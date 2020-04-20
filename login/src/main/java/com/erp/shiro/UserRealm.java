@@ -42,7 +42,6 @@ public class UserRealm extends AuthorizingRealm{
 		}
 		System.out.println(user.getLogin_id());
 		System.out.println(user.getPassword());
-		System.out.println("ssssssss");
 		return new SimpleAuthenticationInfo("",to.getPassword(),"");
 	}
 	
