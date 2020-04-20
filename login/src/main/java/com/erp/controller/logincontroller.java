@@ -57,9 +57,6 @@ public class logincontroller {
         }
         model.addAttribute("list",LoginService.findByName(user.getLogin_id()));
         model.addAttribute("username",user.getLogin_id());
-        System.out.println("哈哈哈哈hhhh");
-        System.out.println("熊旭东就是mxz");
-        System.out.println("這熊旭東必死");
         return "index";
     }
    
