@@ -55,7 +55,7 @@ public class logincontroller {
             model.addAttribute("msg","用戶名密碼錯誤！");
             return "login";
         }
-        System.out.println("起飞");
+        System.out.println("xxd");
         model.addAttribute("list",LoginService.findByName(user.getLogin_id()));
         return "index";
     }
