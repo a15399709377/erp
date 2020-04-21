@@ -58,13 +58,6 @@ public class loginserviceimpl implements LoginService {
 				
 			}
 		}
-		for (Permissions permissions : list4) {
-			for (Permissions permissions2 : permissions.getPermissions()) {
-				System.out.println(permissions2);
-			}
-		}
-
-		
 		return list4;
 	}
 
