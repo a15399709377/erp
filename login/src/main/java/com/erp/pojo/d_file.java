@@ -1,5 +1,7 @@
 package com.erp.pojo;
 
+import java.util.List;
+
 public class d_file {
 	   private int id; //序号',
 	   private String product_id; // '产品编号',
@@ -41,6 +43,7 @@ public class d_file {
 	   private String design_module_tag;// '物料组成标志 W001-0：未设计 W001-1：已设计',
 	   private String design_procedure_tag;// '工序组成标志 G001-0：未设计 G001-1：已设计',
 	   private String design_cell_tag;// '库存分配标志 K001-0：未设计 K001-1：已设计',
+	   private List<m_procedure> m_proceDure;
 	@Override
 	public String toString() {
 		return "d_file [id=" + id + ", product_id=" + product_id + ", product_name=" + product_name + ", factory_name="
@@ -328,6 +331,12 @@ public class d_file {
 	}
 	public void setDesign_cell_tag(String design_cell_tag) {
 		this.design_cell_tag = design_cell_tag;
+	}
+	public List<m_procedure> getM_proceDure() {
+		return m_proceDure;
+	}
+	public void setM_proceDure(List<m_procedure> m_proceDure) {
+		this.m_proceDure = m_proceDure;
 	}
 	
 	   
