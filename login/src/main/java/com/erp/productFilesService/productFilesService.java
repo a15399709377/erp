@@ -15,4 +15,8 @@ public interface productFilesService {
 
 	d_file auditProductFilesXX(int id);
 
+	List<d_file> designProductFiles();
+
+	d_file designProductFilesXX(int id);
+
 }

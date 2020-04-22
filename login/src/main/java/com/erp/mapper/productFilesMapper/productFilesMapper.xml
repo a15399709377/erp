@@ -164,4 +164,12 @@
 		</choose> where id=#{id}
 	
 	</update>
+	
+	<select id="designProductFiles" resultType="d_file">
+	   select * from d_file where type='Y001-2';
+	</select>
+	
+	<select id="designProductFilesXX" resultType="d_file">
+	  select * from d_file where id=#{id};
+	</select>
 </mapper>

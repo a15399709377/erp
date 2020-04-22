@@ -23,5 +23,11 @@ public interface productFilesMapper {
 	d_file auditProductFilesXX(int id);
 
 
+	List<d_file> designProductFiles();
+
+
+	d_file designProductFilesXX(int id);
+
+
 
 }

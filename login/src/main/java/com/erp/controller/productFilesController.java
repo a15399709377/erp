@@ -48,7 +48,7 @@ public class productFilesController {
 				third_kind,"机箱","Y001-2","D001-1","台","1",null,"12个月",
 				null,null,null,200.00,150.00,100.00,null,"效率强劲",null,user,null,null,null,null,null,null,null,null,
 				0,null,null,null,null);
-		int a=productFilesService.addProductFilesService(file1);
+		int a=productFilesService.addProductFilesService(file3);
 		System.out.println(a);
 		return 0;
 	}
@@ -79,6 +79,18 @@ public class productFilesController {
 		return list;
 	}
 	
+	@RequestMapping("/designProductFiles")
+	@ResponseBody
+	public List<d_file> designProductFiles() {
+		List<d_file> list=productFilesService.designProductFiles();
+		return list;
+	}
 	
+	@RequestMapping("/designProductFilesXX")
+	@ResponseBody
+	public d_file designProductFilesXX(int id) {
+		d_file list=productFilesService.designProductFilesXX(id);
+		return list;
+	}
 	
 }

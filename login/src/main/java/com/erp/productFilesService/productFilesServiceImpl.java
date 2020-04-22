@@ -45,5 +45,21 @@ public class productFilesServiceImpl implements productFilesService {
 		// TODO Auto-generated method stub
 		return productFilesMapper.auditProductFilesXX(id);
 	}
+
+
+
+	@Override
+	public List<d_file> designProductFiles() {
+		// TODO Auto-generated method stub
+		return productFilesMapper.designProductFiles();
+	}
+
+
+
+	@Override
+	public d_file designProductFilesXX(int id) {
+		// TODO Auto-generated method stub
+		return productFilesMapper.designProductFilesXX(id);
+	}
 	
 }
