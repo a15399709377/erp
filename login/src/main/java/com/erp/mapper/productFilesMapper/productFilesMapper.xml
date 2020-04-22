@@ -2,6 +2,166 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.erp.mapper.productFilesMapper.productFilesMapper">
-
+<mapper
+	namespace="com.erp.mapper.productFilesMapper.productFilesMapper">
+	<insert id="addProductFilesService">
+		INSERT INTO D_FILE VALUES(null,#{file.product_id},#{file.product_name},
+		<choose>
+			<when test="file.factory_name!=null">
+				#{file.factory_name}
+			</when>
+			<otherwise>				
+				null
+			</otherwise>
+		</choose>
+		,#{file.first_kind.kind_id},#{file.first_kind.kind_name},
+		#{file.second_kind.kind_id},#{file.second_kind.kind_name},#{file.third_kind.kind_id},#{file.third_kind.kind_name},
+		<choose>
+			<when test="file.product_nick==null">
+				null
+			</when>
+			<otherwise>
+				#{file.product_nick}
+			</otherwise>
+		</choose>
+		,#{file.type},#{file.product_class},
+		<choose>
+			<when test="file.personal_unit==null">
+				null
+			</when>
+			<otherwise>
+				#{file.personal_unit}
+			</otherwise>
+		</choose>
+		,<choose>
+			<when test="file.personal_value==null">
+				null
+			</when>
+			<otherwise>
+				#{file.personal_value}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.provider_group==null">
+				null
+			</when>
+			<otherwise>
+				#{file.provider_group}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.warranty==null">
+				null
+			</when>
+			<otherwise>
+				#{file.warranty}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.twin_name==null">
+				null
+			</when>
+			<otherwise>
+				#{file.twin_name}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.twin_id==null">
+				null
+			</when>
+			<otherwise>
+				#{file.twin_id}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.lifecycle==null">
+				null
+			</when>
+			<otherwise>
+				#{file.lifecycle}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.list_price==null">
+				null
+			</when>
+			<otherwise>
+				#{file.list_price}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.cost_price==null">
+				null
+			</when>
+			<otherwise>
+				#{file.cost_price}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.real_cost_price==null">
+				null
+			</when>
+			<otherwise>
+				#{file.real_cost_price}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.amount_unit==null">
+				null
+			</when>
+			<otherwise>
+				#{file.amount_unit}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.product_describe==null">
+				null
+			</when>
+			<otherwise>
+				#{file.product_describe}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.responsible_person==null ">
+				null
+			</when>
+			<otherwise>
+				#{file.responsible_person}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="file.register==null ">
+				null
+			</when>
+			<otherwise>
+				#{file.register.login_id}
+			</otherwise>
+		</choose>,
+		now(),null,null,
+		'S001-0',null,null,'D002-0','J001-0',0,'C001-0','W001-0','G001-0','K001-0'
+		);
+	</insert>
+	
+	
+	
+	<select id="auditAll" resultType="d_file">
+	SELECT * FROM D_FILE WHERE check_tag='S001-0' or check_tag='S001-2' ;
+	</select>
+	
+	<select id="auditProductFilesXX" resultType="d_file">
+	SELECT * FROM D_FILE WHERE id=#{id} ;
+	</select>
+	
+	<update id="auditProductFiles">
+	update D_FILE set checker=#{user.login_id},check_time=now(),
+	<choose>
+			<when test="audit=1">
+				check_tag='S001-1'
+			</when>
+			<otherwise>
+				check_tag='S001-2'
+			</otherwise>
+		</choose> where id=#{id}
+	
+	</update>
 </mapper>

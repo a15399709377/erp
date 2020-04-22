@@ -5,12 +5,12 @@ public class d_file {
 	   private String product_id; // '产品编号',
 	   private String product_name; //'产品名称',
 	   private String factory_name;  //'制造商',
-	   private String first_kind_id; // '产品I级分类编号',
-	   private String first_kind_name; //  '产品I级分类名称',
-	   private String second_kind_id;//  '产品II级分类编号',
-	   private String second_kind_name; // '产品II级分类名称',
-	   private String third_kind_id;//  '产品III级分类编号',
-	   private String third_kind_name; // '产品III级分类名称',
+	   private D_CONFIG_FILE_KIND first_kind; // '产品I级分类编号',
+	   
+	   private D_CONFIG_FILE_KIND second_kind;//  '产品II级分类编号',
+	  
+	   private D_CONFIG_FILE_KIND third_kind;//  '产品III级分类编号',
+	   
 	   private String product_nick; // '产品简称',
 	   private String type;//'用途类型 Y001-1:商品 Y001-2:物料',
 	   private String product_class;// '档次级别 D001-1：高档 D001-2：中档 D001-3：抵挡',
@@ -27,12 +27,12 @@ public class d_file {
 	   private String amount_unit;// '单位',
 	   private String product_describe;// '产品描述',
 	   private String responsible_person;// '产品经理',
-	   private String register;// '登记人',
+	   private User register;// '登记人',
 	   private String register_time;// '建档时间',
-	   private String checker;// '复核人',
+	   private User checker;// '复核人',
 	   private String check_time;// '复核时间',
 	   private String check_tag;//'审核标志 S001-0：等待审核 S001-1：审核通过 S001-2：审核不通过',
-	   private String changer;// '变更人',
+	   private User changer;// '变更人',
 	   private String change_time;//'变更时间',
 	   private String change_tag;// '档案变更标志D002-0：未变更 D002-1：已变更',
 	   private String price_change_tag;//'价格变更标志 J001-0：未变更 J001-1：已变更',
@@ -44,41 +44,35 @@ public class d_file {
 	@Override
 	public String toString() {
 		return "d_file [id=" + id + ", product_id=" + product_id + ", product_name=" + product_name + ", factory_name="
-				+ factory_name + ", first_kind_id=" + first_kind_id + ", first_kind_name=" + first_kind_name
-				+ ", second_kind_id=" + second_kind_id + ", second_kind_name=" + second_kind_name + ", third_kind_id="
-				+ third_kind_id + ", third_kind_name=" + third_kind_name + ", product_nick=" + product_nick + ", type="
-				+ type + ", product_class=" + product_class + ", personal_unit=" + personal_unit + ", personal_value="
-				+ personal_value + ", provider_group=" + provider_group + ", warranty=" + warranty + ", twin_name="
-				+ twin_name + ", twin_id=" + twin_id + ", lifecycle=" + lifecycle + ", list_price=" + list_price
-				+ ", cost_price=" + cost_price + ", real_cost_price=" + real_cost_price + ", amount_unit=" + amount_unit
-				+ ", product_describe=" + product_describe + ", responsible_person=" + responsible_person
-				+ ", register=" + register + ", register_time=" + register_time + ", checker=" + checker
-				+ ", check_time=" + check_time + ", check_tag=" + check_tag + ", changer=" + changer + ", change_time="
-				+ change_time + ", change_tag=" + change_tag + ", price_change_tag=" + price_change_tag
-				+ ", file_change_amount=" + file_change_amount + ", delete_tag=" + delete_tag + ", design_module_tag="
-				+ design_module_tag + ", design_procedure_tag=" + design_procedure_tag + ", design_cell_tag="
-				+ design_cell_tag + "]";
+				+ factory_name + ", first_kind=" + first_kind + ", second_kind=" + second_kind + ", third_kind="
+				+ third_kind + ", product_nick=" + product_nick + ", type=" + type + ", product_class=" + product_class
+				+ ", personal_unit=" + personal_unit + ", personal_value=" + personal_value + ", provider_group="
+				+ provider_group + ", warranty=" + warranty + ", twin_name=" + twin_name + ", twin_id=" + twin_id
+				+ ", lifecycle=" + lifecycle + ", list_price=" + list_price + ", cost_price=" + cost_price
+				+ ", real_cost_price=" + real_cost_price + ", amount_unit=" + amount_unit + ", product_describe="
+				+ product_describe + ", responsible_person=" + responsible_person + ", register=" + register
+				+ ", register_time=" + register_time + ", checker=" + checker + ", check_time=" + check_time
+				+ ", check_tag=" + check_tag + ", changer=" + changer + ", change_time=" + change_time + ", change_tag="
+				+ change_tag + ", price_change_tag=" + price_change_tag + ", file_change_amount=" + file_change_amount
+				+ ", delete_tag=" + delete_tag + ", design_module_tag=" + design_module_tag + ", design_procedure_tag="
+				+ design_procedure_tag + ", design_cell_tag=" + design_cell_tag + "]";
 	}
-	public d_file(int id, String product_id, String product_name, String factory_name, String first_kind_id,
-			String first_kind_name, String second_kind_id, String second_kind_name, String third_kind_id,
-			String third_kind_name, String product_nick, String type, String product_class, String personal_unit,
-			String personal_value, String provider_group, String warranty, String twin_name, String twin_id,
-			String lifecycle, double list_price, double cost_price, double real_cost_price, String amount_unit,
-			String product_describe, String responsible_person, String register, String register_time, String checker,
-			String check_time, String check_tag, String changer, String change_time, String change_tag,
-			String price_change_tag, int file_change_amount, String delete_tag, String design_module_tag,
-			String design_procedure_tag, String design_cell_tag) {
+	public d_file(int id, String product_id, String product_name, String factory_name, D_CONFIG_FILE_KIND first_kind,
+			D_CONFIG_FILE_KIND second_kind, D_CONFIG_FILE_KIND third_kind, String product_nick, String type,
+			String product_class, String personal_unit, String personal_value, String provider_group, String warranty,
+			String twin_name, String twin_id, String lifecycle, double list_price, double cost_price,
+			double real_cost_price, String amount_unit, String product_describe, String responsible_person,
+			User register, String register_time, User checker, String check_time, String check_tag, User changer,
+			String change_time, String change_tag, String price_change_tag, int file_change_amount, String delete_tag,
+			String design_module_tag, String design_procedure_tag, String design_cell_tag) {
 		super();
 		this.id = id;
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.factory_name = factory_name;
-		this.first_kind_id = first_kind_id;
-		this.first_kind_name = first_kind_name;
-		this.second_kind_id = second_kind_id;
-		this.second_kind_name = second_kind_name;
-		this.third_kind_id = third_kind_id;
-		this.third_kind_name = third_kind_name;
+		this.first_kind = first_kind;
+		this.second_kind = second_kind;
+		this.third_kind = third_kind;
 		this.product_nick = product_nick;
 		this.type = type;
 		this.product_class = product_class;
@@ -137,41 +131,23 @@ public class d_file {
 	public void setFactory_name(String factory_name) {
 		this.factory_name = factory_name;
 	}
-	public String getFirst_kind_id() {
-		return first_kind_id;
+	public D_CONFIG_FILE_KIND getFirst_kind() {
+		return first_kind;
 	}
-	public void setFirst_kind_id(String first_kind_id) {
-		this.first_kind_id = first_kind_id;
+	public void setFirst_kind(D_CONFIG_FILE_KIND first_kind) {
+		this.first_kind = first_kind;
 	}
-	public String getFirst_kind_name() {
-		return first_kind_name;
+	public D_CONFIG_FILE_KIND getSecond_kind() {
+		return second_kind;
 	}
-	public void setFirst_kind_name(String first_kind_name) {
-		this.first_kind_name = first_kind_name;
+	public void setSecond_kind(D_CONFIG_FILE_KIND second_kind) {
+		this.second_kind = second_kind;
 	}
-	public String getSecond_kind_id() {
-		return second_kind_id;
+	public D_CONFIG_FILE_KIND getThird_kind() {
+		return third_kind;
 	}
-	public void setSecond_kind_id(String second_kind_id) {
-		this.second_kind_id = second_kind_id;
-	}
-	public String getSecond_kind_name() {
-		return second_kind_name;
-	}
-	public void setSecond_kind_name(String second_kind_name) {
-		this.second_kind_name = second_kind_name;
-	}
-	public String getThird_kind_id() {
-		return third_kind_id;
-	}
-	public void setThird_kind_id(String third_kind_id) {
-		this.third_kind_id = third_kind_id;
-	}
-	public String getThird_kind_name() {
-		return third_kind_name;
-	}
-	public void setThird_kind_name(String third_kind_name) {
-		this.third_kind_name = third_kind_name;
+	public void setThird_kind(D_CONFIG_FILE_KIND third_kind) {
+		this.third_kind = third_kind;
 	}
 	public String getProduct_nick() {
 		return product_nick;
@@ -269,10 +245,10 @@ public class d_file {
 	public void setResponsible_person(String responsible_person) {
 		this.responsible_person = responsible_person;
 	}
-	public String getRegister() {
+	public User getRegister() {
 		return register;
 	}
-	public void setRegister(String register) {
+	public void setRegister(User register) {
 		this.register = register;
 	}
 	public String getRegister_time() {
@@ -281,10 +257,10 @@ public class d_file {
 	public void setRegister_time(String register_time) {
 		this.register_time = register_time;
 	}
-	public String getChecker() {
+	public User getChecker() {
 		return checker;
 	}
-	public void setChecker(String checker) {
+	public void setChecker(User checker) {
 		this.checker = checker;
 	}
 	public String getCheck_time() {
@@ -299,10 +275,10 @@ public class d_file {
 	public void setCheck_tag(String check_tag) {
 		this.check_tag = check_tag;
 	}
-	public String getChanger() {
+	public User getChanger() {
 		return changer;
 	}
-	public void setChanger(String changer) {
+	public void setChanger(User changer) {
 		this.changer = changer;
 	}
 	public String getChange_time() {
@@ -353,5 +329,6 @@ public class d_file {
 	public void setDesign_cell_tag(String design_cell_tag) {
 		this.design_cell_tag = design_cell_tag;
 	}
+	
 	   
 }

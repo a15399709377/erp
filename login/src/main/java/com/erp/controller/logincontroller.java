@@ -1,5 +1,8 @@
 package com.erp.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -33,7 +36,7 @@ public class logincontroller {
 	}
 	
 	@RequestMapping("/login")
-    public String login(User user,Model model) {
+    public String login(User user,Model model,HttpServletRequest request) {
 		System.out.println(user);
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
@@ -56,6 +59,8 @@ public class logincontroller {
             return "login";
         }
         model.addAttribute("list",LoginService.findByName(user.getLogin_id()));
+        HttpSession session=request.getSession();
+        session.setAttribute("user",user);
         model.addAttribute("username",user.getLogin_id());
         return "index";
     }
