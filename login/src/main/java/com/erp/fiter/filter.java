@@ -20,6 +20,7 @@ public class filter implements Filter {
 		response.setContentType("text/html;charset=UTF-8");
 		chain.doFilter(request, response);
 		System.out.println("----------离开FirstFilter---------");
+		System.out.println("shabixxd");
 		
 	}
 	
