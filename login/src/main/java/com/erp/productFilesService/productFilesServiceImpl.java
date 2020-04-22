@@ -76,7 +76,7 @@ public class productFilesServiceImpl implements productFilesService {
 	@Override
 	public int addProcedureAndProcedure_details(d_file file) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("弱智xxd");
 		return 0;
 	}
 }
