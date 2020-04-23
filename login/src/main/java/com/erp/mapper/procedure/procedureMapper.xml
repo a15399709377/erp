@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.erp.mapper.procedure.procedureMapper">
+	<select id="getAllFile" resultType="d_file">
+		SELECT * FROM D_FILE WHERE check_tag='S001-2' AND delete_tag='C001-0' AND design_module_tag='W001-1'
+	</select>
+	
+	<select id="getD_FileByProduct_id" resultType="d_file">
+		SELECT * FROM D_FILE WHERE product_id=#{product_id}
+	</select>
+	
+	<insert id="addProcedure">
+		insert into M_PROCEDURE values(null,#{m.parent_id},
+		<choose>
+			<when test="m.procedure_name==null">
+				null
+			</when>
+			<otherwise>
+				#{m.procedure_name}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.labour_hour_amount==null">
+				null
+			</when>
+			<otherwise>
+				#{m.labour_hour_amount}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.real_labour_hour_amount==null">
+				null
+			</when>
+			<otherwise>
+				#{m.real_labour_hour_amount}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.real_subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.real_subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.module_subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.module_subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.real_module_subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.real_module_subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.cost_price==null">
+				null
+			</when>
+			<otherwise>
+				#{m.cost_price}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.demand_amount==null">
+				null
+			</when>
+			<otherwise>
+				#{m.demand_amount}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.real_amount==null">
+				null
+			</when>
+			<otherwise>
+				#{m.real_amount}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.procedure_finish_tag==null">
+				null
+			</when>
+			<otherwise>
+				#{m.procedure_finish_tag}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.procedure_transfer_tag==null">
+				null
+			</when>
+			<otherwise>
+				#{m.procedure_transfer_tag}
+			</otherwise>
+		</choose>
+		)
+	</insert>
+	<insert id="addProcedureDetails">
+		
+	</insert>
+</mapper>

@@ -81,43 +81,5 @@ public class productFilesController {
 		return list;
 	}
 	
-	@RequestMapping("/designProductFiles")
-	@ResponseBody
-	public List<d_file> designProductFiles() {
-		List<d_file> list=productFilesService.designProductFiles();
-		return list;
-	}
 	
-	@RequestMapping("/designProductFilesXX")
-	@ResponseBody
-	public d_file designProductFilesXX(int id) {
-		d_file list=productFilesService.designProductFilesXX(id);
-		return list;
-	}
-	//显示工序
-		@RequestMapping("/xsgx")
-		@ResponseBody
-		public List<gx> getM_PROCEDURE() {
-			gx g=new gx(01, "组装", "对于产品的组装");
-			gx g2=new gx(01, "测试", "对于产品的测试");
-			gx g3=new gx(01, "包装", "对于产品的包装");
-			List<gx> gxList=new ArrayList<gx>();
-			gxList.add(g);
-			gxList.add(g2);
-			gxList.add(g3);
-			return gxList;
-		}
-		//添加工序
-		@RequestMapping("/tjgx")
-		@ResponseBody
-		public gx getgx(gx g) {
-			return g;
-		}
-		//添加产品工序明细表和产品工序表
-		@RequestMapping("/tjcpgxb")
-		@ResponseBody
-		public int tjcpgxb(d_file file) {
-			//创建一个方法添加数据到产品工序表和产品工序明细表中
-			return productFilesService.addProcedureAndProcedure_details(file);
-		}
 }
