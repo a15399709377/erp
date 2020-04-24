@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.mapper.productFilesMapper.productFilesMapper;
+import com.erp.pojo.D_module;
+import com.erp.pojo.D_module_details;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 
@@ -61,22 +63,27 @@ public class productFilesServiceImpl implements productFilesService {
 		// TODO Auto-generated method stub
 		return productFilesMapper.designProductFilesXX(id);
 	}
-	@Override
-	public List<d_file> getAllFile() {
-		// TODO Auto-generated method stub
-		return productFilesMapper.getAllFile();
-	}
+
+
 
 	@Override
-	public d_file getD_FileByProduct_id(String product_id) {
+	public List<d_file> designProductMaterial() {
 		// TODO Auto-generated method stub
-		return productFilesMapper.getD_FileByProduct_id(product_id);
+		return productFilesMapper.designProductMaterial();
 	}
 
+
+
 	@Override
-	public int addProcedureAndProcedure_details(d_file file) {
-		// TODO Auto-generated method stub
-		System.out.println("弱智xxd");
+	public int addD_module(D_module dm) {
+		int a=productFilesMapper.addD_module(dm);
+		if(a>0) {
+			List<D_module_details> details=dm.getD_module_details();
+			for (D_module_details de : details) {
+				int b=productFilesMapper.addDetails(de);
+			}
+		}
 		return 0;
 	}
+	
 }

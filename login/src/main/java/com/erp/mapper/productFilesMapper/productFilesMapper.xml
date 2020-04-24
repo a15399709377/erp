@@ -166,117 +166,51 @@
 	</update>
 	
 	<select id="designProductFiles" resultType="d_file">
-	   select * from d_file where type='Y001-2';
+	   select * from d_file where type='Y001-1';
 	</select>
 	
 	<select id="designProductFilesXX" resultType="d_file">
 	  select * from d_file where id=#{id};
 	</select>
 	
-	<select id="getAllFile" resultType="d_file">
-		SELECT * FROM D_FILE WHERE check_tag='S001-2' AND delete_tag='C001-0' AND design_module_tag='W001-1'
+	<select id="designProductMaterial" resultType="d_file">
+	   select * from d_file where type='Y001-2';
 	</select>
-	<select id="getD_FileByProduct_id" resultType="d_file">
-		SELECT * FROM D_FILE WHERE product_id=#{product_id}
-	</select>
-	<insert id="addProcedure">
-		insert into M_PROCEDURE values(null,#{m.parent_id},
-		<choose>
-			<when test="m.procedure_name==null">
-				null
-			</when>
-			<otherwise>
-				#{m.procedure_name}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.labour_hour_amount==null">
-				null
-			</when>
-			<otherwise>
-				#{m.labour_hour_amount}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.real_labour_hour_amount==null">
-				null
-			</when>
-			<otherwise>
-				#{m.real_labour_hour_amount}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.subtotal==null">
-				null
-			</when>
-			<otherwise>
-				#{m.subtotal}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.real_subtotal==null">
-				null
-			</when>
-			<otherwise>
-				#{m.real_subtotal}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.module_subtotal==null">
-				null
-			</when>
-			<otherwise>
-				#{m.module_subtotal}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.real_module_subtotal==null">
-				null
-			</when>
-			<otherwise>
-				#{m.real_module_subtotal}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.cost_price==null">
-				null
-			</when>
-			<otherwise>
-				#{m.cost_price}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.demand_amount==null">
-				null
-			</when>
-			<otherwise>
-				#{m.demand_amount}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.real_amount==null">
-				null
-			</when>
-			<otherwise>
-				#{m.real_amount}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.procedure_finish_tag==null">
-				null
-			</when>
-			<otherwise>
-				#{m.procedure_finish_tag}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.procedure_transfer_tag==null">
-				null
-			</when>
-			<otherwise>
-				#{m.procedure_transfer_tag}
-			</otherwise>
-		</choose>
-		)
+	
+	<insert id="addD_module">
+	
+	insert into D_MODULE values(#{dm.id},
+	#{dm.design_id},#{dm.product_id},#{dm.product_name},
+	#{dm.first_kind.kind_id},#{dm.first_kind.kind_name},
+	#{dm.second_kind.kind_id},#{dm.second_kind.kind_name},#{dm.third_kind.kind_id},#{dm.third_kind.kind_name},
+	#{dm.designer.login_id},<choose>
+	<when test="dm.module_descri!=null">
+	#{dm.module_descri}
+	</when>
+	<otherwise>null</otherwise></choose>,
+	#{dm.cost_price_sum},#{dm.register.login_id},now(),
+	null,null,null,null,'S001-0','B002-0'
+	);
+	
+	</insert>
+	
+	<insert id="addDetails">
+	insert into D_MODULE_DETAILS values(
+	null,#{de.parent_id},#{de.details_number},#{de.product_id},
+	#{de.product_name},#{de.type},
+	<choose>
+	<when test="de.product_describe!=null">
+	#{de.product_describe}
+	</when>
+	<otherwise>null</otherwise></choose>,
+	<choose>
+	<when test="de.amount_unit!=null">
+	#{de.amount_unit}
+	</when>
+	<otherwise>null</otherwise></choose>,
+	#{de.amount},#{de.residual_amount},
+	#{de.cost_price},#{de.subtotal}
+	);
+	
 	</insert>
 </mapper>

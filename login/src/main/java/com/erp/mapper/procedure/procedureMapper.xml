@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.erp.mapper.procedure.procedureMapper">
+	<select id="getAllFile" resultType="d_file">
+		SELECT * FROM D_FILE WHERE check_tag='S001-2' AND delete_tag='C001-0' AND design_module_tag='W001-1'
+	</select>
+	
+	<select id="getD_FileByProduct_id" resultType="d_file">
+		SELECT * FROM D_FILE WHERE product_id=#{product_id}
+	</select>
+	
+	<insert id="addProcedure">
+		insert into M_PROCEDURE values(null,#{m.parent_id},#{m.details_number},
+		<choose>
+			<when test="m.procedure_name==null">
+				null
+			</when>
+			<otherwise>
+				#{m.procedure_name}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.labour_hour_amount==null">
+				null
+			</when>
+			<otherwise>
+				#{m.labour_hour_amount}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.real_labour_hour_amount==null">
+				null
+			</when>
+			<otherwise>
+				#{m.real_labour_hour_amount}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.real_subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.real_subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.module_subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.module_subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.real_module_subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.real_module_subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.cost_price==null">
+				null
+			</when>
+			<otherwise>
+				#{m.cost_price}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.demand_amount==null">
+				null
+			</when>
+			<otherwise>
+				#{m.demand_amount}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.real_amount==null">
+				null
+			</when>
+			<otherwise>
+				#{m.real_amount}
+			</otherwise>
+		</choose>,
+		#{m.procedure_finish_tag},#{m.procedure_transfer_tag}
+		);
+	</insert>
+	<insert id="addProcedureDetails">
+		insert into M_DESIGN_PROCEDURE_DETAILS values(null,#{parent_id},#{details_number},#{m.procedure_id},
+		<choose>
+			<when test="m.procedure_name==null">
+				null
+			</when>
+			<otherwise>
+				#{m.procedure_name}
+			</otherwise>
+		</choose>,
+		#{m.labour_hour_amount},
+		<choose>
+			<when test="m.procedure_describe==null">
+				null
+			</when>
+			<otherwise>
+				#{m.procedure_describe}
+			</otherwise>
+		</choose>,
+		#{m.amount_unit},#{m.cost_price},
+		<choose>
+			<when test="m.subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.module_subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.module_subtotal}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.register==null">
+				null
+			</when>
+			<otherwise>
+				#{m.register}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.register_time==null">
+				null
+			</when>
+			<otherwise>
+				#{m.register_time}
+			</otherwise>
+		</choose>,
+		#{m.design_module_tag},#{m.design_module_change_tag}
+		)
+	</insert>
+	
+	<insert id="addProcedure_design">
+		insert into M_DESIGN_PROCEDURE values(null,#{design_id},
+		<choose>
+			<when test="m.first_kind_id==null">
+				null
+			</when>
+			<otherwise>
+				#{m.first_kind.kind_id}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.first_kind_name==null">
+				null
+			</when>
+			<otherwise>
+				#{m.first_kind.kind_name}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.second_kind_id==null">
+				null
+			</when>
+			<otherwise>
+				#{m.second_kind.kind_id}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.second_kind_name==null">
+				null
+			</when>
+			<otherwise>
+				#{m.second_kind.kind_name}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.third_kind_id==null">
+				null
+			</when>
+			<otherwise>
+				#{m.third_kind.kind_id}
+			</otherwise>
+		</choose>,
+				<choose>
+			<when test="m.third_kind_name==null">
+				null
+			</when>
+			<otherwise>
+				#{m.third_kind.kind_name}
+			</otherwise>
+		</choose>,
+		#{m.product_id},
+		<choose>
+			<when test="m.product_name==null">
+				null
+			</when>
+			<otherwise>
+				#{m.product_name}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.procedure_describe==null">
+				null
+			</when>
+			<otherwise>
+				#{m.procedure_describe}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.cost_price_sum==null">
+				null
+			</when>
+			<otherwise>
+				#{m.cost_price_sum}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.module_cost_price_sum==null">
+				null
+			</when>
+			<otherwise>
+				#{m.module_cost_price_sum}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.designer==null">
+				null
+			</when>
+			<otherwise>
+				#{m.designer}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.register==null">
+				null
+			</when>
+			<otherwise>
+				#{m.register}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.register_time==null">
+				null
+			</when>
+			<otherwise>
+				#{m.register_time}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.checker==null">
+				null
+			</when>
+			<otherwise>
+				#{m.checker}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.check_time==null">
+				null
+			</when>
+			<otherwise>
+				#{m.check_time}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.check_suggestion==null">
+				null
+			</when>
+			<otherwise>
+				#{m.check_suggestion}
+			</otherwise>
+		</choose>,
+		#{m.check_tag},
+		<choose>
+			<when test="m.changer==null">
+				null
+			</when>
+			<otherwise>
+				#{m.changer}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.change_time==null">
+				null
+			</when>
+			<otherwise>
+				#{m.change_time}
+			</otherwise>
+		</choose>,
+		#{m.change_tag},#{m.design_module_tag},#{m.design_module_change_tag}
+		)
+	</insert>
+	<!--通过商品的编号查询这个商品的产品工序编号 -->
+	<select id="getProcedureIdByproduct_id" resultType="int">
+		SELECT id FROM M_DESIGN_PROCEDURE WHERE product_id=#{product_id}
+	</select>
+</mapper>
