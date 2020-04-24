@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.erp.pojo.D_module;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 
@@ -20,6 +21,11 @@ public interface productFilesService {
 	List<d_file> designProductFiles();
 
 	d_file designProductFilesXX(int id);
+
+	List<d_file> designProductMaterial();
+
+
+	int addD_module(D_module dm);
 	
 	
 }

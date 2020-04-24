@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.erp.pojo.D_module;
+import com.erp.pojo.D_module_details;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 import com.erp.pojo.m_design_procedure_details;
@@ -29,6 +31,17 @@ public interface productFilesMapper {
 
 
 	d_file designProductFilesXX(int id);
+
+
+	List<d_file> designProductMaterial();
+
+
+	int addD_module(@Param("dm")D_module dm);
+
+
+	int addDetails(@Param("de")D_module_details de);
+
+
 
 	
 }
