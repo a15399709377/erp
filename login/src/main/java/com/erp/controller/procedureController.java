@@ -22,7 +22,7 @@ public class procedureController {
 	@RequestMapping("/zdcpscgxsjd")
 	public String zdcpscgxsjd(Model model) {
 		model.addAttribute("procedureList",service.getAllFile());
-		return "zdcpscgxsjd.jsp";
+		return "zdcpscgxsjd";
 	}
 	
 	//显示工序

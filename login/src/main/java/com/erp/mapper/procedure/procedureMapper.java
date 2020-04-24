@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.erp.pojo.d_file;
+import com.erp.pojo.m_design_procedure;
 import com.erp.pojo.m_design_procedure_details;
 import com.erp.pojo.m_procedure;
 
@@ -24,5 +25,11 @@ public interface procedureMapper {
 		
 		//添加工序明细产品表
 		int addProcedureDetails(m_design_procedure_details m);
+		
+		//添加产品工序表
+		int addProcedure_design(m_design_procedure m);
+
+		int getProcedureIdByproduct_id(@Param("product_id")String product_id);
+		
 
 }
