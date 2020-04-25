@@ -4,6 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.erp.mapper.productFilesMapper.productFilesMapper">
+	
+
 	<insert id="addProductFilesService">
 		INSERT INTO D_FILE VALUES(null,#{file.product_id},#{file.product_name},
 		<choose>
@@ -153,6 +155,8 @@
 	</select>
 	
 	<update id="auditProductFiles">
+	
+	
 	update D_FILE set checker=#{user.login_id},check_time=now(),
 	<choose>
 			<when test="audit=1">
@@ -161,9 +165,25 @@
 			<otherwise>
 				check_tag='S001-2'
 			</otherwise>
-		</choose> where id=#{id}
-	
+		</choose> where id=#{id}			
 	</update>
+	
+	<update id="auditD_module">
+	update D_MODULE set checker=#{user.login_id},check_time=now(),
+	<choose>
+			<when test="audit=1">
+				check_tag='S001-1'
+			</when>
+			<otherwise>
+				check_tag='S001-2'
+			</otherwise>
+		</choose> where id=#{id}
+	</update>
+	
+	<update id="auditD_moduleFile">
+	update D_FILE set design_module_tag='W001-1' where id=#{pid}
+	</update>
+	
 	
 	<select id="designProductFiles" resultType="d_file">
 	   select * from d_file where type='Y001-1';
@@ -179,7 +199,7 @@
 	
 	<insert id="addD_module">
 	
-	insert into D_MODULE values(#{dm.id},
+	insert into D_MODULE values(null,
 	#{dm.design_id},#{dm.product_id},#{dm.product_name},
 	#{dm.first_kind.kind_id},#{dm.first_kind.kind_name},
 	#{dm.second_kind.kind_id},#{dm.second_kind.kind_name},#{dm.third_kind.kind_id},#{dm.third_kind.kind_name},
@@ -213,4 +233,8 @@
 	);
 	
 	</insert>
+	
+	  <select id="test" resultType="int">
+   select * from D_MODULE order by id DESC limit 1
+   </select>
 </mapper>

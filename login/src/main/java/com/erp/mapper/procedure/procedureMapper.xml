@@ -97,8 +97,9 @@
 		#{m.procedure_finish_tag},#{m.procedure_transfer_tag}
 		);
 	</insert>
+	
 	<insert id="addProcedureDetails">
-		insert into M_DESIGN_PROCEDURE_DETAILS values(null,#{parent_id},#{details_number},#{m.procedure_id},
+		insert into M_DESIGN_PROCEDURE_DETAILS values(null,#{m.parent_id},#{m.details_number},#{m.procedure_id},
 		<choose>
 			<when test="m.procedure_name==null">
 				null
@@ -154,55 +155,9 @@
 	</insert>
 	
 	<insert id="addProcedure_design">
-		insert into M_DESIGN_PROCEDURE values(null,#{design_id},
-		<choose>
-			<when test="m.first_kind_id==null">
-				null
-			</when>
-			<otherwise>
-				#{m.first_kind.kind_id}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.first_kind_name==null">
-				null
-			</when>
-			<otherwise>
-				#{m.first_kind.kind_name}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.second_kind_id==null">
-				null
-			</when>
-			<otherwise>
-				#{m.second_kind.kind_id}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.second_kind_name==null">
-				null
-			</when>
-			<otherwise>
-				#{m.second_kind.kind_name}
-			</otherwise>
-		</choose>,
-		<choose>
-			<when test="m.third_kind_id==null">
-				null
-			</when>
-			<otherwise>
-				#{m.third_kind.kind_id}
-			</otherwise>
-		</choose>,
-				<choose>
-			<when test="m.third_kind_name==null">
-				null
-			</when>
-			<otherwise>
-				#{m.third_kind.kind_name}
-			</otherwise>
-		</choose>,
+		insert into M_DESIGN_PROCEDURE values(null,#{m.design_id}
+		,#{m.first_kind.kind_id},#{m.first_kind.kind_name},
+		#{m.second_kind.kind_id},#{m.second_kind.kind_name},#{m.third_kind.kind_id},#{m.third_kind.kind_name},
 		#{m.product_id},
 		<choose>
 			<when test="m.product_name==null">
@@ -304,8 +259,11 @@
 		#{m.change_tag},#{m.design_module_tag},#{m.design_module_change_tag}
 		)
 	</insert>
-	<!--通过商品的编号查询这个商品的产品工序编号 -->
+
 	<select id="getProcedureIdByproduct_id" resultType="int">
-		SELECT id FROM M_DESIGN_PROCEDURE WHERE product_id=#{product_id}
+		SELECT * FROM M_DESIGN_PROCEDURE order by id DESC limit 1
 	</select>
+	<update id="ToExamineDesign_Procedure">
+		update M_DESIGN_PROCEDURE set check_tag='S001-2' where id=#{id}
+	</update>
 </mapper>

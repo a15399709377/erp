@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.erp.mapper.productionPlanMapper.productionPlanMapper">
+	
+	<insert id="addProductionPlan">
+	insert into M_APPLY values(null,#{app.apply_id},
+	#{app.product.product_id},#{app.product.product_name},
+	#{app.product.product_describe},#{app.product.type},
+	#{app.product.amount},#{app.designer},
+	<choose>
+	<when test="app.remark!=null">
+	#{app.remark}
+	</when>
+	<otherwise>null</otherwise>
+	</choose>,#{app.register},now(),null,null,null,'S001-0','P001-0'
+	);
+	</insert>
+	<update id="auditProductionPlan">
+	update m_apply set checker=#{user.login_id},
+	<choose>
+	<when test="app1.check_suggestion!=null">
+	check_suggestion=#{app1.check_suggestion},
+	</when>
+	<otherwise></otherwise>
+	</choose>check_time=now(),
+	<choose>
+	<when test="app1.audit==1">
+	check_tag='S001-1'
+	</when>
+	<otherwise>check_tag='S001-2' </otherwise>
+	</choose>
+	
+	where id=#{app1.id}
+	
+	</update>
+	</mapper>
