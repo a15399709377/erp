@@ -21,15 +21,18 @@ public interface procedureMapper {
 
 		
 		//添加工序产品表
-		int addProcedure(m_procedure m);
+		int addProcedure(@Param("m")m_procedure m);
 		
 		//添加工序明细产品表
-		int addProcedureDetails(m_design_procedure_details m);
+		int addProcedureDetails(@Param("m")m_design_procedure_details m);
 		
 		//添加产品工序表
-		int addProcedure_design(m_design_procedure m);
+		int addProcedure_design(@Param("m")m_design_procedure m);
 
-		int getProcedureIdByproduct_id(@Param("product_id")String product_id);
+		int getProcedureIdByproduct_id();
+		
+		//审批产品工序表
+		int ToExamineDesign_Procedure(@Param("id") int id);
 		
 
 }

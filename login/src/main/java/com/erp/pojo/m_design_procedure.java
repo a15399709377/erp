@@ -5,7 +5,7 @@ import java.util.List;
 //产品生产工序
 public class m_design_procedure {
 	private int id; //序号
-	private String design; //设计编号
+	private String design_id; //设计编号
 	private D_CONFIG_FILE_KIND first_kind; //产品I级分类
 	private D_CONFIG_FILE_KIND second_kind; //产品II级分类
 	private D_CONFIG_FILE_KIND third_kind; //产品III级分类
@@ -22,25 +22,19 @@ public class m_design_procedure {
 	private String check_suggestion; //审核意见
 	private String check_tag; //审核标志S001-0: 等待审核S001-1: 审核通过S001-2: 审核不通过
 	private String changer; //变更人
-	private String change_time; //变更标志B002-0: 未变更B002-1: 已变更
+	private String change_time; //变更时间
+	private String change_tag; //变更标志B002-0: 未变更B002-1: 已变更
 	private String design_module_tag; //工序物料设计标志 G002-0: 未设计G002-1: 已提交G002-2: 已审核
 	private String design_module_change_tag; //工序物料变更标志G003-0: 未变更G003-1: 已变更
-	private List<m_procedure> procedure; //生产工序表
-	
-	public List<m_procedure> getProcedure() {
-		return procedure;
-	}
-	public void setProcedure(List<m_procedure> procedure) {
-		this.procedure = procedure;
-	}
+	private List<m_design_procedure_details> procedure_details;
 	public m_design_procedure(int id, String design, D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind,
 			D_CONFIG_FILE_KIND third_kind, String product_id, String product_name, String procedure_describe,
 			double cost_price_sum, double module_cost_price_sum, String designer, String register, String register_time,
 			String checker, String check_time, String check_suggestion, String check_tag, String changer,
-			String change_time, String design_module_tag, String design_module_change_tag, List<m_procedure> procedure) {
+			String change_time, String design_module_tag, String design_module_change_tag) {
 		super();
 		this.id = id;
-		this.design = design;
+		this.design_id = design;
 		this.first_kind = first_kind;
 		this.second_kind = second_kind;
 		this.third_kind = third_kind;
@@ -60,7 +54,83 @@ public class m_design_procedure {
 		this.change_time = change_time;
 		this.design_module_tag = design_module_tag;
 		this.design_module_change_tag = design_module_change_tag;
-		this.procedure = procedure;
+	}
+	
+	public m_design_procedure(int id, String design, D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind,
+			D_CONFIG_FILE_KIND third_kind, String product_id, String product_name, String procedure_describe,
+			double cost_price_sum, double module_cost_price_sum, String designer, String register, String register_time,
+			String checker, String check_time, String check_suggestion, String check_tag, String changer,
+			String change_time, String change_tag, String design_module_tag, String design_module_change_tag,
+			List<m_design_procedure_details> procedure_details) {
+		super();
+		this.id = id;
+		this.design_id = design;
+		this.first_kind = first_kind;
+		this.second_kind = second_kind;
+		this.third_kind = third_kind;
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.procedure_describe = procedure_describe;
+		this.cost_price_sum = cost_price_sum;
+		this.module_cost_price_sum = module_cost_price_sum;
+		this.designer = designer;
+		this.register = register;
+		this.register_time = register_time;
+		this.checker = checker;
+		this.check_time = check_time;
+		this.check_suggestion = check_suggestion;
+		this.check_tag = check_tag;
+		this.changer = changer;
+		this.change_time = change_time;
+		this.change_tag = change_tag;
+		this.design_module_tag = design_module_tag;
+		this.design_module_change_tag = design_module_change_tag;
+		this.procedure_details = procedure_details;
+	}
+
+	public String getChange_tag() {
+		return change_tag;
+	}
+
+	public void setChange_tag(String change_tag) {
+		this.change_tag = change_tag;
+	}
+
+	public m_design_procedure(int id, String design, D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind,
+			D_CONFIG_FILE_KIND third_kind, String product_id, String product_name, String procedure_describe,
+			double cost_price_sum, double module_cost_price_sum, String designer, String register, String register_time,
+			String checker, String check_time, String check_suggestion, String check_tag, String changer,
+			String change_time, String design_module_tag, String design_module_change_tag,
+			List<m_design_procedure_details> procedure_details) {
+		super();
+		this.id = id;
+		this.design_id = design;
+		this.first_kind = first_kind;
+		this.second_kind = second_kind;
+		this.third_kind = third_kind;
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.procedure_describe = procedure_describe;
+		this.cost_price_sum = cost_price_sum;
+		this.module_cost_price_sum = module_cost_price_sum;
+		this.designer = designer;
+		this.register = register;
+		this.register_time = register_time;
+		this.checker = checker;
+		this.check_time = check_time;
+		this.check_suggestion = check_suggestion;
+		this.check_tag = check_tag;
+		this.changer = changer;
+		this.change_time = change_time;
+		this.design_module_tag = design_module_tag;
+		this.design_module_change_tag = design_module_change_tag;
+		this.procedure_details = procedure_details;
+	}
+	public List<m_design_procedure_details> getProcedure_details() {
+		return procedure_details;
+	}
+	public void setProcedure_details(List<m_design_procedure_details> procedure_details) {
+		this.procedure_details = procedure_details;
 	}
 	public m_design_procedure() {
 		super();
@@ -72,10 +142,10 @@ public class m_design_procedure {
 		this.id = id;
 	}
 	public String getDesign() {
-		return design;
+		return design_id;
 	}
 	public void setDesign(String design) {
-		this.design = design;
+		this.design_id = design;
 	}
 	public D_CONFIG_FILE_KIND getFirst_kind() {
 		return first_kind;
@@ -193,7 +263,7 @@ public class m_design_procedure {
 	}
 	@Override
 	public String toString() {
-		return "m_design_procedure [id=" + id + ", design=" + design + ", first_kind=" + first_kind + ", second_kind="
+		return "m_design_procedure [id=" + id + ", design=" + design_id + ", first_kind=" + first_kind + ", second_kind="
 				+ second_kind + ", third_kind=" + third_kind + ", product_id=" + product_id + ", product_name="
 				+ product_name + ", procedure_describe=" + procedure_describe + ", cost_price_sum=" + cost_price_sum
 				+ ", module_cost_price_sum=" + module_cost_price_sum + ", designer=" + designer + ", register="
