@@ -45,14 +45,7 @@ public class d_file {
 	   private String design_cell_tag;// '库存分配标志 K001-0：未设计 K001-1：已设计',
 	   private List<m_procedure> m_proceDure;
 	   private int amount;
-	   
-	   
-	   
-	
-	
-
-	private m_design_procedure m_Design_Procedure; //产品工序
-
+	   private m_design_procedure m_Design_Procedure; //产品工序
 	@Override
 	public String toString() {
 		return "d_file [id=" + id + ", product_id=" + product_id + ", product_name=" + product_name + ", factory_name="
