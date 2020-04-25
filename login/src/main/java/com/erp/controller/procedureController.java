@@ -60,16 +60,14 @@ public class procedureController {
 			return "scgxsjd";
 		}
 		//添加产品工序明细表和产品工序表
-		//@RequestMapping("/tjcpgxb")
-		//@ResponseBody
-		//public String tjcpgxb() {
+		@RequestMapping("/tjcpgxb")
+		@ResponseBody
+		public String tjcpgxb(HttpServletRequest request,m_design_procedure pro) {
 			//创建一个方法添加数据到产品工序表和产品工序明细表中
-			//d_file file=new d_file(new D_CONFIG_FILE_KIND(1, 0, "1", "电子",1), new D_CONFIG_FILE_KIND(2, 1, "2", "计算机",2), new D_CONFIG_FILE_KIND(3, 2, "3","服务器",3));
 			//获取之前的存入进的file
-			//List<m_design_procedure_details> list=new ArrayList<m_design_procedure_details>();
-			//m_design_procedure pro=new m_design_procedure(1, "2", null, null, null, "cp001", "电脑", "起飞", 1.1, 1.1, "李涛", "李涛", "2020/12/10", "李涛", null, null, "S001-1", null, null, "B002-0", "G002-0", "G003-0",list);
-			//HttpSession session=request.getSession();
-
-			//return "";
-		//}
+			HttpSession session=request.getSession();
+			d_file file=(d_file)session.getAttribute("pro");
+			service.addProcedureAndProcedure_details(pro, file);
+			return "";
+		}
 }

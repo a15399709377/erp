@@ -46,7 +46,6 @@ public class d_file {
 	   private List<m_procedure> m_proceDure;
 	   private int amount;
 	   private m_design_procedure m_Design_Procedure; //产品工序
-
 	@Override
 	public String toString() {
 		return "d_file [id=" + id + ", product_id=" + product_id + ", product_name=" + product_name + ", factory_name="
