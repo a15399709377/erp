@@ -26,6 +26,9 @@ public interface productFilesService {
 
 
 	int addD_module(D_module dm);
+
+	int auditD_module(int id, int pid, int audit, User user);
+
 	
 	
 }

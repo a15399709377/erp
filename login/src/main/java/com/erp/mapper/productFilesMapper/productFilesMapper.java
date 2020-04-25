@@ -18,7 +18,7 @@ public interface productFilesMapper {
 	int addProductFilesService(@Param("file")d_file file);
 
 
-	int auditProductFiles(@Param("id")int id,@Param("audit")int audit, @Param("user") User user);
+	int auditProductFiles(@Param("id")int id,@Param("audit")int audit,@Param("user") User user);
 
 
 	List<d_file> auditAll();
@@ -40,6 +40,14 @@ public interface productFilesMapper {
 
 
 	int addDetails(@Param("de")D_module_details de);
+
+	int test();
+
+
+	int auditD_module(int id, int audit, User user);
+
+
+	int auditD_moduleFile(int pid);
 
 
 

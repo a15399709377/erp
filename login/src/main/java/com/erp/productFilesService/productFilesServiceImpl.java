@@ -29,7 +29,8 @@ public class productFilesServiceImpl implements productFilesService {
 	@Override
 	public int auditProductFiles(int id,int audit,User user) {
 		// TODO Auto-generated method stub
-		return productFilesMapper.auditProductFiles(id,audit,user);
+			return productFilesMapper.auditProductFiles(id,audit,user);
+		
 	}
 
 
@@ -76,14 +77,41 @@ public class productFilesServiceImpl implements productFilesService {
 
 	@Override
 	public int addD_module(D_module dm) {
+		int aa=0;
 		int a=productFilesMapper.addD_module(dm);
 		if(a>0) {
 			List<D_module_details> details=dm.getD_module_details();
 			for (D_module_details de : details) {
 				int b=productFilesMapper.addDetails(de);
+				if(b>0) {
+					aa=1;
+				}else {
+					aa=0;
+				}
 			}
 		}
+		return aa;
+	}
+
+
+
+	@Override
+	public int auditD_module(int id, int pid, int audit, User user) {
+		if(audit==1) {
+			int a=productFilesMapper.auditD_module(id, audit, user);
+			if(a>0) {
+				int b=productFilesMapper.auditD_moduleFile(pid);
+				return b;
+			}
+		}else {
+			int a=productFilesMapper.auditD_module(id, audit, user);
+			return a;
+		}		
+		
 		return 0;
 	}
-	
+
+
+
+
 }

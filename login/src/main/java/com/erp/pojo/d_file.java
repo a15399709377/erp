@@ -44,6 +44,75 @@ public class d_file {
 	   private String design_procedure_tag;// '工序组成标志 G001-0：未设计 G001-1：已设计',
 	   private String design_cell_tag;// '库存分配标志 K001-0：未设计 K001-1：已设计',
 	   private List<m_procedure> m_proceDure;
+	   private int amount;
+	   
+	   
+	   
+	
+	public d_file(String product_id, String product_name, String type, String product_describe, int amount) {
+		super();
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.type = type;
+		this.product_describe = product_describe;
+		this.amount = amount;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public d_file(int id, String product_id, String product_name, String factory_name, D_CONFIG_FILE_KIND first_kind,
+			D_CONFIG_FILE_KIND second_kind, D_CONFIG_FILE_KIND third_kind, String product_nick, String type,
+			String product_class, String personal_unit, String personal_value, String provider_group, String warranty,
+			String twin_name, String twin_id, String lifecycle, double list_price, double cost_price,
+			double real_cost_price, String amount_unit, String product_describe, String responsible_person,
+			User register, String register_time, User checker, String check_time, String check_tag, User changer,
+			String change_time, String change_tag, String price_change_tag, int file_change_amount, String delete_tag,
+			String design_module_tag, String design_procedure_tag, String design_cell_tag,
+			List<m_procedure> m_proceDure, int amount) {
+		super();
+		this.id = id;
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.factory_name = factory_name;
+		this.first_kind = first_kind;
+		this.second_kind = second_kind;
+		this.third_kind = third_kind;
+		this.product_nick = product_nick;
+		this.type = type;
+		this.product_class = product_class;
+		this.personal_unit = personal_unit;
+		this.personal_value = personal_value;
+		this.provider_group = provider_group;
+		this.warranty = warranty;
+		this.twin_name = twin_name;
+		this.twin_id = twin_id;
+		this.lifecycle = lifecycle;
+		this.list_price = list_price;
+		this.cost_price = cost_price;
+		this.real_cost_price = real_cost_price;
+		this.amount_unit = amount_unit;
+		this.product_describe = product_describe;
+		this.responsible_person = responsible_person;
+		this.register = register;
+		this.register_time = register_time;
+		this.checker = checker;
+		this.check_time = check_time;
+		this.check_tag = check_tag;
+		this.changer = changer;
+		this.change_time = change_time;
+		this.change_tag = change_tag;
+		this.price_change_tag = price_change_tag;
+		this.file_change_amount = file_change_amount;
+		this.delete_tag = delete_tag;
+		this.design_module_tag = design_module_tag;
+		this.design_procedure_tag = design_procedure_tag;
+		this.design_cell_tag = design_cell_tag;
+		this.m_proceDure = m_proceDure;
+		this.amount = amount;
+	}
 	@Override
 	public String toString() {
 		return "d_file [id=" + id + ", product_id=" + product_id + ", product_name=" + product_name + ", factory_name="
