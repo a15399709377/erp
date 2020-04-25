@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.mapper.s_cellmapper.s_cellmapper">
+
+<select id="seles_cell" resultType="s_cell">
+select * from S_CELL where CHECK_TAG ='S001-0';
+</select>
+
+<insert id="inserts_cell">
+insert into s_cell values(null,#{store_id},#{product_id},#{product_name},#{first_kind_id},#{first_kind_name},#{second_kind_id},#{second_kind_name},#{third_kind_id},#{third_kind_name},#{min_amount},#{max_amount},#{max_capacity_amount},#{amount},#{config},#{register},now(),#{checker},#{check_time},'S001-0');
+</insert>
+
+<update id="upds_cell_check_tag">
+update s_cell set check_time=now() ,check_tag='S001-1' where id=#{id}
+</update>
+
+<update id="updd_file_design_cell_tag">
+	update D_FILE set 
+	<choose>
+			<when test="did=0">
+				design_cell_tag='K001-0'
+			</when>
+			<otherwise>
+				design_cell_tag='K001-1'
+			</otherwise>
+		</choose> where id=#{id}
+	</update>
+</mapper>

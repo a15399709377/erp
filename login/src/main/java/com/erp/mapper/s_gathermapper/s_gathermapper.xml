@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.mapper.s_gathermapper.s_gathermapper">
+
+<insert id="rksqd">
+insert into s_gather values(null,#{gather_id},#{storer},#{reason},#{reasonexact},#{amount_sum},#{cost_price_sum},#{gathered_amount_sum},#{remark},#{register},now(),#{checker},#{check_time},'S001-0',#{attemper},#{attemper_time},#{store_tag});
+</insert>
+<insert id="rksqdxx">
+insert into s_gather_details values(null,#{parent_id},#{product_id},#{product_name},#{product_describe},#{amount},#{amount_unit},#{cost_price},#{subtotal},#{gathered_amount},#{gather_tag});
+</insert>
+
+<select id="s_gatherAll" resultType="s_gather">
+select * from s_gather where check_tag='S001-0';
+</select>
+
+<update id="upds_gather">
+update s_gather set check_tag='S001-1' where gather_id=#{gather_id};
+</update>
+</mapper>
