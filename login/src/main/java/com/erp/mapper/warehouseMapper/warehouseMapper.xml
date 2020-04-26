@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.mapper.warehouseMapper.warehouseMapper">
+<insert id="addWarehousing">
+insert into S_GATHER values(
+null,#{gaa.gather_id},#{gaa.storer.login_id},#{gaa.reason},
+<choose>
+<when test="gaa.reasonexact!=null">
+#{gaa.reasonexact}
+</when>
+<otherwise>null</otherwise>
+</choose>,#{gaa.amount_sum},#{gaa.cost_price_sum},#{gaa.gathered_amount_sum},
+<choose>
+<when test="gaa.remark!=null">
+#{gaa.remark}
+</when>
+<otherwise>null</otherwise>
+</choose>,#{gaa.register.login_id},now(),null,null,'S001-0',null,null,'K002-0'
+);
+</insert>
+
+<insert id="addWarehousingXX">
+insert into S_GATHER_DETAILS values(
+null,#{id},#{gaaa.product_id},#{gaaa.product_name},
+<choose>
+<when test="gaaa.product_describe!=null">
+#{gaaa.product_describe}
+</when>
+<otherwise>null</otherwise>
+</choose>,#{gaaa.amount},#{gaaa.amount_unit},#{gaaa.cost_price},
+#{gaaa.subtotal},#{gaaa.gathered_amount},'K002-0'
+);
+</insert>
+
+
+<select id="auditWarehousingAll" resultType="S_GATHER">
+SELECT * FROM S_GATHER WHERE check_tag='S001-0' OR check_tag='S001-2' ;
+</select>
+
+<select id="auditWarehousingXX" resultType="S_GATHER">
+SELECT * FROM S_GATHER WHERE id=#{id};
+
+</select>
+
+<update id="auditWarehousing">
+update S_GATHER set checker=#{user.login_id},check_time=now(),
+	<choose>
+			<when test="audit=1">
+				check_tag='S001-1'
+			</when>
+			<otherwise>
+				check_tag='S001-2'
+			</otherwise>
+		</choose> where id=#{id}
+</update>
+<select id="dispatchAll">
+select * from S_GATHER where check_tag='S001-1' and store_tag='K002-0'
+</select>
+
+<select id="dispatchS_GATHERXX" resultMap="">
+
+</select>
+</mapper>

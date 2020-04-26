@@ -29,7 +29,7 @@ public class productionPlanController {
 	}
 	
 	
-	@RequestMapping("auditProductionPlan")
+	@RequestMapping("/auditProductionPlan")
 	@ResponseBody
 	public int auditProductionPlan(m_apply apply,HttpServletRequest request) {
 		HttpSession session=request.getSession();
