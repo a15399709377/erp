@@ -47,7 +47,7 @@ public class warehouseController {
 	}
 	
 	//入库申请单完成后查询需要审批的单号
-	@RequestMapping("/auditWarehousingAll")
+	@RequestMapping("/auditWarehousingXX")
 	@ResponseBody
 	public S_GATHER  auditWarehousingXX(int id){
 			

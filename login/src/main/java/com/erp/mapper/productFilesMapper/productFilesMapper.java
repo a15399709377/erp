@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.erp.pojo.D_CONFIG_FILE_KIND;
 import com.erp.pojo.D_module;
 import com.erp.pojo.D_module_details;
 import com.erp.pojo.User;
@@ -48,6 +49,12 @@ public interface productFilesMapper {
 
 
 	int auditD_moduleFile(int pid);
+
+
+	D_CONFIG_FILE_KIND D_CONFIG_FILE_KINDByid(int id);
+
+
+	int test1();
 
 
 

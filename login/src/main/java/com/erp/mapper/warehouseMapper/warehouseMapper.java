@@ -17,12 +17,13 @@ public interface warehouseMapper {
 
 	List<S_GATHER> auditWarehousingAll();
 
-	S_GATHER auditWarehousingXX(int id);
+	S_GATHER auditWarehousingXX(@Param("idd")int id);
 
-	int auditWarehousing(int id, int audit, User user);
+	int auditWarehousing(@Param("iddd")int id, int audit, User user);
 
 	List<S_GATHER> dispatchAll();
 
-	S_GATHER dispatchS_GATHERXX(int id);
+	//S_GATHER dispatchS_GATHERXX(int id);
+
 	
 }

@@ -59,6 +59,6 @@ public class warehouseServiceImpl implements warehouseService {
 	@Override
 	public S_GATHER dispatchS_GATHERXX(int id) {
 		// TODO Auto-generated method stub
-		return warehouseMapper.dispatchS_GATHERXX(id);
+		return null;
 	}
 }

@@ -40,8 +40,7 @@ SELECT * FROM S_GATHER WHERE check_tag='S001-0' OR check_tag='S001-2' ;
 </select>
 
 <select id="auditWarehousingXX" resultType="S_GATHER">
-SELECT * FROM S_GATHER WHERE id=#{id};
-
+SELECT * FROM S_GATHER WHERE id=#{idd};
 </select>
 
 <update id="auditWarehousing">
@@ -53,13 +52,10 @@ update S_GATHER set checker=#{user.login_id},check_time=now(),
 			<otherwise>
 				check_tag='S001-2'
 			</otherwise>
-		</choose> where id=#{id}
+		</choose> where id=#{iddd}
 </update>
 <select id="dispatchAll">
 select * from S_GATHER where check_tag='S001-1' and store_tag='K002-0'
 </select>
 
-<select id="dispatchS_GATHERXX" resultMap="">
-
-</select>
 </mapper>
