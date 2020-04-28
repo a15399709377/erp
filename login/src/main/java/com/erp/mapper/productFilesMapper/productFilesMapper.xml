@@ -243,4 +243,11 @@
    <select id="D_CONFIG_FILE_KINDByid" resultType="D_CONFIG_FILE_KIND">
    SELECT * FROM D_CONFIG_FILE_KIND WHERE id=#{id} ;
    </select>
+   
+   <select id="cpdacx" resultType="d_file">
+   select * from d_file
+   </select>
+   <select id="cpdacxzs" resultType="int">
+   select count(*) from d_file
+   </select>
 </mapper>

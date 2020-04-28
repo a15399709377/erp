@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.erp.pojo.D_CONFIG_FILE_KIND;
@@ -16,8 +18,9 @@ import com.erp.pojo.D_module;
 import com.erp.pojo.D_module_details;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
-import com.erp.pojo.gx;
 import com.erp.productFilesService.productFilesService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.erp.mapper.productFilesMapper.*;
 
 @Controller
@@ -147,5 +150,30 @@ public class productFilesController {
 		User user=(User) session.getAttribute("user");
 		int list=productFilesService.auditD_module(id,pid,audit,user);
 		return list;
+	}
+	
+//	@RequestMapping("/cpdacx")
+//	public String  cpdacx(Model model,@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum) {
+//		PageHelper.startPage(pageNum,1);
+//		List<d_file> list=productFilesService.cpdacx();
+//		int count=productFilesService.cpdacxzs();
+//		PageInfo<d_file> pageInfo = new PageInfo<d_file>(list);
+//		model.addAttribute("pageInfo",pageInfo);
+//		model.addAttribute("count", count);
+//		System.out.println("========================="+list);
+//		return "cpdacx";
+//	}
+	@RequestMapping("/cpdacx")
+	public String  cpdacx(Model model) {
+		List<d_file> list=productFilesService.cpdacx();
+		int count=productFilesService.cpdacxzs();
+		model.addAttribute("pageInfo",list);
+		model.addAttribute("count", count);
+		System.out.println("========================="+list);
+		return "cpdacx";
+	}
+	@RequestMapping("/cpdabg")
+	public String  cpdabg(Model model) {
+		return "cpdabg";
 	}
 }

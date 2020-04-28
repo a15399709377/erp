@@ -57,6 +57,12 @@ public interface productFilesMapper {
 	int test1();
 
 
+	List<d_file> cpdacx();
+
+
+	int cpdacxzs();
+
+
 
 	
 }

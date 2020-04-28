@@ -16,12 +16,13 @@ import com.erp.s_cellService.s_cellService;
 import com.erp.mapper.productFilesMapper.*;
 import com.erp.mapper.s_cellmapper.s_cellmapper;
 import com.erp.pojo.D_CONFIG_FILE_KIND;
+import com.erp.pojo.S_GATHER;
+import com.erp.pojo.S_GATHER_DETAILS;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 import com.erp.pojo.gx;
 import com.erp.pojo.s_cell;
-import com.erp.pojo.s_gather;
-import com.erp.pojo.s_gather_details;
+
 
 @Controller
 public class s_cellController {
@@ -77,36 +78,4 @@ public class s_cellController {
 			return 0;
 		}
 	}
-	//入库申请单
-	@RequestMapping("/rksqd")
-	@ResponseBody
-	public int rksqd(s_gather sg ) {
-		//sg=new s_gather(0, "SP001SP001","xxd","R001-3" , "", 400, 85050, gathered_amount_sum, remark, register, register_time, checker, check_time, check_tag, attemper, attemper_time, store_tag);
-		int num=service.rksqd(sg);
-		return num;
-	}
-	//入库申请单详细
-	@RequestMapping("/rksqdxx")
-	@ResponseBody
-	public int  rksqdxx(s_gather_details sgd) {
-		int num=service.rksqdxx(sgd);
-		return num;
-	}
-	//入库申请登记审核查询
-	@RequestMapping("/rksqdAll")
-	@ResponseBody
-	public  String s_gatherAll(ModelAndView model) {
-		List<s_gather> list=service.s_gatherAll();
-		model.addObject("list", list);
-		return "rksqdAll";
-	}	
-	//入库申请登记审核(审核)
-	@RequestMapping("/rksqdjsh")
-	@ResponseBody
-	public  int upds_gather(String gather_id) {
-		int num=service.upds_gather(gather_id);
-		return num;
-	}		
-		
-	
 }

@@ -29,6 +29,11 @@ public interface productFilesService {
 
 	int auditD_module(int id, int pid, int audit, User user);
 
+	//产品档案查询（全部）
+	List<d_file> cpdacx();
+
+	int cpdacxzs();
+
 	
 	
 }

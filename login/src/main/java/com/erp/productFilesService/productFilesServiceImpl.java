@@ -113,5 +113,24 @@ public class productFilesServiceImpl implements productFilesService {
 
 
 
+	@Override
+	public List<d_file> cpdacx() {
+		return productFilesMapper.cpdacx();
+	}
+
+
+
+	@Override
+	public int cpdacxzs() {
+		// TODO Auto-generated method stub
+		return productFilesMapper.cpdacxzs();
+	}
+
+
+
+	
+
+
+
 
 }

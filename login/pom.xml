@@ -53,11 +53,17 @@
 			<artifactId>shiro-spring</artifactId>
 			<version>1.4.2</version>
 		</dependency>
-			 <!-- DevTools的坐标 -->
+	<!-- 热部署   devtools工具 -->
      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-devtools</artifactId>
         <optional>true</optional>
      </dependency>
+     <!-- 分页插件 -->
+	<dependency>
+	    <groupId>com.github.pagehelper</groupId>
+	    <artifactId>pagehelper-spring-boot-starter</artifactId>
+	    <version>1.2.5</version>
+	</dependency>
   </dependencies>
 </project>
