@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>用户中心--layui后台管理模板 2.0</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" media="all" />
+</head>
+<body class="childrenBody">
+<button type="submit" class="btn btn-primary" id="sh">审核</button>
+	<div class="layui-row">
+		<div class="magb15 layui-col-md4 layui-col-xs12">
+			<label class="layui-form-label">产品名称</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input userName" id="product_name" lay-verify="required" th:placeholder="${pr.product_name}" disabled="disabled">
+			</div>
+		</div>
+		<input type="hidden" id="id" th:value="${pr.id}"/>
+		<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+		<div class="magb15 layui-col-md4 layui-col-xs12">
+			<label class="layui-form-label">制造商</label>
+			<div class="layui-input-block">
+				<span></span>
+			</div>
+		</div>
+
+	</div>	<br />
+	
+	<div class="layui-row">
+		<div class="magb15 layui-col-md7 layui-col-xs12">
+			<label class="layui-form-label" style="font-size: 18px;">设计人</label>
+			<div class="layui-input-block">
+				<span th:text="${pr.designer}"></span>
+			</div>
+		</div>
+		
+		<div class="magb15 layui-col-md5 layui-col-xs12"></div>
+	</div>	<br /><br />
+		<table class="table table-hover" >
+			 <thead>
+			<tr>
+				<td>工序序号</td>
+				<td>工序名称</td>
+				<td>工序编号</td>
+				<td>描述</td>
+				<td>工时数</td>
+				<td>工时单位</td>
+				<td>单位工时成本</td>
+				<td>工时成本小计</td>
+				<td>设计</td>
+			</tr>
+			</thead>
+			<tbody>
+				<tr th:each="pr:${p}">
+					<td th:text="${pr.details_number}"></td>
+					<td th:text="${pr.procedure_name}"></td>
+					<td th:text="${pr.procedure_id}"></td>
+					<td th:text="${pr.procedure_describe}"></td>
+					<td th:text="${pr.labour_hour_amount}"></td>
+					<td th:text="${pr.amount_unit}"></td>
+					<td th:text="${pr.cost_price }"></td>
+					<td th:text="${pr.subtotal}"></td>
+					<td><span id="sj">设计</span></td>
+				</tr>
+            </tbody>
+		</table>		<br /><br />
+	
+	<div class="layui-row">
+		<div class="magb15 layui-col-md4 layui-col-xs12">
+			<label class="layui-form-label">登记人</label>
+			<div class="layui-input-block">
+				<span th:text="${pr.register}"></span>
+			</div>
+		</div>
+		</div>
+		
+		<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+		<div class="magb15 layui-col-md1 layui-col-xs12">
+			<span>登记时间：</span>			
+		</div>
+		
+		<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
+		    <span th:text="${pr.register_time}"></span>
+		</div>
+	</div>
+	
+	<div class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
+		<label class="layui-form-label" style="font-size: 17px;">设计要求</label>
+		<div class="layui-input-block">
+			<textarea placeholder="请输入信息" th:text="${pr.procedure_describe}" readonly="true" class="layui-textarea userDesc" id="procedure_describe"></textarea>
+		</div>
+	</div>	<br />
+	
+
+
+
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/js/ADDF.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#sj").click(function(){
+			
+		})
+	})
+</script>
+</body>
+</html>

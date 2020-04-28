@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" media="all" />
+</head>
+<body>
+<span style="color: blue">符合产品条件的数量：</span><span th:text="${num}"></span>
+<table class="table table-hover">
+  <tr>
+			<td>产品编号</td>
+			<td>产品名称</td>
+			<td>档次级别</td>
+			<td>I级分类</td>
+			<td>II级分类</td>
+			<td>III分类</td>
+			<td>产品经理</td>
+			<td>制定设计单</td>
+		</tr>
+		<tr th:each="p:${procedureList}">
+			<td th:text="${p.id}"></td>
+			<td th:text="${p.product_name}"></td>
+			<td><span th:if="${p.product_class}=='D001-1'">高档</span><span th:if="${p.product_class}=='D001-2'">中档</span><span th:if="${p.product_class}=='D001-3'">低档</span></td>
+			<td th:text="${p.first_kind_name}"></td>
+			<td th:text="${p.second_kind_name}"></td>
+			<td th:text="${p.third_kind_name}"></td>
+			<td th:text="${p.responsible_person}"></td>
+			<td><a th:href="@{/zdsjd(id=${p.product_id})}">制定设计单</a></td>
+		</tr>
+</table>
+</body>
+</html>
