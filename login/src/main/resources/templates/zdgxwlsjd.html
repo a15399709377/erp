@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" media="all" />
+</head>
+<body>
+<span style="color: blue">符合产品条件的数量：</span><span th:text="${num}"></span>
+<table class="table table-hover">
+  <tr>
+			<td>设计单编号</td>
+			<td>产品编号</td>
+			<td>产品名称</td>
+			<td>设计人</td>
+			<td>登记时间</td>
+			<td>工时总成本</td>
+			<td>是否审核</td>
+			<td>制定设计单</td>
+		</tr>
+		<tr th:each="p:${proList}">
+			<td th:text="${p.design_id}"></td>
+			<td th:text="${p.product_id}"></td>
+			<td th:text="${p.product_name}"></td>
+			<td th:text="${p.designer}"></td>
+			<td th:text="${p.register_time}"></td>
+			<td th:text="${p.cost_price_sum}"></td>
+			<td><span th:if="${p.check_tag}=='S001-0'">等待审核</span><span th:if="${p.check_tag}=='S001-1'">审核完成</span><span th:if="${p.check_tag}=='S001-2'">审核不通过</span></td>
+			<td><a th:href="@{/zxwlsjd(id=${p.id})}">制定设计单</a></td>
+		</tr>
+</table>
+</body>
+</html>

@@ -11,69 +11,100 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
 	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
-	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" media="all" />
 </head>
 <body class="childrenBody">
-<form class="layui-form">
-	
 	<div class="layui-row">
 		<div class="magb15 layui-col-md4 layui-col-xs12">
 			<label class="layui-form-label">产品名称</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input userName" lay-verify="required" placeholder="不可选中" disabled="disabled">
+				<input type="text" class="layui-input userName" id="product_name" lay-verify="required" th:placeholder="${pr.product_name}" disabled="disabled">
 			</div>
 		</div>
 		
 		<div class="magb15 layui-col-md2 layui-col-xs12"></div>
-		
 		<div class="magb15 layui-col-md4 layui-col-xs12">
 			<label class="layui-form-label">制造商</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input userName" lay-verify="required" placeholder="不可选中" disabled="disabled">
 			</div>
 		</div>
+
 	</div>	<br />
 	
 	<div class="layui-row">
 		<div class="magb15 layui-col-md7 layui-col-xs12">
 			<label class="layui-form-label" style="font-size: 18px;">设计人</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input userName" lay-verify="required" placeholder="请输入数值">
+				<input type="text" class="layui-input userName" lay-verify="required" id="designer" placeholder="请输入数值">
 			</div>
 		</div>
 		
 		<div class="magb15 layui-col-md5 layui-col-xs12"></div>
 	</div>	<br /><br />
-	
-		<table class="table">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" id="close" data-toggle="modal" data-target="#myModal">
+  添加工序
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover" id="GxList">
+        	<tr>
+        		<td>工序编号</td>
+        		<td>工序名称</td>
+        		<td>工序描述</td>
+        		<td>添加工序</td>
+        	</tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+		<table class="table table-hover" >
+			 <thead>
 			<tr>
-				<td>产品编号</td>
-				<td>产品名称</td>
-				<td>用途类型</td>
-				<td>I级分类</td>
-				<td>II级分类</td>
-				<td>III级分类</td>
-				<td>产品经理</td>
-				<td>审核</td>
+				<td>点选</td>
+				<td>工序名称</td>
+				<td>工序编号</td>
+				<td>描述</td>
+				<td>工时数</td>
+				<td>工时单位</td>
+				<td>单位工时成本</td>
+				<td>工时成本小计</td>
 			</tr>
+			</thead>
+			<tbody id="gxlist">
+			
+            </tbody>
 		</table>		<br /><br />
 	
 	<div class="layui-row">
-		<div class="magb15 layui-col-md7 layui-col-xs12">
-			<label class="layui-form-label" style="font-size: 18px;">登记人</label>
+		<div class="magb15 layui-col-md4 layui-col-xs12">
+			<label class="layui-form-label">登记人</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input userName" lay-verify="required" placeholder="请输入数值">
+				<input type="text" class="layui-input userName" th:value="${username}" id="register" lay-verify="required" placeholder="请输入数值">
 			</div>
+		</div>
 		</div>
 		
 		<div class="magb15 layui-col-md2 layui-col-xs12"></div>
-		
 		<div class="magb15 layui-col-md1 layui-col-xs12">
 			<span>登记时间：</span>			
 		</div>
 		
 		<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
-		    <script>
+		    <script >
 		        setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();", 1000);
 		    </script>
 		</div>
@@ -82,7 +113,7 @@
 	<div class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
 		<label class="layui-form-label" style="font-size: 17px;">设计要求</label>
 		<div class="layui-input-block">
-			<textarea placeholder="请输入信息" class="layui-textarea userDesc"></textarea>
+			<textarea placeholder="请输入信息" class="layui-textarea userDesc" id="procedure_describe"></textarea>
 		</div>
 	</div>	<br />
 	
@@ -90,18 +121,92 @@
 		<div class="magb15 layui-col-md1 layui-col-xs12"></div>
 		
 		<div class="magb15 layui-col-md6 layui-col-xs12">
-			<button class="layui-btn layui-btn-sm" lay-submit="" lay-filter="addUser">立即添加</button>
+			<button class="layui-btn layui-btn-sm" lay-submit="" id="add" lay-filter="addUser">立即添加</button>
 		</div>
 	</div>
-	
 
 
-	<!--操作-->
-	<script type="text/html" id="userListBar">
-		<input type="radio"/>
-	</script>
-</form>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-<script type="text/javascript" th:src="@{/page/ADDF.js}"></script>
+<script type="text/javascript" th:src="@{/js/ADDF.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+var procedure_details=new Array();
+$(function(){
+	$("#close").click(function(){
+		var gx=null;
+		$.post("xsgx",back,"Json")
+		function back(a){
+			$("#GxList tr:gt(0)").remove();
+			$(a).each(function(){
+				var $tr="<tr class='tr1'><td>"+this.id+"</td><td>"+this.procedure_name+"</td><td>"+this.procedure_mx+"</td><td><input class='tj' value='添加'  type='button'/></td><tr/>";
+				$("#GxList").append($tr);
+			})
+		}
+	})
+	$("#GxList").on("click",".tj",function(){	
+		var id=$(this).parents("tr").children(":eq(0)").text();
+		var name=$(this).parents("tr").children(":eq(1)").text();
+		var mx=$(this).parents("tr").children(":eq(2)").text();
+		var $tr="<tr><td><input type='checkbox' class='xz'/></td><td>"+id+"</td><td>"+name+"</td><td>"+mx+"</td><td contentEditable='true'></td><td contentEditable='true'></td><td contentEditable='true'><td  readonly='true'></td></td></tr>";
+		$("#gxlist").append($tr);
+	})
+	$("#gxlist").on("click",".xz",function(){
+		$(this).each(function(){
+			var details_number=$(this).parent().next().html();
+			var procedure_name=$(this).parent().next().next().html();
+			var procedure_describe=$(this).parent().next().next().next().html();
+			var labour_hour_amount=$(this).parent().next().next().next().next().html();
+			var amount_unit=$(this).parent().next().next().next().next().next().html();
+			var cost_price=$(this).parent().next().next().next().next().next().next().html();
+			var M_DESIGN_PROCEDURE_DETAILS={"details_number":details_number,"procedure_name":procedure_name,"procedure_describe":procedure_describe,"labour_hour_amount":labour_hour_amount,"amount_unit":amount_unit,"cost_price":cost_price,"subtotal":labour_hour_amount*cost_price};
+			procedure_details.push(M_DESIGN_PROCEDURE_DETAILS)
+
+		})
+	})
+	$("#add").click(function(){
+		//获取设计人信息
+		var designer=$("#designer").val();
+		//获取登记人信息
+		var register=$("#register").val();
+		//获取设计信息
+		var procedure_describe=$("#procedure_describe").val();
+		//获取当前时间
+		//判断是否在前面加0
+		function getNow(s) {
+		return s < 10 ? '0' + s: s;
+		}
+		var myDate = new Date();            
+ 
+		var year=myDate.getFullYear();        //获取当前年
+		var month=myDate.getMonth()+1;   //获取当前月
+		var date=myDate.getDate();            //获取当前日
+		var h=myDate.getHours();              //获取当前小时数(0-23)
+		var m=myDate.getMinutes();          //获取当前分钟数(0-59)
+		var s=myDate.getSeconds();
+		var register_time=year+'-'+getNow(month)+"-"+getNow(date)+" "+getNow(h)+':'+getNow(m)+":"+getNow(s);
+		
+		var pro={"designer":designer,"register":register,"procedure_describe":procedure_describe,"register_time":register_time,"procedure_details":procedure_details};
+		$.ajax({
+			type:"POST",
+			url:"tjcpgxb",
+			data:JSON.stringify(pro),
+			contentType:"application/json;charsetset=UTF-8",
+			dataType:"json",
+			cache:true,
+			async:false,
+			error:function(request){
+				showTipAlert("Connection error");
+			},
+			success:function(data){
+				if(data>0){
+					location.href=="qifei.html";
+				}
+			}
+		})
+
+	})
+})
+</script>
 </body>
 </html>

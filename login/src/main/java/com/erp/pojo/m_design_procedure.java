@@ -9,6 +9,12 @@ public class m_design_procedure {
 	private D_CONFIG_FILE_KIND first_kind; //产品I级分类
 	private D_CONFIG_FILE_KIND second_kind; //产品II级分类
 	private D_CONFIG_FILE_KIND third_kind; //产品III级分类
+	   private int first_kind_id;
+	   private String first_kind_name;
+	   private int second_kind_id;
+	   private String second_kind_name;
+	   private int third_kind_id;
+	   private String third_kind_name;
 	private String product_id; //产品编号
 	private String product_name; //产品名称
 	private String procedure_describe; //设计要求
@@ -56,6 +62,101 @@ public class m_design_procedure {
 		this.design_module_change_tag = design_module_change_tag;
 	}
 	
+	public m_design_procedure(int id, String design_id, D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind,
+			D_CONFIG_FILE_KIND third_kind, int first_kind_id, String first_kind_name, int second_kind_id,
+			String second_kind_name, int third_kind_id, String third_kind_name, String product_id, String product_name,
+			String procedure_describe, double cost_price_sum, double module_cost_price_sum, String designer,
+			String register, String register_time, String checker, String check_time, String check_suggestion,
+			String check_tag, String changer, String change_time, String change_tag, String design_module_tag,
+			String design_module_change_tag, List<m_design_procedure_details> procedure_details) {
+		super();
+		this.id = id;
+		this.design_id = design_id;
+		this.first_kind = first_kind;
+		this.second_kind = second_kind;
+		this.third_kind = third_kind;
+		this.first_kind_id = first_kind_id;
+		this.first_kind_name = first_kind_name;
+		this.second_kind_id = second_kind_id;
+		this.second_kind_name = second_kind_name;
+		this.third_kind_id = third_kind_id;
+		this.third_kind_name = third_kind_name;
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.procedure_describe = procedure_describe;
+		this.cost_price_sum = cost_price_sum;
+		this.module_cost_price_sum = module_cost_price_sum;
+		this.designer = designer;
+		this.register = register;
+		this.register_time = register_time;
+		this.checker = checker;
+		this.check_time = check_time;
+		this.check_suggestion = check_suggestion;
+		this.check_tag = check_tag;
+		this.changer = changer;
+		this.change_time = change_time;
+		this.change_tag = change_tag;
+		this.design_module_tag = design_module_tag;
+		this.design_module_change_tag = design_module_change_tag;
+		this.procedure_details = procedure_details;
+	}
+
+	public String getDesign_id() {
+		return design_id;
+	}
+
+	public void setDesign_id(String design_id) {
+		this.design_id = design_id;
+	}
+
+	public int getFirst_kind_id() {
+		return first_kind_id;
+	}
+
+	public void setFirst_kind_id(int first_kind_id) {
+		this.first_kind_id = first_kind_id;
+	}
+
+	public String getFirst_kind_name() {
+		return first_kind_name;
+	}
+
+	public void setFirst_kind_name(String first_kind_name) {
+		this.first_kind_name = first_kind_name;
+	}
+
+	public int getSecond_kind_id() {
+		return second_kind_id;
+	}
+
+	public void setSecond_kind_id(int second_kind_id) {
+		this.second_kind_id = second_kind_id;
+	}
+
+	public String getSecond_kind_name() {
+		return second_kind_name;
+	}
+
+	public void setSecond_kind_name(String second_kind_name) {
+		this.second_kind_name = second_kind_name;
+	}
+
+	public int getThird_kind_id() {
+		return third_kind_id;
+	}
+
+	public void setThird_kind_id(int third_kind_id) {
+		this.third_kind_id = third_kind_id;
+	}
+
+	public String getThird_kind_name() {
+		return third_kind_name;
+	}
+
+	public void setThird_kind_name(String third_kind_name) {
+		this.third_kind_name = third_kind_name;
+	}
+
 	public m_design_procedure(int id, String design, D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind,
 			D_CONFIG_FILE_KIND third_kind, String product_id, String product_name, String procedure_describe,
 			double cost_price_sum, double module_cost_price_sum, String designer, String register, String register_time,
@@ -263,24 +364,17 @@ public class m_design_procedure {
 	}
 	@Override
 	public String toString() {
-		return "m_design_procedure [id=" + id + ", design=" + design_id + ", first_kind=" + first_kind + ", second_kind="
-				+ second_kind + ", third_kind=" + third_kind + ", product_id=" + product_id + ", product_name="
-				+ product_name + ", procedure_describe=" + procedure_describe + ", cost_price_sum=" + cost_price_sum
-				+ ", module_cost_price_sum=" + module_cost_price_sum + ", designer=" + designer + ", register="
-				+ register + ", register_time=" + register_time + ", checker=" + checker + ", check_time=" + check_time
-				+ ", check_suggestion=" + check_suggestion + ", check_tag=" + check_tag + ", changer=" + changer
-				+ ", change_time=" + change_time + ", design_module_tag=" + design_module_tag
-				+ ", design_module_change_tag=" + design_module_change_tag + ", getId()=" + getId() + ", getDesign()="
-				+ getDesign() + ", getFirst_kind()=" + getFirst_kind() + ", getSecond_kind()=" + getSecond_kind()
-				+ ", getThird_kind()=" + getThird_kind() + ", getProduct_id()=" + getProduct_id()
-				+ ", getProduct_name()=" + getProduct_name() + ", getProcedure_describe()=" + getProcedure_describe()
-				+ ", getCost_price_sum()=" + getCost_price_sum() + ", getModule_cost_price_sum()="
-				+ getModule_cost_price_sum() + ", getDesigner()=" + getDesigner() + ", getRegister()=" + getRegister()
-				+ ", getRegister_time()=" + getRegister_time() + ", getChecker()=" + getChecker() + ", getCheck_time()="
-				+ getCheck_time() + ", getCheck_suggestion()=" + getCheck_suggestion() + ", getCheck_tag()="
-				+ getCheck_tag() + ", getChanger()=" + getChanger() + ", getChange_time()=" + getChange_time()
-				+ ", getDesign_module_tag()=" + getDesign_module_tag() + ", getDesign_module_change_tag()="
-				+ getDesign_module_change_tag() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "m_design_procedure [id=" + id + ", design_id=" + design_id + ", first_kind=" + first_kind
+				+ ", second_kind=" + second_kind + ", third_kind=" + third_kind + ", first_kind_id=" + first_kind_id
+				+ ", first_kind_name=" + first_kind_name + ", second_kind_id=" + second_kind_id + ", second_kind_name="
+				+ second_kind_name + ", third_kind_id=" + third_kind_id + ", third_kind_name=" + third_kind_name
+				+ ", product_id=" + product_id + ", product_name=" + product_name + ", procedure_describe="
+				+ procedure_describe + ", cost_price_sum=" + cost_price_sum + ", module_cost_price_sum="
+				+ module_cost_price_sum + ", designer=" + designer + ", register=" + register + ", register_time="
+				+ register_time + ", checker=" + checker + ", check_time=" + check_time + ", check_suggestion="
+				+ check_suggestion + ", check_tag=" + check_tag + ", changer=" + changer + ", change_time="
+				+ change_time + ", change_tag=" + change_tag + ", design_module_tag=" + design_module_tag
+				+ ", design_module_change_tag=" + design_module_change_tag + ", procedure_details=" + procedure_details
+				+ "]";
 	}
 }

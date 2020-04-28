@@ -5,7 +5,11 @@
 <mapper
 	namespace="com.erp.mapper.procedure.procedureMapper">
 	<select id="getAllFile" resultType="d_file">
-		SELECT * FROM D_FILE WHERE check_tag='S001-2' AND delete_tag='C001-0' AND design_module_tag='W001-1'
+		SELECT * FROM D_FILE WHERE check_tag='S001-1' AND delete_tag='C001-0' AND design_module_tag='W001-1' AND type='Y001-1' AND design_procedure_tag='G001-0'
+	</select>
+	
+	<select id="getAllFileNum" resultType="int">
+		SELECT count(1) FROM D_FILE WHERE check_tag='S001-1' AND delete_tag='C001-0' AND design_module_tag='W001-1' AND type='Y001-1' AND design_procedure_tag='G001-0'
 	</select>
 	
 	<select id="getD_FileByProduct_id" resultType="d_file">
@@ -150,14 +154,14 @@
 				#{m.register_time}
 			</otherwise>
 		</choose>,
-		#{m.design_module_tag},#{m.design_module_change_tag}
+		'D002-1','D003-0'
 		)
 	</insert>
 	
 	<insert id="addProcedure_design">
 		insert into M_DESIGN_PROCEDURE values(null,#{m.design_id}
-		,#{m.first_kind.kind_id},#{m.first_kind.kind_name},
-		#{m.second_kind.kind_id},#{m.second_kind.kind_name},#{m.third_kind.kind_id},#{m.third_kind.kind_name},
+		,#{m.first_kind_id},#{m.first_kind_name},
+		#{m.second_kind_id},#{m.second_kind_name},#{m.third_kind_id},#{m.third_kind_name},
 		#{m.product_id},
 		<choose>
 			<when test="m.product_name==null">
@@ -239,7 +243,7 @@
 				#{m.check_suggestion}
 			</otherwise>
 		</choose>,
-		#{m.check_tag},
+		'S001-0',
 		<choose>
 			<when test="m.changer==null">
 				null
@@ -256,14 +260,50 @@
 				#{m.change_time}
 			</otherwise>
 		</choose>,
-		#{m.change_tag},#{m.design_module_tag},#{m.design_module_change_tag}
+		'B002-0','G002-0','G003-0'
 		)
 	</insert>
 
 	<select id="getProcedureIdByproduct_id" resultType="int">
-		SELECT * FROM M_DESIGN_PROCEDURE order by id DESC limit 1
+		SELECT id FROM M_DESIGN_PROCEDURE order by id DESC limit 1
 	</select>
+	
+	<select id="getdesign_id" resultType="int">
+		SELECT design_id FROM M_DESIGN_PROCEDURE order by id DESC limit 1
+	</select>
+	
 	<update id="ToExamineDesign_Procedure">
-		update M_DESIGN_PROCEDURE set check_tag='S001-2' where id=#{id}
+		update M_DESIGN_PROCEDURE set check_tag='S001-1' where id=#{id}
 	</update>
+	
+	<update id="updateFileBydesign_procedure_tag">
+		UPDATE D_FILE SET design_procedure_tag='G001-1' WHERE id=#{id}
+	</update>
+	
+	<select id="getAllM_Design_procedure" resultType="m_design_procedure">
+		SELECT * FROM m_design_procedure WHERE check_tag='S001-0' or check_tag='S001-2'
+	</select>
+	
+	<select id="getAllD_Module" resultType="D_module">
+		SELECT * FROM D_module 
+	</select>
+	
+	<select id="getM_Design_Procedure" resultType="m_design_procedure">
+		SELECT * FROM m_design_procedure where id=#{id}
+	</select>
+	
+	<select id="getDesign_Procedure_details" resultType="m_design_procedure_details">
+		SELECT * FROM m_design_procedure_details WHERE parent_id=#{id}
+	</select>
+	
+	<select id="getM_Produce" resultType="m_design_procedure">
+		SELECT * FROM m_design_procedure where design_id=#{id}
+	</select>
+	
+	<select id="getAllesion" resultType="m_design_procedure">
+		select * from m_design_procedure
+	</select>
+	<select id="getAllm_design_procedureBycheck_tag" resultType="m_design_procedure">
+		select * from m_design_procedure where check_tag='S001-1'
+	</select>
 </mapper>
