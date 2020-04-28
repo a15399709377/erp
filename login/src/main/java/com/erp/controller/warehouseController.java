@@ -78,4 +78,27 @@ public class warehouseController {
 			
 		return warehouseService.dispatchS_GATHERXX(id);
 	}
+	
+	//制定入库调度单
+	@RequestMapping("/dispatchS_GATHER")
+	@ResponseBody
+	public int dispatchS_GATHER(int num){
+				
+		return warehouseService.dispatchS_GATHER(num);
+	}
+		
+	//入库登记	
+	
+	@RequestMapping("/Warehousing registration")
+	@ResponseBody
+	public int Warehousingregistration(List<S_GATHER_DETAILS> ga){
+		List<S_GATHER_DETAILS> dede=new ArrayList<S_GATHER_DETAILS>();
+		S_GATHER_DETAILS deta=new S_GATHER_DETAILS(1,50);
+		S_GATHER_DETAILS deta1=new S_GATHER_DETAILS(2,100);
+		S_GATHER_DETAILS deta2=new S_GATHER_DETAILS(3,50);
+		dede.add(deta);
+		dede.add(deta1);
+		dede.add(deta2);
+		return warehouseService.Warehousingregistration(dede);
+	}
 }

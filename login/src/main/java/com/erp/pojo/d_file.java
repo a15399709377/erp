@@ -132,14 +132,15 @@ public class d_file {
 	@Override
 	public String toString() {
 		return "d_file [id=" + id + ", product_id=" + product_id + ", product_name=" + product_name + ", factory_name="
-				+ factory_name + ", first_kind_id=" + first_kind_id + ", second_kind_id=" + second_kind_id
-				+ ", third_kind_id=" + third_kind_id + ", first_kind=" + first_kind + ", second_kind=" + second_kind
-				+ ", third_kind=" + third_kind + ", product_nick=" + product_nick + ", type=" + type
-				+ ", product_class=" + product_class + ", personal_unit=" + personal_unit + ", personal_value="
-				+ personal_value + ", provider_group=" + provider_group + ", warranty=" + warranty + ", twin_name="
-				+ twin_name + ", twin_id=" + twin_id + ", lifecycle=" + lifecycle + ", list_price=" + list_price
-				+ ", cost_price=" + cost_price + ", real_cost_price=" + real_cost_price + ", amount_unit=" + amount_unit
-				+ ", product_describe=" + product_describe + ", responsible_person=" + responsible_person
+				+ factory_name + ", first_kind_id=" + first_kind_id + ", first_kind_name=" + first_kind_name
+				+ ", second_kind_id=" + second_kind_id + ", second_kind_name=" + second_kind_name + ", third_kind_id="
+				+ third_kind_id + ", third_kind_name=" + third_kind_name + ", first_kind=" + first_kind
+				+ ", second_kind=" + second_kind + ", third_kind=" + third_kind + ", product_nick=" + product_nick
+				+ ", type=" + type + ", product_class=" + product_class + ", personal_unit=" + personal_unit
+				+ ", personal_value=" + personal_value + ", provider_group=" + provider_group + ", warranty=" + warranty
+				+ ", twin_name=" + twin_name + ", twin_id=" + twin_id + ", lifecycle=" + lifecycle + ", list_price="
+				+ list_price + ", cost_price=" + cost_price + ", real_cost_price=" + real_cost_price + ", amount_unit="
+				+ amount_unit + ", product_describe=" + product_describe + ", responsible_person=" + responsible_person
 				+ ", register=" + register + ", register_time=" + register_time + ", checker=" + checker
 				+ ", check_time=" + check_time + ", check_tag=" + check_tag + ", changer=" + changer + ", change_time="
 				+ change_time + ", change_tag=" + change_tag + ", price_change_tag=" + price_change_tag
@@ -576,6 +577,83 @@ public class d_file {
 	}
 	public void setThird_kind_id(int third_kind_id) {
 		this.third_kind_id = third_kind_id;
+	}
+	public d_file(int id, String product_id, String product_name, String factory_name, int first_kind_id,
+			String first_kind_name, int second_kind_id, String second_kind_name, int third_kind_id,
+			String third_kind_name, D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind,
+			D_CONFIG_FILE_KIND third_kind, String product_nick, String type, String product_class, String personal_unit,
+			String personal_value, String provider_group, String warranty, String twin_name, String twin_id,
+			String lifecycle, double list_price, double cost_price, double real_cost_price, String amount_unit,
+			String product_describe, String responsible_person, User register, String register_time, User checker,
+			String check_time, String check_tag, User changer, String change_time, String change_tag,
+			String price_change_tag, int file_change_amount, String delete_tag, String design_module_tag,
+			String design_procedure_tag, String design_cell_tag, List<m_procedure> m_proceDure, int amount,
+			m_design_procedure m_Design_Procedure) {
+		super();
+		this.id = id;
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.factory_name = factory_name;
+		this.first_kind_id = first_kind_id;
+		this.first_kind_name = first_kind_name;
+		this.second_kind_id = second_kind_id;
+		this.second_kind_name = second_kind_name;
+		this.third_kind_id = third_kind_id;
+		this.third_kind_name = third_kind_name;
+		this.first_kind = first_kind;
+		this.second_kind = second_kind;
+		this.third_kind = third_kind;
+		this.product_nick = product_nick;
+		this.type = type;
+		this.product_class = product_class;
+		this.personal_unit = personal_unit;
+		this.personal_value = personal_value;
+		this.provider_group = provider_group;
+		this.warranty = warranty;
+		this.twin_name = twin_name;
+		this.twin_id = twin_id;
+		this.lifecycle = lifecycle;
+		this.list_price = list_price;
+		this.cost_price = cost_price;
+		this.real_cost_price = real_cost_price;
+		this.amount_unit = amount_unit;
+		this.product_describe = product_describe;
+		this.responsible_person = responsible_person;
+		this.register = register;
+		this.register_time = register_time;
+		this.checker = checker;
+		this.check_time = check_time;
+		this.check_tag = check_tag;
+		this.changer = changer;
+		this.change_time = change_time;
+		this.change_tag = change_tag;
+		this.price_change_tag = price_change_tag;
+		this.file_change_amount = file_change_amount;
+		this.delete_tag = delete_tag;
+		this.design_module_tag = design_module_tag;
+		this.design_procedure_tag = design_procedure_tag;
+		this.design_cell_tag = design_cell_tag;
+		this.m_proceDure = m_proceDure;
+		this.amount = amount;
+		this.m_Design_Procedure = m_Design_Procedure;
+	}
+	public String getFirst_kind_name() {
+		return first_kind_name;
+	}
+	public void setFirst_kind_name(String first_kind_name) {
+		this.first_kind_name = first_kind_name;
+	}
+	public String getSecond_kind_name() {
+		return second_kind_name;
+	}
+	public void setSecond_kind_name(String second_kind_name) {
+		this.second_kind_name = second_kind_name;
+	}
+	public String getThird_kind_name() {
+		return third_kind_name;
+	}
+	public void setThird_kind_name(String third_kind_name) {
+		this.third_kind_name = third_kind_name;
 	}
 	
 }

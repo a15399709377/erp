@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>产品档案登记审核</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<table class="table">
+			<tr>
+				<td>产品编号</td>
+				<td>产品名称</td>
+				<td>用途类型</td>
+				<td>I级分类</td>
+				<td>II级分类</td>
+				<td>III级分类</td>
+				<td>产品经理</td>
+				<td>审核</td>
+			</tr>
+			<tr th:each="file:${list}">
+				<td style="display: none;" th:text="${file.id}"></td>
+				<td th:text="${file.product_id}"></td>
+				<td th:text="${file.product_name}"></td>
+				<td th:if="${file.type=='Y001-1'}">商品</td>
+				<td th:if="${file.type=='Y001-2'}">物料</td>
+				<td th:text=${file.first_kind_name}></td>
+				<td th:text=${file.second_kind_name}></td>
+				<td th:text=${file.third_kind_name}></td>
+				<td th:if="${file.responsible_person=='0'}"></td>
+				<td th:if="${file.responsible_person==null}"></td>
+				<td><button type="button" class="btn btn-info sk"
+						data-toggle="modal" data-target="#myModal">审核</button></td>
+			</tr>
+		</table>
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div style="width: 80%" class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					</div>
+					<div class="modal-body">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="tg">复核通过</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/layui/userAdd.js}"></script>
+<script type="text/javascript">
+$(function(){
+	$(".sk").click(function(){
+		var id=$(this).parent().parent().children(0).html();
+		alert(id);
+		$.post("auditProductFilesXX",{"id":id},back,"Json")
+		function back(a){
+
+			 $("[name='type'] option").each( function () {
+			    if($(this).val()==a["type"]){
+			    $(this).attr("selected","selected");        
+			}                                 
+		
+		})
+	}})
+})
+</script>
+</html>

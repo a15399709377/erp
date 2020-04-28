@@ -183,6 +183,11 @@ public class S_GATHER {
 	public void setS_GATHER_DETAILS(List<S_GATHER_DETAILS> s_GATHER_DETAILS) {
 		S_GATHER_DETAILS = s_GATHER_DETAILS;
 	}
+	public S_GATHER(int id, List<com.erp.pojo.S_GATHER_DETAILS> s_GATHER_DETAILS) {
+		super();
+		this.id = id;
+		S_GATHER_DETAILS = s_GATHER_DETAILS;
+	}
 	
 	
 	
