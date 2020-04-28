@@ -94,13 +94,11 @@ public class productFilesController {
 		return list;
 	}
 	
-	
-	
-	@RequestMapping("/designProductFiles")
+	@RequestMapping("/designProductMaterial")
 	@ResponseBody
-	public List<d_file> designProductFiles() {
-		List<d_file> list=productFilesService.designProductFiles();
-		return list;
+	public List<d_file> designProductMaterial(){
+		
+		return productFilesService.designProductMaterial();		
 	}
 
 
@@ -111,44 +109,61 @@ public class productFilesController {
 		return list;
 	}
 	
-
-	@RequestMapping("/designProductMaterial")
+	List<D_module_details> de;
+	@RequestMapping("/array")
 	@ResponseBody
-	public List<d_file> designProductMaterial() {
-		List<d_file> list=productFilesService.designProductMaterial();
-		return list;
+	public int array(@RequestBody List<D_module_details> details) {
+		System.out.println(details);
+		de=details;
+		return 0;
 	}
+
 	
 	@RequestMapping("/addD_module")
 	@ResponseBody
-	public int addD_module(D_module Dm,HttpServletRequest request) {
+	public int addD_module(int Dm,HttpServletRequest request) {
+		System.out.println("hhhhhh");
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");
 		int idd=productFilesMapper.test();
+		int dd=productFilesMapper.test2();
+		int ddd=dd+1;
 		int iddd=idd+1;
+		int shunxu=0;
 		String pro_id="SJ00"+iddd;
-		D_CONFIG_FILE_KIND first_kind=new D_CONFIG_FILE_KIND(1,0,"1","电子",1);
-		D_CONFIG_FILE_KIND second_kind=new D_CONFIG_FILE_KIND(2,1,"2","计算机",2);
-		D_CONFIG_FILE_KIND third_kind=new D_CONFIG_FILE_KIND(3,2,"3","服务器",3);
-		D_module_details Md=new D_module_details(1,idd+1,1,"4","因特尔 i9CPU", "Y001-2", "效率强劲", "颗", 1, 1, 800.00, 800.00);
-		D_module_details Md1=new D_module_details(2,idd+1,2,"5","海盗船内存条 2900HZ 36GB", "Y001-2", "容量充足", "片", 2, 2, 250.00,500.00);
-		D_module_details Md2=new D_module_details(3,idd+1,3,"6","七彩虹炫光灯机箱", "Y001-2", "效率强劲", "台", 1, 1, 100.00, 100.00);
-		List<D_module_details> details=new ArrayList<D_module_details>();
-		details.add(Md);
-		details.add(Md1);
-		details.add(Md2);
-		
-		D_module Dm1=new D_module(1, "SJ00"+iddd,"3", "神州 笔记本电脑", first_kind, second_kind, third_kind, user, "hhhhhh", 1400.00,user, null, null, null, null, null, null, null, details);
-		int list=productFilesService.addD_module(Dm1);		
+		d_file mo=productFilesMapper.designProductFilesXX(Dm);
+		D_CONFIG_FILE_KIND first_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(mo.getFirst_kind_id());
+		D_CONFIG_FILE_KIND second_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(mo.getSecond_kind_id());
+		D_CONFIG_FILE_KIND third_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(mo.getThird_kind_id());
+		List<D_module_details> dee=new ArrayList<D_module_details>();
+		double cost_price_sum=0;
+		for (D_module_details de : de) {
+			shunxu++;
+			cost_price_sum=cost_price_sum+de.getSubtotal();
+			d_file file=productFilesMapper.getdeee(de.getId());
+			D_module_details  deee=new D_module_details(ddd, iddd, shunxu, file.getProduct_id(), file.getProduct_name(), file.getType(),file.getProduct_describe(), file.getAmount_unit(), de.getAmount(), de.getAmount(), file.getCost_price(), de.getSubtotal());
+			dee.add(deee);
+		}
+		D_module dm=new D_module(1, pro_id, mo.getProduct_id(), mo.getProduct_name(), first_kind, second_kind, third_kind, user, null, cost_price_sum, user, null, null, null, null, null, null, null, dee);
+		int list=productFilesService.addD_module(dm);		
 		return list;
 	}
 	
+	@RequestMapping("D_moduleXX")
+	@ResponseBody
+	public D_module D_moduleXX(int id) {
+		D_module list=productFilesService.D_moduleXX(id);
+		System.out.println(list.getD_module_details().get(0));
+		return list;
+	}
+	
+	
 	@RequestMapping("/auditD_module")
 	@ResponseBody
-	public int auditD_module(int id,int pid,int audit,HttpServletRequest request) {
+	public int auditD_module(int id,int audit,HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");
-		int list=productFilesService.auditD_module(id,pid,audit,user);
+		int list=productFilesService.auditD_module(id,audit,user);
 		return list;
 	}
 	

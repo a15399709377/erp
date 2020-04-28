@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>指定物料设计单</title>
+</head>
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<body>
+	<div class="container">
+		<div class="row">
+			<span style="color: blue">符合产品条件的数量：</span><span th:text="${num}"></span>
+			<table class="table table-hover">
+				<tr>
+					<td>产品编号</td>
+					<td>产品名称</td>
+					<td>用途类型</td>
+					<td>I级分类</td>
+					<td>II级分类</td>
+					<td>III级分类</td>
+					<td>产品经理</td>
+					<td>指定设计单</td>
+				</tr>
+				<tr th:each="file:${list}">
+					<td style="display: none;" th:text="${file.id}"></td>
+					<td th:text="${file.product_id}"></td>
+					<td th:text="${file.product_name}"></td>
+					<td th:if="${file.type=='Y001-1'}">商品</td>
+					<td th:if="${file.type=='Y001-2'}">物料</td>
+					<td th:text=${file.first_kind_name}></td>
+					<td th:text=${file.second_kind_name}></td>
+					<td th:text=${file.third_kind_name}></td>
+					<td th:if="${file.responsible_person=='0'}"></td>
+					<td th:if="${file.responsible_person==null}"></td>
+					<td><button type="button" class="btn btn-info sk"
+							data-toggle="modal" data-target="#myModal">指定设计单</button></td>
+				</tr>
+			</table>
+		</div>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div style="width: 80%" class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">物料组成设计单</h4>
+					</div>
+					<div class="modal-body">
+						<form class="layui-form">
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">产品名称</label>
+									<div class="layui-input-block">
+									<input type="text" name="id" style="display: none;" />
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="product_name" placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">产品编号</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="product_id"  placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+							</div>
+							<br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md7 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">设计人</label>
+									<div class="layui-input-block">
+										<input type="text" th:value="${username}" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md5 layui-col-xs12"></div>
+							</div>
+							<br /> <br />
+
+							<table class="table">
+								<tr>
+									<td>点选</td>
+									<td>物料编号</td>
+									<td>物料名称</td>
+									<td>用途类型</td>
+									<td>描述</td>
+									<td>数量</td>
+									<td>单位</td>
+									<td>计划成本单价(￥)</td>
+									<td>小计(￥)</td>
+								</tr>
+								<tr th:each="file1:${list1}">
+								    <td><input type="checkbox" name="xz" /></td>
+									<td style="display: none;" th:text="${file1.id}"></td>								
+									<td th:text="${file1.product_id}"></td>
+									<td th:text="${file1.product_name}"></td>
+									<td th:if="${file1.type=='Y001-1'}">商品</td>
+									<td th:if="${file1.type=='Y001-2'}">物料</td>
+									<td th:if="${file1.product_describe==''}"></td>
+					                <td th:if="${file1.product_describe==null}"></td>
+					                <td th:text="${file1.product_describe}"></td>								
+									<td><input type="text" class="amount" name="amount" /></td>
+									<td th:if="${file1.	amount_unit=='0'}"></td>
+					                <td th:if="${file1.	amount_unit==null}"></td>
+									<td th:text="${file1.cost_price}"></td>
+									<td ></td>
+								</tr>
+							</table>
+							<br /> <br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md7 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">登记人</label>
+									<div class="layui-input-block">
+										<input type="text" th:value="${username}" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+								<div class="magb15 layui-col-md1 layui-col-xs12">
+									<span>登记时间：</span>
+								</div>
+
+								<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
+									<script>
+										setInterval(
+												"document.getElementById('datetime').innerHTML=new Date().toLocaleString();",
+												1000);
+									</script>
+								</div>
+							</div>
+
+							<div
+								class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
+								<label class="layui-form-label" style="font-size: 17px;">设计要求</label>
+								<div class="layui-input-block">
+									<textarea placeholder="请输入信息" class="layui-textarea userDesc"></textarea>
+								</div>
+							</div>
+							<br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md1 layui-col-xs12"></div>
+							</div>
+
+
+
+							<!--操作-->
+							<script type="text/html" id="userListBar">
+		<input type="radio"/>
+	</script>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="tg">复核通过</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/page/ADDF.js}"></script>
+<script type="text/javascript">
+$(function(){
+	$(".sk").click(function(){
+		var id=$(this).parent().parent().children(0).html();
+		$.post("designProductFilesXX",{"id":id},back,"Json")
+		function back(a){
+			$("[name='id']").val(a["id"]);
+			$("[name='product_name']").val(a["product_name"]);
+			$("[name='product_id']").val(a["product_id"]);
+		}
+	})
+	
+	$(".amount").change(function(){
+		var amount=$(this).val();
+		//alert($(this).parent().parent().children(0).children(0).attr("selected"));
+		var cost_price=$(this).parent().next().next().html();
+		$(this).parent().next().next().next().html(parseInt(amount)*parseInt(cost_price));
+	})
+	
+	$("#tg").click(function(){
+		var details = new Array();
+		$("input[name='xz']").each(function(){           
+			if($(this).is(":checked"))
+            {
+              var id=$(this).parent().next().html();
+              alert($(this).parent().next().next().next().next().next().next().children(0).val());
+              var amount=$(this).parent().next().next().next().next().next().next().children(0).val();
+              var subtotal=$(this).parent().next().next().next().next().next().next().next().next().html();
+              alert(subtotal);
+              var D_module_details={"id":id,"amount":amount,"subtotal":subtotal};
+              details.push(D_module_details);
+            }
+          });
+		
+		$.ajax({
+			type:"POST",
+			url:"array",
+			data:JSON.stringify(details),
+			contentType:"application/json;charsetset=UTF-8",
+			dataType:"json",
+			cache:true,
+			async:false,
+			error:function(request){
+				showTipAlert("Connection error");
+			},
+			success:function(data){
+				
+			}
+		})
+	    var id=$("[name='id']").val();
+		$.post("addD_module",{"Dm":id},back,"text")
+		function back(a){
+			if(a>0){
+				alert("增加成功！");
+			}
+		}
+	})
+})
+</script>
+</html>

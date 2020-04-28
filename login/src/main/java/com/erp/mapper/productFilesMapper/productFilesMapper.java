@@ -55,7 +55,23 @@ public interface productFilesMapper {
 
 
 	int test1();
+	
+	int test2();
 
+	d_file getdeee(int id);
+
+
+	int addD_moduledeSign_module_tag(String id);
+
+
+	List<D_module> D_moduleAll();
+
+
+	D_module D_moduleXX(int id);
+
+	List<D_module_details> selectByTid(int id);
+
+	User selectNameId(String id);
 
 	List<d_file> cpdacx();
 

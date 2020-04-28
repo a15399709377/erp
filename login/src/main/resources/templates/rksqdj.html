@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>入库申请登记</title>
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+
+
+
+			<div class="layui-row">
+				<div class="magb15 layui-col-md4 layui-col-xs12">
+					<label class="layui-form-label">产品添加</label>
+					<div class="layui-input-block">
+
+						<button class="btn btn-info sk" data-toggle="modal"
+							data-target="#myModal">添加产品</button>
+					</div>
+				</div>
+
+				<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+
+			</div>
+			<br />
+
+			<div class="layui-row">
+				<div class="magb15 layui-col-md7 layui-col-xs12">
+					<label class="layui-form-label" style="font-size: 18px;">入库人</label>
+					<div class="layui-input-block">
+						<input type="text" class="layui-input userName"
+							lay-verify="required" placeholder="请输入数值">
+					</div>
+				</div>
+
+				<div class="magb15 layui-col-md5 layui-col-xs12">
+					<label class="layui-form-label">入库理由</label>
+					<div class="layui-input-block">
+						<select name="type" class="userStatus" lay-filter="userStatus">
+							<option value="R001-1">生产入库</option>
+							<option value="R001-2">库存初始</option>
+							<option value="R001-3">赠送</option>
+							<option value="R001-4">内部归还</option>
+							<option value="R001-5">其他归还</option>
+						</select>
+					</div>
+				</div>
+
+				<br /> <br />
+
+				<table class="table" id="fab">
+					<tr>
+						<td>点选</td>
+						<td>产品名称</td>
+						<td>产品编号</td>
+						<td>描述</td>	
+						<td>类型</td>
+						<td>单位</td>
+						<td>成本单价(￥)</td>
+						<td>数量</td>
+						<td>小计(￥)</td>
+					</tr>
+				</table>
+				<br /> <br />
+				<div class="layui-row">
+					<div class="magb15 layui-col-md4 layui-col-xs12">
+						<label class="layui-form-label">总件数</label>
+						<div class="layui-input-block">
+
+							<input type="text" class="layui-input userName"
+								lay-verify="required" placeholder="不可选中" disabled="disabled">
+						</div>
+
+
+					</div>
+					<div class="layui-row">
+						<div class="magb15 layui-col-md4 layui-col-xs12">
+							<label class="layui-form-label">总金额</label>
+							<div class="layui-input-block">
+								<input type="text" class="layui-input userName"
+									lay-verify="required" placeholder="不可选中" disabled="disabled">
+							</div>
+						</div>
+						<div class="magb15 layui-col-md5 layui-col-xs12"></div>
+					</div>
+					<div class="layui-row">
+						<div class="magb15 layui-col-md7 layui-col-xs12">
+							<label class="layui-form-label" style="font-size: 18px;">登记人</label>
+							<div class="layui-input-block">
+								<input type="text" th:value="${username}"
+									class="layui-input userName" lay-verify="required"
+									placeholder="请输入数值">
+							</div>
+						</div>
+
+						<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+						<div class="magb15 layui-col-md1 layui-col-xs12">
+							<span>登记时间：</span>
+						</div>
+
+						<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
+							<script>
+								setInterval(
+										"document.getElementById('datetime').innerHTML=new Date().toLocaleString();",
+										1000);
+							</script>
+						</div>
+					</div>
+
+					<div
+						class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
+						<label class="layui-form-label" style="font-size: 17px;">详细理由</label>
+						<div class="layui-input-block">
+							<textarea placeholder="请输入信息" class="layui-textarea userDesc"></textarea>
+						</div>
+					</div>
+					<br />
+
+					<div class="layui-row">
+						<div class="magb15 layui-col-md1 layui-col-xs12"></div>
+
+
+					</div>
+
+
+				</div>
+				<!--操作-->
+				<script type="text/html" id="userListBar">
+		<input type="radio"/>
+	</script>
+
+
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div style="width: 80%" class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">选择商品增加</h4>
+							</div>
+							<div class="modal-body">
+								<table class="table" id="tab">
+									<tr>
+										<td>点选</td>
+										<td>产品名称</td>
+										<td>产品编号</td>
+										<td>描述</td>
+										<td>类型</td>
+										<td>单位</td>
+										<td>成本单价(￥)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" id="tg" data-dismiss="modal">确定</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/page/ADDF.js}"></script>
+<script type="text/javascript">
+	$(function() {
+		$(".sk").click(function() {
+			$("#tab  tr:not(:first)").html("");
+							$.post("designProductMaterial", back, "Json");
+							function back(aa) {
+								for (var i = 0; i < aa.length; i++) {
+									var node = $("<tr><td style='display:none;'>"
+											+ aa[i]["id"]
+											+ "</td><td><input type='checkbox' name='xz' /></td><td>"
+											+ aa[i]["product_name"]
+											+ "</td><td>"
+											+ aa[i]["product_id"]
+											+ "</td><td>"+aa[i]["product_describe"]+"</td><td>物料</td><td>"
+											+ aa[i]["amount_unit"]
+											+ "</td><td>"
+											+ aa[i]["real_cost_price"]
+											+ "</td></tr>");
+									$("#tab").append(node);
+									
+								}
+							}
+						})
+						
+		$("#tg").click(function(){
+			var details = new Array();
+			$("#fab  tr:not(:first)").html("");
+			$("input[name='xz']").each(function(){           
+				if($(this).is(":checked"))
+	            {
+	              var node=$(this).parent().parent().html();
+	              var node1=$("<tr>"+node+"<td><input type='text' class='amount'/></td><td></td></tr>");
+	              $("#fab").append(node1);
+	            }
+	          });
+		})				
+	})
+</script>
+</html>
