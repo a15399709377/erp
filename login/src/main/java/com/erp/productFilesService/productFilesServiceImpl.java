@@ -79,6 +79,7 @@ public class productFilesServiceImpl implements productFilesService {
 	public int addD_module(D_module dm) {
 		int aa=0;
 		int a=productFilesMapper.addD_module(dm);
+		int bb=productFilesMapper.addD_moduledeSign_module_tag(dm.getProduct_id());
 		if(a>0) {
 			List<D_module_details> details=dm.getD_module_details();
 			for (D_module_details de : details) {
@@ -96,19 +97,31 @@ public class productFilesServiceImpl implements productFilesService {
 
 
 	@Override
-	public int auditD_module(int id, int pid, int audit, User user) {
+	public int auditD_module(int id, int audit, User user) {
 		if(audit==1) {
 			int a=productFilesMapper.auditD_module(id, audit, user);
-			if(a>0) {
-				int b=productFilesMapper.auditD_moduleFile(pid);
-				return b;
-			}
 		}else {
 			int a=productFilesMapper.auditD_module(id, audit, user);
 			return a;
 		}		
 		
 		return 0;
+	}
+
+
+
+	@Override
+	public List<D_module> D_moduleAll() {
+		// TODO Auto-generated method stub
+		return productFilesMapper.D_moduleAll();
+	}
+
+
+
+	@Override
+	public D_module D_moduleXX(int id) {
+		// TODO Auto-generated method stub
+		return productFilesMapper.D_moduleXX(id);
 	}
 
 

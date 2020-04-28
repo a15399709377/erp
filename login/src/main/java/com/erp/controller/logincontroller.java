@@ -50,7 +50,16 @@ public class logincontroller {
 		model.addAttribute("third_kind",LoginService.third_kind());
 		return "Addc";
 	}
-
+	@RequestMapping("/zdwlzcsjd")
+	public String zdwlzcsjd(Model model,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		User user=(User) session.getAttribute("user");
+		model.addAttribute("username",user.getLogin_id());
+		model.addAttribute("list",productFilesService.designProductFiles());
+		model.addAttribute("list1",productFilesService.designProductMaterial());
+		return "zdwlzcsjd";
+	}
+	
 	@RequestMapping("/cpdadjsh")
 	 public String cpdadjsh(Model model,HttpServletRequest request) {
 		HttpSession session=request.getSession();
@@ -62,6 +71,38 @@ public class logincontroller {
 		model.addAttribute("third_kind",LoginService.third_kind());
 		return "cpdadjsh";
 	}
+	
+	@RequestMapping("/zdaqkcpzd")
+	 public String zdaqkcpzd(Model model,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		User user=(User) session.getAttribute("user");
+		model.addAttribute("username",user.getLogin_id());
+		model.addAttribute("list",productFilesService.auditAll());
+		model.addAttribute("first_kind",LoginService.first_kind());
+		model.addAttribute("second_kind",LoginService.second_kind());
+		model.addAttribute("third_kind",LoginService.third_kind());
+		return "zdaqkcpzd";
+	}
+	
+	@RequestMapping("/wlzcsjdsh")
+	public String wlzcsjdsh(Model model,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		User user=(User) session.getAttribute("user");
+		model.addAttribute("username",user.getLogin_id());
+		model.addAttribute("list",productFilesService.D_moduleAll());
+		return "wlzcsjdsh";
+	}
+	
+	
+	@RequestMapping("/rksqdj")
+	public String rksqdj(Model model,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		User user=(User) session.getAttribute("user");
+		model.addAttribute("username",user.getLogin_id());
+		
+		return "rksqdj";
+	}
+	
 	@RequestMapping("/login")
     public String login(User user,Model model,HttpServletRequest request) {
 		System.out.println(user);

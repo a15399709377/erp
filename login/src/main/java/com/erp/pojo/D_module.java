@@ -26,6 +26,12 @@ private String  check_tag     ;//'审核标志 S001-0：等待审核 S001-1：�
 private String  change_tag    ;//'变更标志 B002-0：未变更 B002-1：已变更'
 private List<D_module_details> D_module_details;
 
+private String  designerr   ;
+private String  registerr   ;
+private String  checkerr   ;
+private String  changerr   ;
+
+
 public List<D_module_details> getD_module_details() {
 	return D_module_details;
 }
@@ -208,6 +214,60 @@ public String toString() {
 			+ getCheck_time() + ", getChanger()=" + getChanger() + ", getChange_time()=" + getChange_time()
 			+ ", getCheck_tag()=" + getCheck_tag() + ", getChange_tag()=" + getChange_tag() + ", getClass()="
 			+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+}
+public String getDesignerr() {
+	return designerr;
+}
+public void setDesignerr(String designerr) {
+	this.designerr = designerr;
+}
+public String getRegisterr() {
+	return registerr;
+}
+public void setRegisterr(String registerr) {
+	this.registerr = registerr;
+}
+public String getCheckerr() {
+	return checkerr;
+}
+public void setCheckerr(String checkerr) {
+	this.checkerr = checkerr;
+}
+public String getChangerr() {
+	return changerr;
+}
+public void setChangerr(String changerr) {
+	this.changerr = changerr;
+}
+public D_module(int id, String design_id, String product_id, String product_name, D_CONFIG_FILE_KIND first_kind,
+		D_CONFIG_FILE_KIND second_kind, D_CONFIG_FILE_KIND third_kind, User designer, String module_descri,
+		double cost_price_sum, User register, String register_time, User checker, String check_time, User changer,
+		String change_time, String check_tag, String change_tag, List<com.erp.pojo.D_module_details> d_module_details,
+		String designerr, String registerr, String checkerr, String changerr) {
+	super();
+	this.id = id;
+	this.design_id = design_id;
+	this.product_id = product_id;
+	this.product_name = product_name;
+	this.first_kind = first_kind;
+	this.second_kind = second_kind;
+	this.third_kind = third_kind;
+	this.designer = designer;
+	this.module_descri = module_descri;
+	this.cost_price_sum = cost_price_sum;
+	this.register = register;
+	this.register_time = register_time;
+	this.checker = checker;
+	this.check_time = check_time;
+	this.changer = changer;
+	this.change_time = change_time;
+	this.check_tag = check_tag;
+	this.change_tag = change_tag;
+	D_module_details = d_module_details;
+	this.designerr = designerr;
+	this.registerr = registerr;
+	this.checkerr = checkerr;
+	this.changerr = changerr;
 }
 
 

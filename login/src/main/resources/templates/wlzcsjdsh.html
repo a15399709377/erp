@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>物料组成设计单审核</title>
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+		<span style="color: blue">符合产品条件的数量：</span><span th:text="${num}"></span>
+			<table class="table table-hover">
+				<tr>
+					<td>设计单编号</td>
+					<td>产品编号</td>
+					<td>产品名称</td>
+					<td>设计人</td>
+					<td>登记时间</td>
+					<td>物料总成本</td>
+					<td>审核</td>
+				</tr>
+				<tr th:each="file:${list}">
+					<td style="display: none;" th:text="${file.id}"></td>
+					<td th:text="${file.design_id}"></td>
+					<td th:text="${file.product_id}"></td>
+					<td th:text="${file.product_name}"></td>
+					<td th:if="${file.designerr==''}"></td>
+					<td th:if="${file.designerr==null}"></td>
+					<td th:text="${file.designerr}"></td>					
+					<td th:text="${file.register_time}"></td>
+					<td th:text="${file.cost_price_sum}"></td>
+					<td><button type="button" class="btn btn-info sk"
+							data-toggle="modal" data-target="#myModal">审核</button></td>
+				</tr>
+			</table>
+		</div>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div style="width: 80%" class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">物料组成设计单</h4>
+					</div>
+					<div class="modal-body">
+						<form class="layui-form">
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">产品名称</label>
+									<div class="layui-input-block">
+									<input type="text" name="id" style="display: none;" />
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="product_name" placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">产品编号</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="product_id"  placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+							</div>
+							<br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md7 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">设计人</label>
+									<div class="layui-input-block">
+										<input type="text" name="designer" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md5 layui-col-xs12"></div>
+							</div>
+							<br /> <br />
+
+							<table class="table" id="tab">
+								<tr>
+									<td>物料编号</td>
+									<td>物料名称</td>
+									<td>用途类型</td>
+									<td>描述</td>
+									<td>数量</td>
+									<td>单位</td>
+									<td>单价(￥)</td>
+									<td>小计(￥)</td>
+								</tr>
+								
+							</table>
+							<br /> <br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md7 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">审核人</label>
+									<div class="layui-input-block">
+										<input type="text" th:value="${username}" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+								<div class="magb15 layui-col-md1 layui-col-xs12">
+									<span>登记时间：</span>
+								</div>
+
+								<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
+									<script>
+										setInterval(
+												"document.getElementById('datetime').innerHTML=new Date().toLocaleString();",
+												1000);
+									</script>
+								</div>
+							</div>
+
+							<div
+								class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
+								<label class="layui-form-label" style="font-size: 17px;">设计要求</label>
+								<div class="layui-input-block">
+									<textarea placeholder="请输入信息" name="module_descri" class="layui-textarea userDesc"></textarea>
+								</div>
+							</div>
+							<br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md1 layui-col-xs12"></div>
+							</div>
+
+
+
+							<!--操作-->
+							<script type="text/html" id="userListBar">
+		<input type="radio"/>
+	</script>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" id="btg">复核不通过</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="tg">复核通过</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/page/ADDF.js}"></script>
+<script type="text/javascript">
+$(function(){
+	$(".sk").click(function(){
+		var id=$(this).parent().parent().children(0).html();
+		$.post("D_moduleXX",{"id":id},back,"Json")
+		function back(a){
+			$("[name='id']").val(a["id"]);
+			$("[name='product_name']").val(a["product_name"]);
+			$("[name='product_id']").val(a["product_id"]);
+			$("[name='module_descri']").val(a["module_descri"]);
+			$("[name='designer']").val(a["designer"]["login_id"]);
+			//alert(a["d_module_details"].length);
+			var aa=a["d_module_details"];
+			for (var i=0;i<aa.length;i++)
+			{
+				var node=$("<tr><td>"+aa[i]["details_number"]+"</td><td>"+aa[i]["product_name"]+"</td><td>物料</td><td>"+aa[i]["product_describe"]+"</td><td>"+aa[i]["amount"]+"</td><td>"+aa[i]["amount_unit"]+"</td><td>"+aa[i]["cost_price"]+"</td><td>"+aa[i]["subtotal"]+"</td></tr>");
+			    $("#tab").append(node);
+			}
+		}
+	})
+	
+	$("#tg").click(function(){
+		var id=$("[name='id']").val();
+		var audit=1;
+		$.post("auditD_module",{"id":id,"audit":audit},back,"text");
+		function back(a){
+			if(a>0){
+				alert("审核通过!");
+			}
+		}
+	})
+})
+</script>
+</html>

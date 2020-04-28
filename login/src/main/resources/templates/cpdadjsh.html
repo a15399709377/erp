@@ -76,7 +76,6 @@
 $(function(){
 	$(".sk").click(function(){
 		var id=$(this).parent().parent().children(0).html();
-		alert(id);
 		$.post("auditProductFilesXX",{"id":id},back,"Json")
 		function back(a){
 

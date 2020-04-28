@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.erp.pojo.S_GATHER;
 import com.erp.pojo.S_GATHER_DETAILS;
 import com.erp.pojo.User;
+import com.erp.pojo.d_file;
 import com.erp.warehouseService.warehouseService;
 
 @Controller
 public class warehouseController {
 	@Autowired
 	warehouseService warehouseService;
+	//所有的物料入库
+
 	
 	//入库申请管理（采购原材料）
 	@RequestMapping("/addWarehousing")

@@ -113,6 +113,11 @@ public String toString() {
 			+ product_describe + ", amount_unit=" + amount_unit + ", amount=" + amount + ", residual_amount="
 			+ residual_amount + ", cost_price=" + cost_price + ", subtotal=" + subtotal + "]";
 }
+public D_module_details(int id, double amount) {
+	super();
+	this.id = id;
+	this.amount = amount;
+}
     	
 	
 }
