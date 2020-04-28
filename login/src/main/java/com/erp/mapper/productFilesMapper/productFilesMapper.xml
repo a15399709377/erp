@@ -9,7 +9,7 @@
 	<insert id="addProductFilesService">
 		INSERT INTO D_FILE VALUES(null,#{file.product_id},#{file.product_name},
 		<choose>
-			<when test="file.factory_name!=null">
+			<when test="file.factory_name!=''">
 				#{file.factory_name}
 			</when>
 			<otherwise>				
@@ -19,7 +19,7 @@
 		,#{file.first_kind.kind_id},#{file.first_kind.kind_name},
 		#{file.second_kind.kind_id},#{file.second_kind.kind_name},#{file.third_kind.kind_id},#{file.third_kind.kind_name},
 		<choose>
-			<when test="file.product_nick==null">
+			<when test="file.product_nick==''">
 				null
 			</when>
 			<otherwise>
@@ -28,7 +28,7 @@
 		</choose>
 		,#{file.type},#{file.product_class},
 		<choose>
-			<when test="file.personal_unit==null">
+			<when test="file.personal_unit==''">
 				null
 			</when>
 			<otherwise>
@@ -36,7 +36,7 @@
 			</otherwise>
 		</choose>
 		,<choose>
-			<when test="file.personal_value==null">
+			<when test="file.personal_value==''">
 				null
 			</when>
 			<otherwise>
@@ -44,7 +44,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.provider_group==null">
+			<when test="file.provider_group==''">
 				null
 			</when>
 			<otherwise>
@@ -52,7 +52,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.warranty==null">
+			<when test="file.warranty==''">
 				null
 			</when>
 			<otherwise>
@@ -60,7 +60,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.twin_name==null">
+			<when test="file.twin_name==''">
 				null
 			</when>
 			<otherwise>
@@ -68,7 +68,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.twin_id==null">
+			<when test="file.twin_id==''">
 				null
 			</when>
 			<otherwise>
@@ -76,7 +76,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.lifecycle==null">
+			<when test="file.lifecycle==''">
 				null
 			</when>
 			<otherwise>
@@ -84,7 +84,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.list_price==null">
+			<when test="file.list_price==''">
 				null
 			</when>
 			<otherwise>
@@ -92,7 +92,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.cost_price==null">
+			<when test="file.cost_price==''">
 				null
 			</when>
 			<otherwise>
@@ -100,7 +100,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.real_cost_price==null">
+			<when test="file.real_cost_price==''">
 				null
 			</when>
 			<otherwise>
@@ -108,7 +108,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.amount_unit==null">
+			<when test="file.amount_unit==''">
 				null
 			</when>
 			<otherwise>
@@ -116,7 +116,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.product_describe==null">
+			<when test="file.product_describe==''">
 				null
 			</when>
 			<otherwise>
@@ -124,7 +124,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.responsible_person==null ">
+			<when test="file.responsible_person==''">
 				null
 			</when>
 			<otherwise>
@@ -132,7 +132,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.register==null ">
+			<when test="file.register==null">
 				null
 			</when>
 			<otherwise>
@@ -234,7 +234,13 @@
 	
 	</insert>
 	
-	  <select id="test" resultType="int">
+	<select id="test" resultType="int">
    select * from D_MODULE order by id DESC limit 1
+   </select>
+   <select id="test1" resultType="int">
+   select * from d_file order by id DESC limit 1
+   </select>
+   <select id="D_CONFIG_FILE_KINDByid" resultType="D_CONFIG_FILE_KIND">
+   SELECT * FROM D_CONFIG_FILE_KIND WHERE id=#{id} ;
    </select>
 </mapper>

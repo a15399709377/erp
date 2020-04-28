@@ -29,12 +29,16 @@ public class productFilesController {
 	productFilesMapper productFilesMapper;
 	
 	@RequestMapping("/addProductFilesService")
+	@ResponseBody
 	public int addProductFilesService(d_file file,HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");
-		D_CONFIG_FILE_KIND first_kind=new D_CONFIG_FILE_KIND(1,0,"1","电子",1);
-		D_CONFIG_FILE_KIND second_kind=new D_CONFIG_FILE_KIND(2,1,"2","计算机",2);
-		D_CONFIG_FILE_KIND third_kind=new D_CONFIG_FILE_KIND(3,2,"3","服务器",3);
+		D_CONFIG_FILE_KIND first_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(file.getFirst_kind_id());
+		D_CONFIG_FILE_KIND second_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(file.getSecond_kind_id());
+		D_CONFIG_FILE_KIND third_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(file.getThird_kind_id());
+		int idd=productFilesMapper.test1();
+		int iddd=idd+1;
+		String pro_id="SJ00"+iddd;
 		/*d_file file1=new d_file(1,"SP003","神州战神 笔记本电脑",null,first_kind,second_kind,
 				third_kind,"神州笔记本","Y001-1","D001-1","台","1",null,"12个月",
 				null,null,null,5000.00,3000.00,2000.00,null,"很好用的笔记本",null,user,null,null,null,null,null,null,null,null,
@@ -51,14 +55,20 @@ public class productFilesController {
 		d_file file3=new d_file(1,"SP006","七彩虹炫光灯机箱",null,first_kind,second_kind,
 				third_kind,"机箱","Y001-2","D001-1","台","1",null,"12个月",
 				null,null,null,200.00,150.00,100.00,null,"效率强劲",null,user,null,null,null,null,null,null,null,null,
-				0,null,null,null,null);*/
-		d_file file3=new d_file(1,"SP006","iphone 888",null,first_kind,second_kind,
-				third_kind,"手机","Y001-1","D001-1","台","1",null,"12个月",
-				null,null,null,5000.00,2500.00,2000.00,null,"iphone 升级版",null,user,null,null,null,null,null,null,null,null,
 				0,null,null,null,null);
-		int a=productFilesService.addProductFilesService(file3);
+		d_file file4=new d_file(1,"SP007","test","",first_kind,second_kind,
+				third_kind,"机箱","Y001-2","D001-1","台","1",null,"12个月",
+				null,null,null,200.00,150.00,100.00,null,"效率强劲",null,user,null,null,null,null,null,null,null,null,
+				0,null,null,null,null);*/
+		file.setProduct_id(pro_id);
+		file.setFirst_kind(first_kind);
+		file.setSecond_kind(second_kind);
+		file.setThird_kind(third_kind);
+		file.setRegister(user);
+		System.out.println(file);
+		int a=productFilesService.addProductFilesService(file);
 		System.out.println(a);
-		return 0;
+		return a;
 	}
 	
 	@RequestMapping("/auditProductFiles")
@@ -72,12 +82,6 @@ public class productFilesController {
 		return list;
 	}
 	
-	@RequestMapping("/auditAll")
-	@ResponseBody
-	public List<d_file> auditAll() {
-		List<d_file> list=productFilesService.auditAll();
-		return list;
-	}
 	
 	@RequestMapping("/auditProductFilesXX")
 	@ResponseBody
@@ -118,6 +122,8 @@ public class productFilesController {
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");
 		int idd=productFilesMapper.test();
+		int iddd=idd+1;
+		String pro_id="SJ00"+iddd;
 		D_CONFIG_FILE_KIND first_kind=new D_CONFIG_FILE_KIND(1,0,"1","电子",1);
 		D_CONFIG_FILE_KIND second_kind=new D_CONFIG_FILE_KIND(2,1,"2","计算机",2);
 		D_CONFIG_FILE_KIND third_kind=new D_CONFIG_FILE_KIND(3,2,"3","服务器",3);
@@ -128,7 +134,7 @@ public class productFilesController {
 		details.add(Md);
 		details.add(Md1);
 		details.add(Md2);
-		int iddd=idd+1;
+		
 		D_module Dm1=new D_module(1, "SJ00"+iddd,"3", "神州 笔记本电脑", first_kind, second_kind, third_kind, user, "hhhhhh", 1400.00,user, null, null, null, null, null, null, null, details);
 		int list=productFilesService.addD_module(Dm1);		
 		return list;

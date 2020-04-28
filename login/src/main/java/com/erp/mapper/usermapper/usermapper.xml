@@ -11,4 +11,16 @@ IN(SELECT menu_id FROM SYS_MENU_ROLE WHERE role_id=(SELECT role_id FROM SYS_USER
 <select id="getMapByName" resultType="User">
 select * from sys_users where login_id=#{userName} and password=#{pwd}
 </select>
+
+<select id="first_kind" resultType="D_CONFIG_FILE_KIND">
+SELECT * FROM D_CONFIG_FILE_KIND where kind_level =1;
+</select>
+<select id="second_kind" resultType="D_CONFIG_FILE_KIND">
+SELECT * FROM D_CONFIG_FILE_KIND where kind_level =2;
+
+</select>
+<select id="third_kind" resultType="D_CONFIG_FILE_KIND">
+SELECT * FROM D_CONFIG_FILE_KIND where kind_level =3;
+
+</select>
 </mapper>

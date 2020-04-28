@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.erp.mapper.usermapper.usermapper;
+import com.erp.pojo.D_CONFIG_FILE_KIND;
 import com.erp.pojo.Permissions;
 import com.erp.pojo.Role;
 import com.erp.pojo.User;
@@ -59,6 +60,24 @@ public class loginserviceimpl implements LoginService {
 			}
 		}
 		return list4;
+	}
+
+	@Override
+	public List<D_CONFIG_FILE_KIND> first_kind() {
+		// TODO Auto-generated method stub
+		return usermapper.first_kind();
+	}
+
+	@Override
+	public List<D_CONFIG_FILE_KIND> second_kind() {
+		// TODO Auto-generated method stub
+		return usermapper.second_kind();
+	}
+
+	@Override
+	public List<D_CONFIG_FILE_KIND> third_kind() {
+		// TODO Auto-generated method stub
+		return usermapper.third_kind();
 	}
 
 }
