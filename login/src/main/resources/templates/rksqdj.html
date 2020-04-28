@@ -58,10 +58,11 @@
 						<td>点选</td>
 						<td>产品名称</td>
 						<td>产品编号</td>
-						<td>描述</td>
-						<td>数量</td>
+						<td>描述</td>	
+						<td>类型</td>
 						<td>单位</td>
 						<td>成本单价(￥)</td>
+						<td>数量</td>
 						<td>小计(￥)</td>
 					</tr>
 				</table>
@@ -144,14 +145,15 @@
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">物料组成设计单</h4>
+								<h4 class="modal-title" id="myModalLabel">选择商品增加</h4>
 							</div>
 							<div class="modal-body">
 								<table class="table" id="tab">
 									<tr>
 										<td>点选</td>
-										<td>产品编号</td>
 										<td>产品名称</td>
+										<td>产品编号</td>
+										<td>描述</td>
 										<td>类型</td>
 										<td>单位</td>
 										<td>成本单价(￥)</td>
@@ -161,14 +163,13 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary" id="tg">复核通过</button>
+								<button type="button" class="btn btn-primary" id="tg" data-dismiss="modal">确定</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </body>
 <script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
@@ -177,19 +178,18 @@
 <script type="text/javascript" th:src="@{/page/ADDF.js}"></script>
 <script type="text/javascript">
 	$(function() {
-		$(".sk")
-				.click(
-						function() {
+		$(".sk").click(function() {
+			$("#tab  tr:not(:first)").html("");
 							$.post("designProductMaterial", back, "Json");
 							function back(aa) {
 								for (var i = 0; i < aa.length; i++) {
 									var node = $("<tr><td style='display:none;'>"
 											+ aa[i]["id"]
 											+ "</td><td><input type='checkbox' name='xz' /></td><td>"
-											+ aa[i]["product_id"]
-											+ "</td><td>"
 											+ aa[i]["product_name"]
-											+ "</td><td>物料</td><td>"
+											+ "</td><td>"
+											+ aa[i]["product_id"]
+											+ "</td><td>"+aa[i]["product_describe"]+"</td><td>物料</td><td>"
 											+ aa[i]["amount_unit"]
 											+ "</td><td>"
 											+ aa[i]["real_cost_price"]
@@ -199,6 +199,19 @@
 								}
 							}
 						})
+						
+		$("#tg").click(function(){
+			var details = new Array();
+			$("#fab  tr:not(:first)").html("");
+			$("input[name='xz']").each(function(){           
+				if($(this).is(":checked"))
+	            {
+	              var node=$(this).parent().parent().html();
+	              var node1=$("<tr>"+node+"<td><input type='text' class='amount'/></td><td></td></tr>");
+	              $("#fab").append(node1);
+	            }
+	          });
+		})				
 	})
 </script>
 </html>
