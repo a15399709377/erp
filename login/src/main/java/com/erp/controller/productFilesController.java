@@ -82,12 +82,6 @@ public class productFilesController {
 		return list;
 	}
 	
-	@RequestMapping("/auditAll")
-	@ResponseBody
-	public List<d_file> auditAll() {
-		List<d_file> list=productFilesService.auditAll();
-		return list;
-	}
 	
 	@RequestMapping("/auditProductFilesXX")
 	@ResponseBody

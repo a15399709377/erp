@@ -23,6 +23,7 @@ public class S_GATHER_DETAILS {
 	private double subtotal;
 	private int gathered_amount;
 	private String gather_tag;
+	private int nowamount;
 	public S_GATHER_DETAILS(int id, int parent_id, String product_id, String product_name, String product_describe,
 			int amount, String amount_unit, double cost_price, double subtotal, int gathered_amount,
 			String gather_tag) {
@@ -47,7 +48,8 @@ public class S_GATHER_DETAILS {
 		return "S_GATHER_DETAILS [id=" + id + ", parent_id=" + parent_id + ", product_id=" + product_id
 				+ ", product_name=" + product_name + ", product_describe=" + product_describe + ", amount=" + amount
 				+ ", amount_unit=" + amount_unit + ", cost_price=" + cost_price + ", subtotal=" + subtotal
-				+ ", gathered_amount=" + gathered_amount + ", gather_tag=" + gather_tag + "]";
+				+ ", gathered_amount=" + gathered_amount + ", gather_tag=" + gather_tag + ", nowamount=" + nowamount
+				+ "]";
 	}
 	public int getId() {
 		return id;
@@ -114,6 +116,34 @@ public class S_GATHER_DETAILS {
 	}
 	public void setGather_tag(String gather_tag) {
 		this.gather_tag = gather_tag;
+	}
+	public S_GATHER_DETAILS(int id, int parent_id, String product_id, String product_name, String product_describe,
+			int amount, String amount_unit, double cost_price, double subtotal, int gathered_amount, String gather_tag,
+			int nowamount) {
+		super();
+		this.id = id;
+		this.parent_id = parent_id;
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.product_describe = product_describe;
+		this.amount = amount;
+		this.amount_unit = amount_unit;
+		this.cost_price = cost_price;
+		this.subtotal = subtotal;
+		this.gathered_amount = gathered_amount;
+		this.gather_tag = gather_tag;
+		this.nowamount = nowamount;
+	}
+	public int getNowamount() {
+		return nowamount;
+	}
+	public void setNowamount(int nowamount) {
+		this.nowamount = nowamount;
+	}
+	public S_GATHER_DETAILS(int id, int nowamount) {
+		super();
+		this.id = id;
+		this.nowamount = nowamount;
 	}
 	
 }

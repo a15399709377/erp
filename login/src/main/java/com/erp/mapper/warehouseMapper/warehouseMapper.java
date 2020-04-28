@@ -23,7 +23,16 @@ public interface warehouseMapper {
 
 	List<S_GATHER> dispatchAll();
 
-	//S_GATHER dispatchS_GATHERXX(int id);
+	S_GATHER dispatchS_GATHERXX(int id);
+	
+	List<S_GATHER_DETAILS> selectByTid(int id);
+	
+	User selectNameId(String storer);
+	
+	int dispatchS_GATHER(int num);
+
+	int Warehousingregistration(S_GATHER_DETAILS de);
+
 
 	
 }

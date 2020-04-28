@@ -59,6 +59,28 @@ public class warehouseServiceImpl implements warehouseService {
 	@Override
 	public S_GATHER dispatchS_GATHERXX(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return warehouseMapper.dispatchS_GATHERXX(id);
 	}
+
+	@Override
+	public int dispatchS_GATHER(int num) {
+		// TODO Auto-generated method stub
+		return warehouseMapper.dispatchS_GATHER(num);
+	}
+
+	@Override
+	public int Warehousingregistration(List<S_GATHER_DETAILS> dede) {
+		int b=0;
+		for (S_GATHER_DETAILS de : dede) {
+			b=warehouseMapper.Warehousingregistration(de);
+			if(b>0) {
+				
+			}else {
+				b=0;
+			}
+		}
+		return b;
+	}
+	
+	
 }
