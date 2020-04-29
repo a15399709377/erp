@@ -72,6 +72,12 @@ public interface productFilesMapper {
 	List<D_module_details> selectByTid(int id);
 
 	User selectNameId(String id);
+
+
+	List<d_file> cpdacx();
+
+
+	int cpdacxzs();
 	
 }
 

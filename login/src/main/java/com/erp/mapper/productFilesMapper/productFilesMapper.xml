@@ -285,4 +285,11 @@ SELECT id,design_id,product_id,product_name,designer AS designerr,register_time,
       select * from sys_users where login_id=#{id}
    
    </select>
+   
+   <select id="cpdacx" resultType="d_file">
+   select * from d_file
+   </select>
+   <select id="cpdacxzs" resultType="int">
+   select count(*) from d_file
+   </select>
 </mapper>

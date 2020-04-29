@@ -13,79 +13,133 @@
 <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
 <link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-</head>
-<body>
-	<div class="container">
-		<table class="table">
-			<tr>
-				<td>产品编号</td>
-				<td>产品名称</td>
-				<td>用途类型</td>
-				<td>I级分类</td>
-				<td>II级分类</td>
-				<td>III级分类</td>
-				<td>产品经理</td>
-				<td>审核</td>
-			</tr>
-			<tr th:each="file:${list}">
-				<td style="display: none;" th:text="${file.id}"></td>
-				<td th:text="${file.product_id}"></td>
-				<td th:text="${file.product_name}"></td>
-				<td th:if="${file.type=='Y001-1'}">商品</td>
-				<td th:if="${file.type=='Y001-2'}">物料</td>
-				<td th:text=${file.first_kind_name}></td>
-				<td th:text=${file.second_kind_name}></td>
-				<td th:text=${file.third_kind_name}></td>
-				<td th:if="${file.responsible_person=='0'}"></td>
-				<td th:if="${file.responsible_person==null}"></td>
-				<td><button type="button" class="btn btn-info sk"
-						data-toggle="modal" data-target="#myModal">审核</button></td>
-			</tr>
-		</table>
 
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel">
-			<div style="width: 80%" class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+<link rel="shortcut icon" href="favicon.ico">
+<link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+<link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+<!-- Data Tables -->
+<link href="css/plugins/dataTables/dataTables.bootstrap.css"
+	rel="stylesheet">
+
+<link href="css/animate.min.css" rel="stylesheet">
+<link href="css/style.min.css?v=4.0.0" rel="stylesheet">
+<base target="_blank">
+</head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>
+							产品设计 <small>产品档案管理 -->产品档案登记审核</small>
+						</h5>
+						<div class="ibox-tools">
+							<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+							</a>
+							<button class="btn  btn-outline" type="button" name="refresh"
+								title="刷新">
+								<i class="glyphicon glyphicon-repeat"></i>
+							</button>
+						</div>
 					</div>
-					<div class="modal-body">
-						
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" id="tg">复核通过</button>
+					<div class="ibox-content">
+
+						<table class="table">
+							<tr>
+								<td>产品编号</td>
+								<td>产品名称</td>
+								<td>用途类型</td>
+								<td>I级分类</td>
+								<td>II级分类</td>
+								<td>III级分类</td>
+								<td>产品经理</td>
+								<td>审核</td>
+							</tr>
+							<tr th:each="file:${list}">
+								<td style="display: none;" th:text="${file.id}"></td>
+								<td th:text="${file.product_id}"></td>
+								<td th:text="${file.product_name}"></td>
+								<td th:if="${file.type=='Y001-1'}">商品</td>
+								<td th:if="${file.type=='Y001-2'}">物料</td>
+								<td th:text=${file.first_kind_name}></td>
+								<td th:text=${file.second_kind_name}></td>
+								<td th:text=${file.third_kind_name}></td>
+								<td th:if="${file.responsible_person=='0'}"></td>
+								<td th:if="${file.responsible_person==null}"></td>
+								<td><button type="button" class="btn btn-info sk"
+										data-toggle="modal" data-target="#myModal">审核</button></td>
+							</tr>
+						</table>
+
 					</div>
 				</div>
 			</div>
 		</div>
 
 	</div>
+
+
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div style="width: 80%" class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="tg">复核通过</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
 </body>
 <script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:src="@{/layui/userAdd.js}"></script>
-<script type="text/javascript">
-$(function(){
-	$(".sk").click(function(){
-		var id=$(this).parent().parent().children(0).html();
-		$.post("auditProductFilesXX",{"id":id},back,"Json")
-		function back(a){
-
-			 $("[name='type'] option").each( function () {
-			    if($(this).val()==a["type"]){
-			    $(this).attr("selected","selected");        
-			}                                 
-		
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.5"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="js/content.min.js?v=1.0.0"></script>
+<script>
+	$(document).ready(function() {
+		$(".dataTables-example").dataTable();
+		var oTable = $("#editable").dataTable();
+		oTable.$("td").editable("../example_ajax.php", {
+			"callback" : function(sValue, y) {
+				var aPos = oTable.fnGetPosition(this);
+				oTable.fnUpdate(sValue, aPos[0], aPos[1])
+			},
+			"submitdata" : function(value, settings) {
+				return {
+					"row_id" : this.parentNode.getAttribute("id"),
+					"column" : oTable.fnGetPosition(this)[2]
+				}
+			},
+			"width" : "90%",
+			"height" : "100%"
 		})
-	}})
-})
+	});
+	function fnClickAddRow() {
+		$("#editable").dataTable().fnAddData(
+				[ "Custom row", "New row", "New row", "New row", "New row" ])
+	};
 </script>
+
 </html>

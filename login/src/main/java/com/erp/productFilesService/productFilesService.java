@@ -33,6 +33,10 @@ public interface productFilesService {
 
 	D_module D_moduleXX(int id);
 
+	List<d_file> cpdacx();
+
+	int cpdacxzs();
+
 	
 	
 }

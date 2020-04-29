@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -164,5 +165,20 @@ public class productFilesController {
 		User user=(User) session.getAttribute("user");
 		int list=productFilesService.auditD_module(id,audit,user);
 		return list;
+	}
+	
+	@RequestMapping("/cpdacx")
+	public String  cpdacx(Model model) {
+		List<d_file> list=productFilesService.cpdacx();
+		int count=productFilesService.cpdacxzs();
+		model.addAttribute("pageInfo",list);
+		model.addAttribute("count", count);
+		System.out.println("========================="+list);
+		return "cpdacx";
+	}
+	
+	@RequestMapping("/cpdabg")
+	public String  cpdabg(Model model) {
+		return "cpdabg";
 	}
 }
