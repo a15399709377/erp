@@ -11,6 +11,7 @@ import com.erp.pojo.D_module;
 import com.erp.pojo.d_file;
 import com.erp.pojo.m_design_procedure;
 import com.erp.pojo.m_design_procedure_details;
+import com.erp.pojo.m_design_procedure_module;
 import com.erp.pojo.m_procedure;
 
 @Service
@@ -50,7 +51,12 @@ public class procedureServiceImpl implements procedureService{
 		//获取产品工序表的产品编号
 		pro.setProduct_id(file.getProduct_id());
 		//设置产品工序的设计编号
-		int id=mapper.getProcedureIdByproduct_id();
+		int id=0;
+		if(mapper.getProcedureIdByproduct_id()==0) {
+			id=0;
+		}else {
+			id=mapper.getProcedureIdByproduct_id();
+		}
 		int iid=id+1;
 		String design_id="GX00"+iid;
 		pro.setDesign_id(design_id);
@@ -127,5 +133,56 @@ public class procedureServiceImpl implements procedureService{
 	public List<m_design_procedure> getAllm_design_procedureBycheck_tag() {
 		// TODO Auto-generated method stub
 		return mapper.getAllm_design_procedureBycheck_tag();
+	}
+
+	@Override
+	public D_module D_moduleXX(String id) {
+		// TODO Auto-generated method stub
+		return mapper.D_moduleXX(id);
+	}
+
+	@Override
+	public int addM_WL(List<m_design_procedure_module> modul,int pid) {
+		// TODO Auto-generated method stub
+		//获取产品工序详细表的ID
+		int id=0;
+		//添加产品工序物料详细表
+		System.out.println(modul);
+		for (m_design_procedure_module m : modul) {
+			//添加产品工序物料详细表
+			mapper.addM_DESIGN_PROCEDURE_MODULE(m);
+			//修改产品工序详细表
+			mapper.updateM_DESIGN_PROCEDURE_DETAILS(m.getSubtotal(), m.getParent_id());
+			//修改产品物料组成明细
+			mapper.updated_module_details(m.getAmount(), m.getProduct_id(),pid);
+			//修改产品生产工序表
+			id=m.getParent_id();
+		}
+		int count=mapper.updateM_DESIGN_PROCEDURE(mapper.getM_DESIGN_PROCEDURE_ID(id));
+		return count;
+	}
+
+	@Override
+	public List<m_design_procedure> getAllm_design_procedureBywlsjwc() {
+		// TODO Auto-generated method stub
+		return mapper.getAllm_design_procedureBywlsjwc();
+	}
+
+	@Override
+	public List<m_design_procedure_module> getM_DESIGN_PROCEDURE_MODULEByParent_Id(int id) {
+		// TODO Auto-generated method stub
+		return mapper.getM_DESIGN_PROCEDURE_MODULEByParent_Id(id);
+	}
+
+	@Override
+	public int updateProduce(int id) {
+		// TODO Auto-generated method stub
+		return mapper.updateProduct(id);
+	}
+
+	@Override
+	public List<m_design_procedure> getAllM_design_procedure() {
+		// TODO Auto-generated method stub
+		return mapper.getAllM_design_procedure();
 	}
 }

@@ -126,6 +126,9 @@ public class productFilesController {
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");
 		int idd=productFilesMapper.test();
+		if(idd==0) {
+			idd=1;
+		}
 		int dd=productFilesMapper.test2();
 		int ddd=dd+1;
 		int iddd=idd+1;

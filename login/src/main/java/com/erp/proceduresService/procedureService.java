@@ -8,6 +8,7 @@ import com.erp.pojo.D_module;
 import com.erp.pojo.d_file;
 import com.erp.pojo.m_design_procedure;
 import com.erp.pojo.m_design_procedure_details;
+import com.erp.pojo.m_design_procedure_module;
 
 public interface procedureService {
 	//获取所有的档案信息必须是通过的档案信息
@@ -38,4 +39,18 @@ public interface procedureService {
 		
 		//获取所有的完成审核的产品工序
 		List<m_design_procedure> getAllm_design_procedureBycheck_tag();
+		
+		//获取所有的物料组成和它关联的物料组成详细表
+		D_module D_moduleXX(String id);
+		
+		int addM_WL(List<m_design_procedure_module> modul, int id);
+		
+		//获取通过审核并且工序物料设计已经完成了的产品工序表
+		List<m_design_procedure> getAllm_design_procedureBywlsjwc();
+		//根据父级编号获取产品工序物料详细组成表
+		List<m_design_procedure_module> getM_DESIGN_PROCEDURE_MODULEByParent_Id(@Param("id") int id);
+		//修改产品生产工序表的物料组成设计标志
+		int updateProduce(int id);
+		//获取所有的产品生产工序标的数据
+		List<m_design_procedure> getAllM_design_procedure();
 }

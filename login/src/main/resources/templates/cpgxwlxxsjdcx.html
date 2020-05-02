@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>用户中心--layui后台管理模板 2.0</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" media="all" />
+</head>
+<body class="childrenBody">
+	<div class="layui-row">
+		<div class="magb15 layui-col-md4 layui-col-xs12">
+			<label class="layui-form-label">设计单编号</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input userName" id="product_name" lay-verify="required" th:placeholder="${pr.design_id}" disabled="disabled">
+			</div>
+		</div>
+		<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+		<div class="magb15 layui-col-md4 layui-col-xs12">
+			<label class="layui-form-label">制造商</label>
+			<div class="layui-input-block">
+				<span></span>
+			</div>
+		</div>
+
+	</div>	<br />
+	
+	<div class="layui-row">
+		<div class="magb15 layui-col-md7 layui-col-xs12">
+			<label class="layui-form-label" style="font-size: 18px;">设计人</label>
+			<div class="layui-input-block">
+				<span th:text="${pr.designer}"></span>
+			</div>
+		</div>
+		
+		<div class="magb15 layui-col-md5 layui-col-xs12"></div>
+	</div>	<br /><br />
+		<table class="table table-hover" >
+			 <thead>
+			<tr>
+				<td>工序序号</td>
+				<td>工序名称</td>
+				<td>工序编号</td>
+				<td>描述</td>
+				<td>工时数</td>
+				<td>工时单位</td>
+				<td>单位工时成本</td>
+				<td>物料成本小计</td>
+				<td>审核</td>
+			</tr>
+			</thead>
+			<tbody class="wlgxList">
+				<tr th:each="pr:${p}">
+					<td th:text="${pr.details_number}"></td>
+					<td th:text="${pr.procedure_name}"></td>
+					<td th:text="${pr.procedure_id}"></td>
+					<td th:text="${pr.procedure_describe}"></td>
+					<td th:text="${pr.labour_hour_amount}"></td>
+					<td th:text="${pr.amount_unit}"></td>
+					<td th:text="${pr.cost_price }"></td>
+					<td th:text="${pr.module_subtotal}"></td>
+					<td><input th:value="${pr.id}" type="hidden"/><button type="button" class="btn btn-primary btn-lg" id="sh"
+					data-toggle="modal" data-target="#myModal">查询</button></td>
+					<td></td>
+				</tr>
+            </tbody>
+		</table>		<br /><br />
+		<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">工序物料设计单</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table table-hover" id="GxList">
+						<tr>
+							<td>序号</td>
+							<td>物料名称</td>
+							<td>物料编号</td>
+							<td>描述</td>
+							<td>本工序数量</td>
+							<td>单位</td>
+							<td>单价（元）</td>
+							<td>小计</td>
+						</tr>
+						<tbody id="wlList">
+							
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		
+	<div class="magb15 layui-col-md1 layui-col-xs12">
+		<span>审核时间：</span>
+	</div>
+
+	<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
+		<script>
+			setInterval(
+					"document.getElementById('datetime').innerHTML=new Date().toLocaleString();",
+					1000);
+		</script>
+	</div>
+	</div>
+	
+	<div class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
+		<label class="layui-form-label" style="font-size: 17px;">审核意见</label>
+		<div class="layui-input-block">
+			<textarea placeholder="请输入信息" th:text="${pr.procedure_describe}" readonly="true" class="layui-textarea userDesc" id="procedure_describe"></textarea>
+		</div>
+	</div>	<br />
+	
+
+
+
+	<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+	<script type="text/javascript" th:src="@{/js/ADDF.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".wlgxList").on("click","#sh",function(){
+			var id=$(this).prev().val();
+			$.post("cpwlzcxxbById",{"id":id},back,"json")
+			function back(a){
+				$("#GxList tr:gt(0)").remove();
+				$(a).each(function(){
+					var $tr="<tr><td>"+this.details_number+"</td><td>"+this.product_name+"</td><td>"+this.product_id+"</td><td>"+this.product_describe+"</td><td>"+this.amount+"</td><td>"+this.amount_unit+"</td><td>"+this.cost_price+"</td><td>"+this.subtotal+"</td></tr>";
+					$("#GxList").append($tr);
+				})
+			}
+		})
+
+	})
+</script>
+</body>
+</html>
