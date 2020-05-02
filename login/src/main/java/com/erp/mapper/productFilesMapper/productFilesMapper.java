@@ -42,7 +42,7 @@ public interface productFilesMapper {
 
 	int addDetails(@Param("de")D_module_details de);
 
-	int test();
+	String test();
 
 
 	int auditD_module(int id, int audit, User user);
@@ -54,9 +54,9 @@ public interface productFilesMapper {
 	D_CONFIG_FILE_KIND D_CONFIG_FILE_KINDByid(int id);
 
 
-	int test1();
+	String test1();
 	
-	int test2();
+	String test2();
 
 	d_file getdeee(int id);
 

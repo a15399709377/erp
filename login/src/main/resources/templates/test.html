@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- 引入样式 -->
+<link rel="stylesheet"
+	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+
+</head>
+<style>
+.el-row {
+	margin-bottom: 20px;
+	&:
+	last-child
+	{
+	margin-bottom
+	:
+	0;
+}
+
+}
+.el-col {
+	border-radius: 4px;
+}
+
+.bg-purple-dark {
+	background: #99a9bf;
+}
+
+.bg-purple {
+	background: #d3dce6;
+}
+
+.bg-purple-light {
+	background: #e5e9f2;
+}
+
+.grid-content {
+	border-radius: 4px;
+	min-height: 36px;
+}
+
+.row-bg {
+	padding: 10px 0;
+	background-color: #f9fafc;
+}
+
+.el-table .warning-row {
+	background: oldlace;
+}
+
+.el-table .success-row {
+	background: #f0f9eb;
+}
+</style>
+<body>
+<div class="container " style="width: 100%" id="app">
+	<button type="button" class="btn btn-info sk" data-toggle="modal"
+		data-target="#myModal" @click="ck(2)">登记</button>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div style="width: 80%" class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h5>
+						<small>入库单</small>
+					</h5>
+				</div>
+				<div class="modal-body">
+					
+						<div class="row">
+
+							<input id="num" type="text" v-model="sss" />
+							<el-row> <el-col :span="24">
+							<div class="text-center grid-content bg-purple-dark">
+								<span class="text-center">物料组成设计单</span>
+							</div>
+							</el-col> </el-row>
+							<el-row> <el-col :span="12">
+							<div class="grid-content bg-purple">
+								<span class="">入库单编号:</span>
+								<el-input placeholder="请输入内容" v-model="dd.name" :disabled="true"></el-input>
+							</div>
+							</el-col> <el-col :span="12">
+							<div class="grid-content bg-purple-light"></div>
+							</el-col> </el-row>
+							<el-row> <el-col :span="12">
+							<div class="grid-content bg-purple">
+								<span class="">入库理由:</span>
+								<el-input placeholder="请输入内容" v-model="dd.name" :disabled="true"></el-input>
+							</div>
+							</el-col> <el-col :span="12">
+							<div class="grid-content bg-purple-light">
+								<span class="">入库详细理由:</span>
+								<el-input placeholder="请输入内容" v-model="dd.name" :disabled="true"></el-input>
+							</div>
+							</el-col> </el-row>
+							<el-row> <el-col :span="24">
+							<table class="table table-hover">
+								<tr>
+									<td>产品编号</td>
+									<td>产品名称</td>
+									<td>库房名称</td>
+									<td>应入库件数</td>
+									<td>已入库件数</td>
+									<td>本次入库数量</td>
+									<td>序列号</td>
+								</tr>
+								<tr th:each="t:${list}">
+									<td th:text="${t.name}"></td>
+									<td><el-slider v-model="num" @change="cs"></el-slider></td>
+								</tr>
+							</table>
+							</el-col> </el-row>
+							<el-row> <el-col :span="12">
+							<div class="grid-content bg-purple">
+								<span class="">入库单编号:</span>
+								<el-input placeholder="请输入内容" v-model="dd.name" :disabled="true"></el-input>
+							</div>
+							</el-col> <el-col :span="12">
+							<div class="grid-content bg-purple-light">
+								<span class="">入库单编号:</span>
+								<el-input placeholder="请输入内容" v-model="dd.name" :disabled="true"></el-input>
+							</div>
+							</el-col> </el-row>
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal" id="qd">登记</button>
+
+
+
+						</div>
+					
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+<script type="text/javascript" src="js/qs.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.5"></script>
+<script>
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				sss:0,
+				num: 1,
+				input: '',
+				id: '',
+				name: '',
+				keywords: '',
+				list: [], //存储所有品牌对象的数据,
+				dd: {
+					name: "sss"
+				}, tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '<input type="text" />',
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }],data:[]
+			},
+			mounted() { //初始化显示完成调用
+
+			},
+			methods: {
+				handleChange(value) {
+					console.log(value);
+				},
+				cs() {
+
+				},
+				ck(a){
+			    	  alert(a);
+			      }
+			}
+		
+			
+		})
+	</script>
+</html>

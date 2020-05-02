@@ -233,15 +233,15 @@
 	
 	</insert>
 	
-	<select id="test" resultType="int">
-   select * from D_MODULE order by id DESC limit 1
+	<select id="test" resultType="String">
+   select id from D_MODULE order by id DESC limit 1
    </select>
-   <select id="test1" resultType="int">
-   select * from d_file order by id DESC limit 1
+   <select id="test1" resultType="String">
+   select id from d_file order by id DESC limit 1
    </select>
    
-    <select id="test2" resultType="int">
-   select * from D_CONFIG_FILE_KIND order by id DESC limit 1
+    <select id="test2" resultType="String">
+   select id from D_CONFIG_FILE_KIND order by id DESC limit 1
    </select>
    
    <select id="D_CONFIG_FILE_KINDByid" resultType="D_CONFIG_FILE_KIND">
