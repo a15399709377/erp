@@ -6,18 +6,16 @@
 	namespace="com.erp.mapper.productionPlanMapper.productionPlanMapper">
 	
 	<insert id="addProductionPlan">
-	insert into M_APPLY values(null,#{app.apply_id},
-	#{app.product.product_id},#{app.product.product_name},
-	#{app.product.product_describe},#{app.product.type},
-	#{app.product.amount},#{app.designer},
-	<choose>
-	<when test="app.remark!=null">
-	#{app.remark}
-	</when>
-	<otherwise>null</otherwise>
-	</choose>,#{app.register},now(),null,null,null,'S001-0','P001-0'
+	insert into M_APPLY values(null,#{sc_id},
+	#{df.product_id},#{df.product_name},
+	#{df.product_describe},#{df.type},
+	#{df.amount},#{user.login_id},null,#{user.login_id},now(),null,null,null,'S001-0','P001-0','SC001'
 	);
 	</insert>
+	<select id="test" resultType="String">
+	select id from M_APPLY  ORDER BY id DESC LIMIT 1
+	</select>
+	
 	<update id="auditProductionPlan">
 	update m_apply set checker=#{user.login_id},
 	<choose>
@@ -36,4 +34,17 @@
 	where id=#{app1.id}
 	
 	</update>
+	
+	
+	
+	<select id="d_fileAll" resultType="d_file">
+	select * from d_file  where type='Y001-1' and design_module_tag='W001-1'  and check_tag='S001-1' ;
+	</select>
+	
+	<select id="sccxAll" resultType="m_apply">
+	select * from m_apply ;
+	</select>
+	
+	
+	
 	</mapper>

@@ -18,12 +18,31 @@
 <link href="css/style.min.css?v=4.0.0" rel="stylesheet">
 <base target="_blank">
 </head>
-<body>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>产品设计 <small>产品档案管理  -->产品档案查询</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <button class="btn  btn-outline" type="button" name="refresh" title="刷新">
+                            	<i class="glyphicon glyphicon-repeat"></i>
+                            </button>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+     
+    </div>
 	<div class="container">
 		<div class="row">
-
-
-
 			<div class="layui-row">
 				<div class="magb15 layui-col-md4 layui-col-xs12">
 					<label class="layui-form-label">产品添加</label>
@@ -31,6 +50,7 @@
 
 						<button class="btn btn-info sk" data-toggle="modal"
 							data-target="#myModal">添加产品</button>
+							<button id="qd" class="btn btn-info" >确定</button>
 					</div>
 				</div>
 
@@ -39,12 +59,12 @@
 
 			</div>
 			<br />
-
+<form id="f1">
 			<div class="layui-row">
 				<div class="magb15 layui-col-md7 layui-col-xs12">
 					<label class="layui-form-label" style="font-size: 18px;">入库人</label>
 					<div class="layui-input-block">
-						<input type="text" class="layui-input userName"
+						<input type="text" th:value="${username}" class="layui-input userName"
 							lay-verify="required" placeholder="请输入数值">
 					</div>
 				</div>
@@ -52,7 +72,7 @@
 				<div class="magb15 layui-col-md5 layui-col-xs12">
 					<label class="layui-form-label">入库理由</label>
 					<div class="layui-input-block">
-						<select name="type" class="userStatus" lay-filter="userStatus">
+						<select name="reason" class="userStatus" lay-filter="userStatus">
 							<option value="R001-1">生产入库</option>
 							<option value="R001-2">库存初始</option>
 							<option value="R001-3">赠送</option>
@@ -68,13 +88,11 @@
 					<tr>
 						<td>点选</td>
 						<td>产品名称</td>
-						<td>产品编号</td>
-						<td>描述</td>
-						<td>类型</td>
 						<td>单位</td>
 						<td>成本单价(￥)</td>
 						<td>数量</td>
 						<td>小计(￥)</td>
+						<td>操作</td>
 					</tr>
 				</table>
 				<br /> <br />
@@ -84,7 +102,7 @@
 						<div class="layui-input-block">
 
 							<input type="text" class="layui-input userName"
-								lay-verify="required" placeholder="不可选中" disabled="disabled">
+								lay-verify="required" name="amount_sum" placeholder="不可选中" disabled="disabled">
 						</div>
 
 
@@ -93,13 +111,13 @@
 						<div class="magb15 layui-col-md4 layui-col-xs12">
 							<label class="layui-form-label">总金额</label>
 							<div class="layui-input-block">
-								<input type="text" class="layui-input userName"
+								<input type="text" name="cost_price_sum" class="layui-input userName"
 									lay-verify="required" placeholder="不可选中" disabled="disabled">
 							</div>
 						</div>
 						<div class="magb15 layui-col-md5 layui-col-xs12"></div>
 					</div>
-					<div class="layui-row">
+					<div class="layui-row" id="xxx">
 						<div class="magb15 layui-col-md7 layui-col-xs12">
 							<label class="layui-form-label" style="font-size: 18px;">登记人</label>
 							<div class="layui-input-block">
@@ -128,7 +146,7 @@
 						class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
 						<label class="layui-form-label" style="font-size: 17px;">详细理由</label>
 						<div class="layui-input-block">
-							<textarea placeholder="请输入信息" class="layui-textarea userDesc"></textarea>
+							<textarea placeholder="请输入信息" name="reasonexact" class="layui-textarea userDesc"></textarea>
 						</div>
 					</div>
 					<br />
@@ -183,55 +201,33 @@
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 </body>
+<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/page/ADDF.js}"></script>
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.5"></script>
 <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
 <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script src="js/content.min.js?v=1.0.0"></script>
-<script>
-	$(document).ready(function() {
-		$(".dataTables-example").dataTable();
-		var oTable = $("#editable").dataTable();
-		oTable.$("td").editable("../example_ajax.php", {
-			"callback" : function(sValue, y) {
-				var aPos = oTable.fnGetPosition(this);
-				oTable.fnUpdate(sValue, aPos[0], aPos[1])
-			},
-			"submitdata" : function(value, settings) {
-				return {
-					"row_id" : this.parentNode.getAttribute("id"),
-					"column" : oTable.fnGetPosition(this)[2]
-				}
-			},
-			"width" : "90%",
-			"height" : "100%"
-		})
-	});
-	function fnClickAddRow() {
-		$("#editable").dataTable().fnAddData(
-				[ "Custom row", "New row", "New row", "New row", "New row" ])
-	};
-</script>
-<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-<script type="text/javascript" th:src="@{/page/ADDF.js}"></script>
 <script type="text/javascript">
 	$(function() {
 		$(".sk")
 				.click(
 						function() {
+							amount_sum=0;
 							$("#tab  tr:not(:first)").html("");
 							$.post("designProductMaterial", back, "Json");
 							function back(aa) {
 								for (var i = 0; i < aa.length; i++) {
 									var node = $("<tr><td style='display:none;'>"
 											+ aa[i]["id"]
-											+ "</td><td><input type='checkbox' name='xz' /></td><td>"
+											+ "</td><td><input type='checkbox' name='xz' class='xz' /></td><td>"
 											+ aa[i]["product_name"]
 											+ "</td><td>"
 											+ aa[i]["product_id"]
@@ -248,24 +244,103 @@
 							}
 						})
 
-		$("#tg")
-				.click(
+		$("#tg").click(function() {
+			var details = new Array();
+				$("#fab  tr:not(:first)").html("");
+					$("input[name='xz']").each(
 						function() {
-							var details = new Array();
-							$("#fab  tr:not(:first)").html("");
-							$("input[name='xz']")
-									.each(
-											function() {
-												if ($(this).is(":checked")) {
-													var node = $(this).parent()
-															.parent().html();
-													var node1 = $("<tr>"
-															+ node
-															+ "<td><input type='text' class='amount'/></td><td></td></tr>");
-													$("#fab").append(node1);
-												}
-											});
+							if ($(this).is(":checked")) {
+								var id = $(this).parent().prev().html();
+								var name=$(this).parent().next().html();
+								var unit=$(this).parent().next().next().next().next().next().html();
+								var price=$(this).parent().next().next().next().next().next().next().html();
+								var node1 = $("<tr><td style='display:none;'>"+id+"</td><td><input type='checkbox' name='xx' class='xz' /></td><td>"+name+"</td><td>"+unit+"</td><td>"+price+"</td><td><input type='text' class='amount'/></td><td></td><td><button class='btn btn-info sc' >删除产品</button></td></tr>");
+								$("#fab").append(node1);
+							}
+						});
+						})
+						var amount_sum=0;
+		                var cost_price_sum=0;
+						$("#fab").on("change","[name='xx']",function(){
+							var dd=$(this).parent().next().next().next().next().children();
+							if($(this).is(":checked")){								
+								dd.val(1);
+								var price=$(this).parent().next().next().next().html();
+								$(this).parent().next().next().next().next().next().html(parseInt(dd.val())*parseInt(price));
+								amount_sum=amount_sum+1;
+								cost_price_sum=cost_price_sum+parseInt(dd.val())*parseInt(price);
+								$("[name='amount_sum']").val(amount_sum);
+								$("[name='cost_price_sum']").val(cost_price_sum);
+							}else{								
+								amount_sum=amount_sum-parseInt(dd.val());
+								cost_price_sum=cost_price_sum-parseInt($(this).parent().next().next().next().next().next().html());
+								$("[name='amount_sum']").val(amount_sum);
+								$("[name='cost_price_sum']").val(cost_price_sum);
+								dd.val("");
+								$(this).parent().next().next().next().next().next().html("");
+							}
+								
+														
+							
+							});
+		
+						$("#fab").on("change",".amount",function(){
+							amount_sum=0;
+							cost_price_sum=0;
+							var amount=$(this).val();
+							var price=$(this).parent().prev().html();
+							$(this).parent().next().html(parseInt(amount)*parseInt(price));							
+							
+							$("#fab  tr").not(":first").each(function(){
+								if($(this).children(":eq(1)").children(0).is(":checked")){
+									amount_sum=amount_sum+parseInt($(this).children(":eq(5)").children(0).val());
+									cost_price_sum=cost_price_sum+parseInt($(this).children(":eq(6)").html());
+								}							
+							})
+							$("[name='amount_sum']").val(amount_sum);
+							$("[name='cost_price_sum']").val(cost_price_sum);
+						});
+						
+						$("#qd").click(function(){
+							var DETAILS = new Array();
+							$("input[name='xx']").each(function() {
+								 var id=$(this).parent().prev().html();
+					              var amount=$(this).parent().next().next().next().next().children(0).val();
+					              var subtotal=$(this).parent().next().next().next().next().next().html();				              
+					              var cost_price=$(this).parent().next().next().next().html();
+					              alert(cost_price);
+					              var S_GATHER_DETAILS={"id":id,"amount":amount,"cost_price":cost_price,"subtotal":subtotal};
+					              DETAILS.push(S_GATHER_DETAILS);
+									});
+							$.ajax({
+								type:"POST",
+								url:"AllS_GATHER_DETAILS",
+								data:JSON.stringify(DETAILS),
+								contentType:"application/json;charsetset=UTF-8",
+								dataType:"json",
+								cache:true,
+								async:false,
+								error:function(request){
+									showTipAlert("Connection error");
+								},
+								success:function(data){
+									
+								}
+							})
+							var reason=$("[name='reason']").val();
+							var reasonexact=$("[name='reasonexact']").val();
+							$.post("addWarehousing",{"reason":reason,"reasonexact":reasonexact,"amount_sum":amount_sum,"cost_price_sum":cost_price_sum},back,"text")
+							function back(a){
+								if(a>0){
+									alert("增加成功!");
+								}
+							}
 						})
 	})
+	
+	
 </script>
+
+
+
 </html>
