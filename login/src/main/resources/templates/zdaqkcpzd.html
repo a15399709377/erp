@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>H+ 后台主题UI框架 - 数据表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+	<link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+<style type="text/css">
+input{
+	  width:50%;
+}
+</style>
+</head>
+<!--  border:none;-->
+<body class="gray-bg">
+    <div id="app">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>库存管理<small>安全库存配置管理  --> 制定安全库存配置单</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <button class="btn  btn-outline" type="button" name="refresh" title="刷新">
+                            	<i class="glyphicon glyphicon-repeat"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                	<th>序号</th>
+                                    <th>产品编号</th>
+									<th>产品名称</th>
+									<th>用途类型</th>
+									<th>档次级别</th>
+									<th>I级分类</th>
+									<th>II级分类</th>
+									<th>III级分类</th>
+									<th>详情</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="file:${list}">
+                                	<td th:text="${file.id}"></td>
+									<td th:text="${file.product_id}"></td>
+									<td th:text="${file.product_name}"></td>
+									<td th:if="${file.type=='Y001-1'}">商品</td>
+									<td th:if="${file.type=='Y001-2'}">物料</td>
+									<td th:if="${file.product_class=='D001-1'}">高档</td>
+									<td th:if="${file.product_class=='D001-2'}">中档</td>
+									<td th:if="${file.product_class=='D001-3'}">低档</td>
+									<td th:text=${file.first_kind_name}></td>
+									<td th:text=${file.second_kind_name}></td>
+									<td th:text=${file.third_kind_name}></td>
+									<td>
+									  <button id="zd" class="btn btn-info " data-toggle="modal" data-target="#myModal">制定</button>
+									</td>
+								</tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     
+     <!-- Modal -->
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div style="width: 80%" class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5>库存管理<small>安全库存配置管理  --> 制定安全库存配置单</small></h5>
+					</div>
+					<div class="modal-body">
+						<form class="layui-form">
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">产品名称</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="product_name" placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">产品编号</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="product_id"  placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+							</div>
+							<br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">库存预警下限数</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值" name="min_amount">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">库存预警上限数</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName"
+											lay-verify="required"  placeholder="请输入数值" name="max_amount" >
+									</div>
+								</div>
+							</div>
+							<br /> <br />
+
+							<table class="table" id="tab">
+								<tr>
+                                	<th>序号</th>
+                                    <th>仓库名称</th>
+									<th>最大存储量</th>
+									<th>存储单位</th>
+                                </tr>
+								
+							</table>
+							<br /> <br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">登记人</label>
+									<div class="layui-input-block">
+										<input type="text"  class="layui-input userName"
+										 th:value="${username}"	lay-verify="required" placeholder="请输入登记人" name="register">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+								
+								<div class="magb15 layui-col-md1 layui-col-xs12">
+									<span>登记时间：</span>
+								</div>
+
+								<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
+									<script>
+										setInterval(
+												"document.getElementById('datetime').innerHTML=new Date().toLocaleString();",
+												1000);
+									</script>
+								</div>
+							</div>
+
+							<div
+								class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
+								<label class="layui-form-label" style="font-size: 17px;">配置要求</label>
+								<div class="layui-input-block">
+									<textarea placeholder="请输入信息" name="config" class="layui-textarea userDesc"></textarea>
+								</div>
+							</div>
+							<br />
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md1 layui-col-xs12"></div>
+							</div>
+
+
+
+							<!--操作-->
+							<script type="text/html" id="userListBar">
+								<input type="radio"/>
+							</script>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" id="btg">复核不通过</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="tj">提交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+    </div>
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script>
+        $(document).ready(function(){
+        	$(".dataTables-example").dataTable();
+        	var oTable=$("#editable").dataTable();
+        	oTable.$("td").editable("../example_ajax.php",{
+        		"callback":function(sValue,y){
+        			var aPos=oTable.fnGetPosition(this);
+        			oTable.fnUpdate(sValue,aPos[0],aPos[1])},
+        		"submitdata":function(value,settings){
+        			return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})
+        });
+        $("#zd").click(function(){
+        	var id=$(this).parent().parent().children(0).html();
+    		$("#tab  tr:not(:first)").html("");
+        	$.post("zdaqkcpzdx",{"id":id},back,"Json")
+    		function back(a){
+    			console.log(a);
+    			$("[name='product_name']").val(a["product_name"]);
+    			$("[name='product_id']").val(a["product_id"]);
+    			$("[name='min_amount']").val(a["min_amount"]);
+    			$("[name='max_amount']").val(a["max_amount"]);
+    			$.post("cxkcbxx",back,"Json")
+        		function back(b){
+        			  var node=$("<tr><td>"+b["id"]+"</td><td>"+b["housename"]+"</td><td><input type='text' name='max_capacity_amount'/> </td><td><input type='text' id='hh'/></td></tr>");
+        			    $("#tab").append(node);
+        		}
+    		}
+    	  })
+    	 $("#tj").click(function(){
+    		var productid=$("[name='product_id']").val();
+			var min=$("[name='min_amount']").val();
+			var max=$("[name='max_amount']").val();
+			var maxca=$("[name='max_capacity_amount']").val();
+			var config=$("[name='config']").val();
+			$.post("aqkcpzd",{"product_id":productid,"min_amount":min,"max_amount":max,"max_capacity_amount":maxca,"config":config},back,"text");
+			function back(a){
+				if(a>0){
+					swal({title:"提交成功",text:"需要审核！",type:"success"},
+							function(){	window.location="zdaqkcpzd"}
+				     )
+				}else{
+					swal({title:"提交失败",text:"需要重新提交！",type:"error"})
+				}
+			}
+		})
+           function fnClickAddRow(){
+        	   $("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
+    </script>
+</body>
+
+</html>
+<!-- 
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>H+ 后台主题UI框架 - Sweet alert</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    Sweet Alert
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Sweet Alert</h5>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <strong>可以替换JavaScript中alert的插件</strong>
+
+                        <p>
+                            Sweet Alert 是一个替代传统的 JavaScript Alert 的漂亮提示效果。SweetAlert 自动居中对齐在页面中央，不管您使用的是台式电脑，手机或平板电脑看起来效果都很棒。另外提供了丰富的自定义配置选择，可以灵活控制。项目主页：
+                            <a href="http://t4t5.github.io/sweetalert/" target="_blank">http://t4t5.github.io/sweetalert/</a>
+
+                        </p>
+
+                        <div class="row text-center">
+
+                            <div class="col-sm-6 h-100 p-lg">
+                                <p>基本消息</p>
+                                <button class="btn btn-primary btn-sm demo1">打开示例</button>
+                            </div>
+                            <div class="col-sm-6 h-100 p-lg">
+                                <p>成功提示 </p>
+                                <button class="btn btn-success btn-sm demo2">打开示例</button>
+                            </div>
+                            <div class="col-sm-6 h-100 p-lg">
+                                <p>警告信息</p>
+                                <button class="btn btn-warning btn-sm demo3">打开示例</button>
+                            </div>
+                            <div class="col-sm-6 h-100 p-lg">
+                                <p>通过传参可以自定义取消按钮 </p>
+                                <button class="btn btn-danger btn-sm demo4">打开示例</button>
+                            </div>
+
+
+
+
+
+                        </div>
+                        <div class="m-t-md">
+                            <p>
+                                您可以在js中很简单的实用SweetAlert，如添加一个警告框：
+                            </p>
+                            <pre>
+$('.demo3').click(function () {
+    swal({
+        title: "您确定要删除这条信息吗",
+        text: "删除后将无法恢复，请谨慎操作！",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "删除",
+        closeOnConfirm: false
+    }, function () {
+        swal("删除成功！", "您已经永久删除了这条信息。", "success");
+    });
+});</pre>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function(){
+        	$(".demo1").click(function(){
+        		swal({title:"欢迎使用SweetAlert",text:"Sweet Alert 是一个替代传统的 JavaScript Alert 的漂亮提示效果。"})
+        		});
+        	$(".demo2").click(function(){
+        		swal({title:"太帅了",text:"小手一抖就打开了一个框",type:"success"})
+        		});
+        	$(".demo3").click(function(){swal({title:"您确定要删除这条信息吗",text:"删除后将无法恢复，请谨慎操作！",type:"warning",showCancelButton:true,confirmButtonColor:"#DD6B55",confirmButtonText:"删除",closeOnConfirm:false},
+        		function(){swal("删除成功！","您已经永久删除了这条信息。","success")})});
+        	$(".demo4").click(function(){
+        		swal({title:"您确定要删除这条信息吗",text:"删除后将无法恢复，请谨慎操作！",type:"warning",showCancelButton:true,confirmButtonColor:"#DD6B55",confirmButtonText:"是的，我要删除！",cancelButtonText:"让我再考虑一下…",closeOnConfirm:false,closeOnCancel:false},
+        				function(isConfirm){if(isConfirm){swal("删除成功！","您已经永久删除了这条信息。","success")
+        					}else{swal("已取消","您取消了删除操作！","error")}})})});
+    </script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+</html> -->

@@ -3,28 +3,101 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.erp.mapper.s_cellmapper.s_cellmapper">
-
-<select id="seles_cell" resultType="s_cell">
-select * from S_CELL where CHECK_TAG ='S001-0';
+<!--  -->
+   <select id="cxByshbz_kcfpbz" resultType="d_file">
+   		select * from d_file where check_tag='S001-1' and design_cell_tag='K001-0'
+   </select>
+   <select id="cxByproduct_id" resultType="d_file">
+   		select * from d_file where id=#{id}
+   </select>
+   
+   <select id="cxByshbz" resultType="d_file">
+   	SELECT d.* ,s.store_id ,s.`check_tag` AS s_check_tag  FROM d_file d,s_cell s WHERE d.product_id=s.product_id AND d.check_tag='S001-1'
+   </select>
+   <select id="aqkcpzdbgcx" resultType="d_file">
+	SELECT d.* ,s.store_id  FROM d_file d,s_cell s WHERE d.product_id=s.product_id AND d.check_tag='S001-1' AND s.check_tag='S001-1'
+	</select>
+	<select id="cxck" resultType="warehouse">select * from warehouse where id=1</select>
+	<select id="cxuser" resultType="User">SELECT * FROM sys_users WHERE login_id=#{register} </select>
+	<select id="cxByproduct_id2" resultType="d_file">
+   		select * from d_file where product_id=#{product_id}
+   </select>
+   <select id="cxzhid"  resultType="int">select count(1) from s_cell order by id DESC limit 1</select>
+	
+<select id="seles_cell" resultType="d_file">
+SELECT d.*,s.store_id,s.check_tag AS s_check_tag   FROM d_file d
+INNER JOIN s_cell s ON d.product_id=s.product_id 
+WHERE d.check_tag='S001-1'AND d.design_cell_tag='K001-1' AND s.check_tag='S001-0' OR s.check_tag='S001-2'
 </select>
+<select id="aqkcpzdfhcx" resultType="s_cell">SELECT * FROM S_CELL WHERE store_id=#{id} </select>
 
 <insert id="inserts_cell">
-insert into s_cell values(null,#{store_id},#{product_id},#{product_name},#{first_kind_id},#{first_kind_name},#{second_kind_id},#{second_kind_name},#{third_kind_id},#{third_kind_name},#{min_amount},#{max_amount},#{max_capacity_amount},#{amount},#{config},#{register},now(),#{checker},#{check_time},'S001-0');
+insert into s_cell values(null,#{store_id},#{product_id},#{product_name},
+#{first_kind.kind_id},#{first_kind.kind_name},#{second_kind.kind_id},#{second_kind.kind_name},#{third_kind.kind_id},#{third_kind.kind_name},
+#{min_amount},#{max_amount},#{max_capacity_amount},#{amount},#{config},#{register},now(),#{checker},#{check_time},'S001-0');
 </insert>
 
 <update id="upds_cell_check_tag">
-update s_cell set check_time=now() ,check_tag='S001-1' where id=#{id}
-</update>
+   	UPDATE s_cell 
+   	<set>
+   	   store_id=#{store_id},
+   	  <if test="min_amount!=null and min_amount!='' "> min_amount=#{min_amount},</if>
+   	  <if test="max_amount !=null and max_amount !='' "> max_amount=#{max_amount},</if>
+   	  <if test="max_capacity_amount !=null and max_capacity_amount !='' "> max_capacity_amount=#{max_capacity_amount},</if>
+   	  <if test="amount !=null and amount !='' "> amount=#{amount},</if>
+   	  <if test="checker !=null and checker !='' "> checker=#{checker},</if>
+   	  <if test="check_time !=null and check_time !='' "> check_time=now(),</if>
+   	  <if test="check_tag !=null and check_tag !='' "> check_tag=#{check_tag},</if>
+   	</set>
+   	 WHERE store_id=#{store_id}
+   </update>
+
 
 <update id="updd_file_design_cell_tag">
-	update D_FILE set 
-	<choose>
-			<when test="did=0">
-				design_cell_tag='K001-0'
-			</when>
-			<otherwise>
-				design_cell_tag='K001-1'
-			</otherwise>
-		</choose> where id=#{id}
-	</update>
+	update D_FILE set design_cell_tag='K001-1' where id=#{id}
+</update>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
+<select id="cpdadjshcx" resultType="d_file"> select * from d_file where id=#{id}</select>
+<select id="cpdabgcx" resultType="d_file">  SELECT * FROM d_file WHERE check_tag='S001-1' AND delete_tag='C001-0'</select>
+<update id="updD_file">
+	UPDATE d_file
+   	<set>
+   	   id=#{id},
+   	  <if test="product_name !=null and  product_name !='' "> product_name=#{product_name},</if>
+   	  <if test="factory_name !=null and factory_name !='' "> factory_name=#{factory_name},</if>
+   	  <if test="first_kind_id !=null and first_kind_id !='' "> first_kind_id=#{first_kind.kind_id},</if>
+   	  <if test="first_kind_name !=null and first_kind_name !='' "> first_kind_name=#{first_kind.kind_name},</if>
+   	  <if test="second_kind_id !=null and second_kind_id !='' "> second_kind_id=#{third_kind.kind_id},</if>
+   	  <if test="second_kind_name !=null and second_kind_name !='' "> second_kind_name=#{first_kind.kind_name}</if>
+   	  <if test="third_kind_id !=null and third_kind_id !='' "> third_kind_id=#{third_kind.kind_id},</if>
+   	  <if test="third_kind_name !=null and third_kind_name !='' "> third_kind_name=#{first_kind.kind_name},</if>
+   	  <if test="product_nick !=null and product_nick !='' "> product_nick=#{product_nick},</if>
+   	  <if test="type !=null and type !='' "> type=#{type},</if>
+   	  <if test="product_class !=null and product_class !='' "> product_class=#{product_class},</if>
+   	  <if test="personal_unit !=null and personal_unit !='' "> personal_unit=#{personal_unit},</if>
+   	  <if test="personal_value !=null and personal_value !='' "> personal_value=#{personal_value},</if>
+   	  <if test="provider_group !=null and provider_group !='' "> provider_group=#{provider_group},</if>
+   	  <if test="warranty !=null and warranty !='' "> warranty=#{warranty},</if>
+   	  <if test="twin_name !=null and twin_name !='' "> twin_name=#{twin_name},</if>
+   	  <if test="twin_id !=null and twin_id !='' "> twin_id=#{twin_id},</if>
+   	  <if test="lifecycle !=null and lifecycle !='' "> lifecycle=#{lifecycle},</if>
+   	  <if test="list_price !=null and list_price !='' "> list_price=#{list_price},</if>
+   	  <if test="cost_price !=null and cost_price !='' "> cost_price=#{cost_price},</if>
+   	  <if test="real_cost_price !=null and real_cost_price !='' "> real_cost_price=#{real_cost_price},</if>
+   	  <if test="amount_unit !=null and amount_unit !='' "> amount_unit=#{amount_unit},</if>
+   	  <if test="product_describe !=null and product_describe !='' "> product_describe=#{product_describe},</if>
+   	  <if test="responsible_person !=null and responsible_person !='' "> responsible_person=#{responsible_person},</if>
+   	  <if test="checker !=null and checker !='' "> checker=#{register.login_id},</if>
+   	  <if test="check_time !=null and check_time !='' "> check_time=now(),</if>
+   	  <if test="check_tag !=null and check_tag !='' "> check_tag=#{check_tag},</if>
+   	  <if test="changer !=null and changer !='' "> changer=#{changer},</if>
+   	  <if test="change_time !=null and change_time !='' "> change_time=#{change_time},</if>
+   	  <if test="change_tag !=null and change_tag !='' "> change_tag=#{change_tag},</if>
+   	  <if test="price_change_tag !=null and price_change_tag !='' "> price_change_tag=#{price_change_tag},</if>
+   	  <if test="file_change_amount !=null and file_change_amount !='' "> file_change_amount=file_change_amount+1,</if>
+   	  <if test="delete_tag !=null and delete_tag !='' "> delete_tag=#{delete_tag},</if>
+   	</set>
+   	 WHERE id=#{id}
+</update>
 </mapper>

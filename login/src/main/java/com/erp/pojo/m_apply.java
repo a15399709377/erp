@@ -3,7 +3,15 @@ package com.erp.pojo;
 public class m_apply {
 	private int id; //序号
 	private String apply_id; //生产计划编号
+	
 	private d_file product; //产品编号
+	
+	private  String product_id  ;// #产品编号
+	private  String  product_name     ;// #产品名称
+	private  String  product_describe ;// #产品描述
+	private  String  TYPE             ;// #用途类型`erpdb``erpdb`
+	private  int  amount         ;//# 数量
+	
 	private String designer; //设计人
 	private String remark; //备注
 	private String register; //登记人
@@ -14,7 +22,7 @@ public class m_apply {
 	private String check_tag; //审核标志 S001-0: 等待审核S001-1: 审核通过S001-2: 审核不通过
 	private String manufacture_tag; //派工标志P001-0: 未派工 P001-1: 已派工
 	private int audit;
-	
+	private String panduan;
 	public m_apply(int id, String check_suggestion, int audit) {
 		super();
 		this.id = id;
@@ -65,11 +73,12 @@ public class m_apply {
 	}
 	@Override
 	public String toString() {
-		return "m_apply [id=" + id + ", apply_id=" + apply_id + ", product=" + product + ", designer=" + designer
-				+ ", remark=" + remark + ", register=" + register + ", register_time=" + register_time + ", checker="
-				+ checker + ", check_suggestion=" + check_suggestion + ", check_time=" + check_time + ", check_tag="
-				+ check_tag + ", manufacture_tag=" + manufacture_tag + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "m_apply [id=" + id + ", apply_id=" + apply_id + ", product=" + product + ", product_id=" + product_id
+				+ ", product_name=" + product_name + ", product_describe=" + product_describe + ", TYPE=" + TYPE
+				+ ", amount=" + amount + ", designer=" + designer + ", remark=" + remark + ", register=" + register
+				+ ", register_time=" + register_time + ", checker=" + checker + ", check_suggestion=" + check_suggestion
+				+ ", check_time=" + check_time + ", check_tag=" + check_tag + ", manufacture_tag=" + manufacture_tag
+				+ ", audit=" + audit + ", panduan=" + panduan + "]";
 	}
 	public m_apply() {
 		super();
@@ -145,6 +154,86 @@ public class m_apply {
 	}
 	public void setManufacture_tag(String manufacture_tag) {
 		this.manufacture_tag = manufacture_tag;
+	}
+	public m_apply(int id, String apply_id, d_file product, String designer, String remark, String register,
+			String register_time, String checker, String check_suggestion, String check_time, String check_tag,
+			String manufacture_tag, int audit, String panduan) {
+		super();
+		this.id = id;
+		this.apply_id = apply_id;
+		this.product = product;
+		this.designer = designer;
+		this.remark = remark;
+		this.register = register;
+		this.register_time = register_time;
+		this.checker = checker;
+		this.check_suggestion = check_suggestion;
+		this.check_time = check_time;
+		this.check_tag = check_tag;
+		this.manufacture_tag = manufacture_tag;
+		this.audit = audit;
+		this.panduan = panduan;
+	}
+	public String getPanduan() {
+		return panduan;
+	}
+	public void setPanduan(String panduan) {
+		this.panduan = panduan;
+	}
+	public m_apply(int id, String apply_id, d_file product, String product_id, String product_name,
+			String product_describe, String tYPE, int amount, String designer, String remark, String register,
+			String register_time, String checker, String check_suggestion, String check_time, String check_tag,
+			String manufacture_tag, int audit, String panduan) {
+		super();
+		this.id = id;
+		this.apply_id = apply_id;
+		this.product = product;
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.product_describe = product_describe;
+		TYPE = tYPE;
+		this.amount = amount;
+		this.designer = designer;
+		this.remark = remark;
+		this.register = register;
+		this.register_time = register_time;
+		this.checker = checker;
+		this.check_suggestion = check_suggestion;
+		this.check_time = check_time;
+		this.check_tag = check_tag;
+		this.manufacture_tag = manufacture_tag;
+		this.audit = audit;
+		this.panduan = panduan;
+	}
+	public String getProduct_id() {
+		return product_id;
+	}
+	public void setProduct_id(String product_id) {
+		this.product_id = product_id;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public String getProduct_describe() {
+		return product_describe;
+	}
+	public void setProduct_describe(String product_describe) {
+		this.product_describe = product_describe;
+	}
+	public String getTYPE() {
+		return TYPE;
+	}
+	public void setTYPE(String tYPE) {
+		TYPE = tYPE;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 	
 	

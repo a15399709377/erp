@@ -7,11 +7,11 @@ private int   	 id                 ;//#序号
 private String 	 store_id           ;//#库存编号
 private String 	 product_id         ;//产品编号
 private String 	 product_name       ;//产品名称      
-private String 	 first_kind_id      ;//产品I级分类编号  
+private int 	 first_kind_id      ;//产品I级分类编号  
 private String 	 first_kind_name    ;// #产品I级分类名称  
-private String 	 second_kind_id     ;// #产品II级分类编号 
+private int 	 second_kind_id     ;// #产品II级分类编号 
 private String 	 second_kind_name   ;// #产品II级分类名称 
-private String 	 third_kind_id      ;// #产品III级分类编号
+private int 	 third_kind_id      ;// #产品III级分类编号
 private String 	 third_kind_name    ;// #产品III级分类名称
 private double 	 min_amount         ;// #库存报警下限数 
 private double 	 max_amount         ;// #库存报警上限数 
@@ -23,14 +23,19 @@ private String 	 register_time      ;//#登记时间
 private String 	 checker            ;//#复核人
 private String 	 check_time         ;//复核时间
 private String 	 check_tag          ;//审核标志
+private D_CONFIG_FILE_KIND first_kind; // '产品I级分类编号',
 
+private D_CONFIG_FILE_KIND second_kind;//  '产品II级分类编号',
+
+private D_CONFIG_FILE_KIND third_kind;//  '产品III级分类编号',
 public s_cell() {
 	super();
 }
-public s_cell(int id, String store_id, String product_id, String product_name, String first_kind_id,
-		String first_kind_name, String second_kind_id, String second_kind_name, String third_kind_id,
-		String third_kind_name, double min_amount, double max_amount, double max_capacity_amount, double amount,
-		String config, String register, String register_time, String checker, String check_time, String check_tag) {
+public s_cell(int id, String store_id, String product_id, String product_name, int first_kind_id,
+		String first_kind_name, int second_kind_id, String second_kind_name, int third_kind_id, String third_kind_name,
+		double min_amount, double max_amount, double max_capacity_amount, double amount, String config, String register,
+		String register_time, String checker, String check_time, String check_tag, D_CONFIG_FILE_KIND first_kind,
+		D_CONFIG_FILE_KIND second_kind, D_CONFIG_FILE_KIND third_kind) {
 	super();
 	this.id = id;
 	this.store_id = store_id;
@@ -52,6 +57,28 @@ public s_cell(int id, String store_id, String product_id, String product_name, S
 	this.checker = checker;
 	this.check_time = check_time;
 	this.check_tag = check_tag;
+	this.first_kind = first_kind;
+	this.second_kind = second_kind;
+	this.third_kind = third_kind;
+}
+
+public D_CONFIG_FILE_KIND getFirst_kind() {
+	return first_kind;
+}
+public void setFirst_kind(D_CONFIG_FILE_KIND first_kind) {
+	this.first_kind = first_kind;
+}
+public D_CONFIG_FILE_KIND getSecond_kind() {
+	return second_kind;
+}
+public void setSecond_kind(D_CONFIG_FILE_KIND second_kind) {
+	this.second_kind = second_kind;
+}
+public D_CONFIG_FILE_KIND getThird_kind() {
+	return third_kind;
+}
+public void setThird_kind(D_CONFIG_FILE_KIND third_kind) {
+	this.third_kind = third_kind;
 }
 public int getId() {
 	return id;
@@ -77,10 +104,10 @@ public String getProduct_name() {
 public void setProduct_name(String product_name) {
 	this.product_name = product_name;
 }
-public String getFirst_kind_id() {
+public int getFirst_kind_id() {
 	return first_kind_id;
 }
-public void setFirst_kind_id(String first_kind_id) {
+public void setFirst_kind_id(int first_kind_id) {
 	this.first_kind_id = first_kind_id;
 }
 public String getFirst_kind_name() {
@@ -89,10 +116,10 @@ public String getFirst_kind_name() {
 public void setFirst_kind_name(String first_kind_name) {
 	this.first_kind_name = first_kind_name;
 }
-public String getSecond_kind_id() {
+public int getSecond_kind_id() {
 	return second_kind_id;
 }
-public void setSecond_kind_id(String second_kind_id) {
+public void setSecond_kind_id(int second_kind_id) {
 	this.second_kind_id = second_kind_id;
 }
 public String getSecond_kind_name() {
@@ -101,10 +128,10 @@ public String getSecond_kind_name() {
 public void setSecond_kind_name(String second_kind_name) {
 	this.second_kind_name = second_kind_name;
 }
-public String getThird_kind_id() {
+public int getThird_kind_id() {
 	return third_kind_id;
 }
-public void setThird_kind_id(String third_kind_id) {
+public void setThird_kind_id(int third_kind_id) {
 	this.third_kind_id = third_kind_id;
 }
 public String getThird_kind_name() {
@@ -181,6 +208,8 @@ public String toString() {
 			+ third_kind_id + ", third_kind_name=" + third_kind_name + ", min_amount=" + min_amount + ", max_amount="
 			+ max_amount + ", max_capacity_amount=" + max_capacity_amount + ", amount=" + amount + ", config=" + config
 			+ ", register=" + register + ", register_time=" + register_time + ", checker=" + checker + ", check_time="
-			+ check_time + ", check_tag=" + check_tag + "]";
+			+ check_time +", check_tag=" + check_tag
+			+ ", first_kind=" + first_kind + ", second_kind=" + second_kind + ", third_kind=" + third_kind + "]";
 }
+
 }

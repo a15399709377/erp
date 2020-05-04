@@ -188,8 +188,5 @@ public class productFilesController {
 		System.out.println("========================="+list);
 		return "cpdacx";
 	}
-	@RequestMapping("/cpdabg")
-	public String  cpdabg(Model model) {
-		return "cpdabg";
-	}
+	
 }

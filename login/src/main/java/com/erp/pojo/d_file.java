@@ -52,6 +52,8 @@ public class d_file {
 	   private List<m_procedure> m_proceDure;
 	   private int amount;
 	   private m_design_procedure m_Design_Procedure; //产品工序
+	   private String store_id;
+	   private String s_check_tag;
 	public d_file(int id, String product_id, String product_name, String factory_name, int first_kind_id,
 			String first_kind_name, int second_kind_id, String second_kind_name, int third_kind_id,
 			String third_kind_name, D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind,
@@ -62,7 +64,7 @@ public class d_file {
 			String check_time, String check_tag, User changer, String change_time, String change_tag,
 			String price_change_tag, int file_change_amount, String delete_tag, String design_module_tag,
 			String design_procedure_tag, String design_cell_tag, List<m_procedure> m_proceDure, int amount,
-			m_design_procedure m_Design_Procedure) {
+			m_design_procedure m_Design_Procedure,String store_id,String s_check_tag) {
 		super();
 		this.id = id;
 		this.product_id = product_id;
@@ -110,7 +112,18 @@ public class d_file {
 		this.m_proceDure = m_proceDure;
 		this.amount = amount;
 		this.m_Design_Procedure = m_Design_Procedure;
+		this.store_id=store_id;
+		this.s_check_tag=s_check_tag;
 	}
+	
+	public String getS_check_tag() {
+		return s_check_tag;
+	}
+
+	public void setS_check_tag(String s_check_tag) {
+		this.s_check_tag = s_check_tag;
+	}
+
 	public String getFirst_kind_name() {
 		return first_kind_name;
 	}
@@ -129,24 +142,26 @@ public class d_file {
 	public void setThird_kind_name(String third_kind_name) {
 		this.third_kind_name = third_kind_name;
 	}
+	
 	@Override
 	public String toString() {
 		return "d_file [id=" + id + ", product_id=" + product_id + ", product_name=" + product_name + ", factory_name="
-				+ factory_name + ", first_kind_id=" + first_kind_id + ", second_kind_id=" + second_kind_id
-				+ ", third_kind_id=" + third_kind_id + ", first_kind=" + first_kind + ", second_kind=" + second_kind
-				+ ", third_kind=" + third_kind + ", product_nick=" + product_nick + ", type=" + type
-				+ ", product_class=" + product_class + ", personal_unit=" + personal_unit + ", personal_value="
-				+ personal_value + ", provider_group=" + provider_group + ", warranty=" + warranty + ", twin_name="
-				+ twin_name + ", twin_id=" + twin_id + ", lifecycle=" + lifecycle + ", list_price=" + list_price
-				+ ", cost_price=" + cost_price + ", real_cost_price=" + real_cost_price + ", amount_unit=" + amount_unit
-				+ ", product_describe=" + product_describe + ", responsible_person=" + responsible_person
+				+ factory_name + ", first_kind_id=" + first_kind_id + ", first_kind_name=" + first_kind_name
+				+ ", second_kind_id=" + second_kind_id + ", second_kind_name=" + second_kind_name + ", third_kind_id="
+				+ third_kind_id + ", third_kind_name=" + third_kind_name + ", first_kind=" + first_kind
+				+ ", second_kind=" + second_kind + ", third_kind=" + third_kind + ", product_nick=" + product_nick
+				+ ", type=" + type + ", product_class=" + product_class + ", personal_unit=" + personal_unit
+				+ ", personal_value=" + personal_value + ", provider_group=" + provider_group + ", warranty=" + warranty
+				+ ", twin_name=" + twin_name + ", twin_id=" + twin_id + ", lifecycle=" + lifecycle + ", list_price="
+				+ list_price + ", cost_price=" + cost_price + ", real_cost_price=" + real_cost_price + ", amount_unit="
+				+ amount_unit + ", product_describe=" + product_describe + ", responsible_person=" + responsible_person
 				+ ", register=" + register + ", register_time=" + register_time + ", checker=" + checker
 				+ ", check_time=" + check_time + ", check_tag=" + check_tag + ", changer=" + changer + ", change_time="
 				+ change_time + ", change_tag=" + change_tag + ", price_change_tag=" + price_change_tag
 				+ ", file_change_amount=" + file_change_amount + ", delete_tag=" + delete_tag + ", design_module_tag="
 				+ design_module_tag + ", design_procedure_tag=" + design_procedure_tag + ", design_cell_tag="
 				+ design_cell_tag + ", m_proceDure=" + m_proceDure + ", amount=" + amount + ", m_Design_Procedure="
-				+ m_Design_Procedure + "]";
+				+ m_Design_Procedure + ", store_id=" + store_id+ ", s_check_tag=" + s_check_tag + "]";
 	}
 	public d_file(D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind, D_CONFIG_FILE_KIND third_kind) {
 		super();
@@ -202,6 +217,12 @@ public class d_file {
 		this.design_module_tag = design_module_tag;
 		this.design_procedure_tag = design_procedure_tag;
 		this.design_cell_tag = design_cell_tag;
+	}
+	public String getStore_id() {
+		return store_id;
+	}
+	public void setStore_id(String store_id) {
+		this.store_id = store_id;
 	}
 	public d_file() {
 		super();
