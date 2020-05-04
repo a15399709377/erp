@@ -2,114 +2,193 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.erp.mapper.warehouseMapper.warehouseMapper">
-<insert id="addWarehousing">
-insert into S_GATHER values(
-null,#{gaa.gather_id},#{gaa.storer.login_id},#{gaa.reason},
-<choose>
-<when test="gaa.reasonexact!=null">
-#{gaa.reasonexact}
-</when>
-<otherwise>null</otherwise>
-</choose>,#{gaa.amount_sum},#{gaa.cost_price_sum},#{gaa.gathered_amount_sum},
-<choose>
-<when test="gaa.remark!=null">
-#{gaa.remark}
-</when>
-<otherwise>null</otherwise>
-</choose>,#{gaa.register.login_id},now(),null,null,'S001-0',null,null,'K002-0'
-);
-</insert>
+<mapper
+	namespace="com.erp.mapper.warehouseMapper.warehouseMapper">
+	<insert id="addWarehousing">
+		insert into S_GATHER values(
+		null,#{gaa.gather_id},#{gaa.storer.login_id},#{gaa.reason},
+		<choose>
+			<when test="gaa.reasonexact!=null">
+				#{gaa.reasonexact}
+			</when>
+			<otherwise>null</otherwise>
+		</choose>
+		,#{gaa.amount_sum},#{gaa.cost_price_sum},#{gaa.gathered_amount_sum},
+		<choose>
+			<when test="gaa.remark!=null">
+				#{gaa.remark}
+			</when>
+			<otherwise>null</otherwise>
+		</choose>
+		,#{gaa.register.login_id},now(),null,null,'S001-0',null,null,'K002-0'
+		);
+	</insert>
 
-<insert id="addWarehousingXX">
-insert into S_GATHER_DETAILS values(
-null,#{id},#{gaaa.product_id},#{gaaa.product_name},
-<choose>
-<when test="gaaa.product_describe!=null">
-#{gaaa.product_describe}
-</when>
-<otherwise>null</otherwise>
-</choose>,#{gaaa.amount},#{gaaa.amount_unit},#{gaaa.cost_price},
-#{gaaa.subtotal},#{gaaa.gathered_amount},'K002-0'
-);
-</insert>
+	<insert id="addWarehousingXX">
+		insert into S_GATHER_DETAILS values(
+		null,#{id},#{gaaa.product_id},#{gaaa.product_name},
+		<choose>
+			<when test="gaaa.product_describe!=null">
+				#{gaaa.product_describe}
+			</when>
+			<otherwise>null</otherwise>
+		</choose>
+		,#{gaaa.amount},#{gaaa.amount_unit},#{gaaa.cost_price},
+		#{gaaa.subtotal},#{gaaa.gathered_amount},'K002-0'
+		);
+	</insert>
 
 
-<select id="auditWarehousingAll" resultType="S_GATHER">
-SELECT * FROM S_GATHER WHERE check_tag='S001-0' OR check_tag='S001-2' ;
-</select>
+	<select id="auditWarehousingAll" resultType="S_GATHER">
+		SELECT * FROM S_GATHER ;
+	</select>
 
-<select id="auditWarehousingXX" resultType="S_GATHER">
-SELECT * FROM S_GATHER WHERE id=#{idd};
-</select>
+	<select id="auditWarehousingXX" resultMap="dispatchS_GATHERXX">
+		SELECT * FROM S_GATHER WHERE id=#{idd};
+	</select>
 
-<update id="auditWarehousing">
-update S_GATHER set checker=#{user.login_id},check_time=now(),
-	<choose>
-			<when test="audit=1">
+	<update id="auditWarehousing">
+		update S_GATHER set checker=#{user.login_id},check_time=now(),
+		<choose>
+			<when test="audit==1">
 				check_tag='S001-1'
 			</when>
-			<otherwise>
+			<when test="audit==2">
 				check_tag='S001-2'
+			</when>
+			<otherwise>
 			</otherwise>
-		</choose> where id=#{iddd}
-</update>
-<select id="dispatchAll">
-select * from S_GATHER where check_tag='S001-1' and store_tag='K002-0'
-</select>
+		</choose>
+		where id=#{iddd}
+	</update>
+	<select id="dispatchAll" resultType="S_GATHER">
+		select * from S_GATHER where check_tag='S001-1'
+	</select>
 
-<select id="dispatchS_GATHERXX" resultMap="dispatchS_GATHERXX">
-select * from S_GATHER
-</select>
 
-<resultMap type="S_GATHER" id="dispatchS_GATHERXX">
+
+	<resultMap type="S_GATHER" id="dispatchS_GATHERXX">
 		<!-- 主键使用id标签映射， 其它列使用result标签映射 -->
 		<id property="id" column="id" />
 		<result property="gather_id" column="gather_id" />
 
-        
-        
+
+
 		<result property="reason" column="reason" />
 		<result property="reasonexact" column="reasonexact" />
 		<result property="amount_sum" column="amount_sum" />
 		<result property="cost_price_sum" column="cost_price_sum" />
-		<result property="gathered_amount_sum" column="gathered_amount_sum" />
+		<result property="gathered_amount_sum"
+			column="gathered_amount_sum" />
 		<result property="remark" column="remark" />
-		
+
 		<result property="register_time" column="register_time" />
 		<result property="check_time" column="check_time" />
 		<result property="check_tag" column="check_tag" />
 		<result property="attemper_time" column="attemper_time" />
 		<result property="store_tag" column="store_tag" />
 		<!-- 关联集合对象 -->
-		<association property="storer" 
-            select="com.erp.mapper.warehouseMapper.warehouseMapper.selectNameId" column="storer">     
-        </association>
-        <association property="register" 
-            select="com.erp.mapper.warehouseMapper.warehouseMapper.selectNameId" column="register">     
-        </association>
-        <association property="checker" 
-            select="com.erp.mapper.warehouseMapper.warehouseMapper.selectNameId" column="checker">     
-        </association>
-        <association property="attemper" 
-            select="com.erp.mapper.warehouseMapper.warehouseMapper.selectNameId" column="attemper">     
-        </association>
-		<collection property="S_GATHER_DETAILS" ofType="S_GATHER_DETAILS" 
-		     select="com.erp.mapper.warehouseMapper.warehouseMapper.selectByTid" column="id">
+		<association property="storer"
+			select="com.erp.mapper.warehouseMapper.warehouseMapper.selectNameId"
+			column="storer">
+		</association>
+		<association property="register"
+			select="com.erp.mapper.warehouseMapper.warehouseMapper.selectNameId"
+			column="register">
+		</association>
+		<association property="checker"
+			select="com.erp.mapper.warehouseMapper.warehouseMapper.selectNameId"
+			column="checker">
+		</association>
+		<association property="attemper"
+			select="com.erp.mapper.warehouseMapper.warehouseMapper.selectNameId"
+			column="attemper">
+		</association>
+		<collection property="S_GATHER_DETAILS"
+			ofType="S_GATHER_DETAILS"
+			select="com.erp.mapper.warehouseMapper.warehouseMapper.selectByTid"
+			column="id">
 		</collection>
- 		 </resultMap> 
+	</resultMap>
 
-<select id="selectByTid" resultType="S_GATHER_DETAILS">
-select * from S_GATHER_DETAILS where parent_id=#{id}
-</select>
-<select id="selectNameId" resultType="User">
-select * from SYS_USERS where name=#{storer}
-</select>
-<update id="dispatchS_GATHER">
-update S_GATHER_DETAILS set gather_tag='K002-2' where id=#{num}
-</update>
+	<select id="selectByTid" resultType="S_GATHER_DETAILS">
+		select * from S_GATHER_DETAILS where parent_id=#{id}
+	</select>
+	<select id="selectNameId" resultType="User">
+		select * from SYS_USERS where login_id=#{storer}
+	</select>
 
-<update id="Warehousingregistration">
-update S_GATHER_DETAILS set gathered_amount=#{de.nowamount},gather_tag='K002-1' where id=#{de.id}
-</update>
+	<select id="getmaxnum" resultType="int">
+		select amount from S_GATHER_DETAILS where id=#{id}
+	</select>
+
+	<select id="getnownum" resultType="int">
+		select gathered_amount from S_GATHER_DETAILS where id=#{id}
+	</select>
+
+
+
+	<update id="dispatchS_GATHER">
+		update S_GATHER_DETAILS set gather_tag='K002-2' where id=#{id}
+	</update>
+
+	<update id="dispatchS_GATHER3">
+		update S_GATHER_DETAILS set
+		gather_tag='K002-1',gathered_amount=gathered_amount+#{num} where
+		id=#{id}
+	</update>
+	<update id="dispatchS_GATHER2">
+		update S_GATHER_DETAILS set gathered_amount=gathered_amount+#{num} where
+		id=#{id}
+	</update>
+
+	<update id="WarehousingregistrationF">
+		update S_GATHER set
+		store_tag='K002-1',gathered_amount_sum=gathered_amount_sum+#{gathered_amount_sum}
+		where id=#{id}
+	</update>
+
+	<select id="gets_G" resultType="S_GATHER_DETAILS">
+		SELECT product_id,product_name,product_describe,amount_unit,real_cost_price
+		FROM D_FILE where id=#{id} ;
+	</select>
+
+	<select id="test" resultType="String">
+		select id from S_GATHER order by id DESC limit 1
+	</select>
+	<select id="allWoreHouse" resultType="warehouse">
+		select * from warehouse;
+	</select>
+	<update id="dispatchS_GATHERFather">
+		update S_GATHER set
+		store_tag='K002-2',attemper=#{user.login_id},attemper_time=now() where
+		id=#{fid}
+	</update>
+
+	<select id="warehousingAll" resultType="S_GATHER">
+		select * from S_GATHER where store_tag='K002-2'
+	</select>
+
+	<select id="rkdjfh" resultType="S_GATHER">
+		select * from S_GATHER where store_tag='K002-1' or store_tag='K002-3'
+	</select>
+
+	<update id="auditruku">
+		update S_GATHER set
+		<choose>
+			<when test="audit==1">
+				store_tag='K002-3',check_time=now()
+			</when>
+			<when test="audit==2">
+				store_tag='K002-4'
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		where id=#{id}
+	</update>
+
+	<select id="rkcxAll" resultType="S_GATHER">
+		select * from S_GATHER where store_tag='K002-3'
+	</select>
 </mapper>

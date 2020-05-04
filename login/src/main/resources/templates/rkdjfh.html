@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- 引入样式 -->
+<link rel="stylesheet"
+	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+
+</head>
+<style>
+ .el-table .warning-row {
+    background: oldlace;
+  }
+
+  .el-table .success-row {
+    background: #f0f9eb;
+    
+  }
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+</style>
+<body>
+
+	<div class="container"  id="app">
+		<div class="row">
+		<el-row >
+		<el-col :span="24">
+			<el-table :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)" border   :row-class-name="tableRowClassName" > 
+			<el-table-column type="index" label="#">
+				 </el-table-column>
+			<el-table-column
+				prop="gather_id" label="入库单编号" width="180">
+				 </el-table-column> 
+				 <el-table-column
+				prop="reason" label="入库理由" width="180"> 
+				</el-table-column> 
+				<el-table-column
+				prop="register_time" label="登记时间">
+				</el-table-column>
+				<el-table-column
+				prop="amount_sum" label="总件数">
+				</el-table-column>
+				<el-table-column
+				prop="cost_price_sum" label="总金额(￥)">
+				</el-table-column>				
+				<el-table-column label="审核">
+				<template v-slot="scope">
+				<button v-show="scope.row.store_tag=='K002-1'" type="button" @click="(S_GATHERXX(scope.row.id))" class="btn btn-info"
+							data-toggle="modal" data-target="#myModal">审核</button>
+				<button v-show="scope.row.store_tag=='K002-3'" type="button"  class="btn btn-info"
+							>已完成</button>
+				</template>			
+				</el-table-column>
+ </el-table>
+ <el-pagination
+					  			@size-change="handleSizeChange" @current-change="handleCurrentChange"
+					  			:current-page="currentPage" :page-sizes="[1, 2, 5, 10]"
+					  			:page-size="pagesize"
+					  			layout="total, sizes, prev, pager, next, jumper" :total="list.length">
+					  		</el-pagination>
+ </el-col>
+ </el-row>
+			
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div style="width: 80%" class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h5>
+								<small>入库登记审批</small>
+							</h5>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<el-row> <el-col :span="12"> <span class="">入库单编号:</span>
+								<el-input placeholder="请输入内容" v-model="S_GATHER.gather_id" :disabled="true"></el-input> </el-col> <el-col
+									:span="12"> </el-col> </el-row>
+								<el-row> <el-col :span="12"> <span class="">入库理由:</span>
+								<el-input placeholder="请输入内容" v-model="S_GATHER.reason" :disabled="true"></el-input> </el-col> <el-col
+									:span="12"> <span class="">入库详细理由:</span> <el-input
+									placeholder="请输入内容" v-model="S_GATHER.reasonexact" :disabled="true"></el-input> </el-col> </el-row>
+								<el-row> <el-col :span="24">
+								
+								<el-table   :row-class-name="tableRowClassName"  border :data="S_GATHER.s_GATHER_DETAILS" style="width: 100%"> 
+			<el-table-column
+				prop="product_id" label="产品编号" width="180">
+				 </el-table-column> 
+				 <el-table-column
+				prop="product_name" label="产品名称" width="180"> 
+				</el-table-column> 
+				<el-table-column  label="库房名称">
+				成品库
+				</el-table-column>
+				<el-table-column
+				prop="amount" label="应入库件数">
+				</el-table-column>
+				<el-table-column label="已入库件数">
+				0
+				</el-table-column>
+				<el-table-column prop="gathered_amount" label="本次入库数量">
+				
+				</el-table-column>
+ </el-table>
+								</el-col> </el-row>
+								<el-row> <el-col :span="12"> <span class="">总件数:</span>
+								<el-input placeholder="请输入内容" v-model="S_GATHER.amount_sum" :disabled="true"></el-input> </el-col> <el-col
+									:span="12"> <span class="">总成本:</span> <el-input
+									placeholder="请输入内容" v-model="S_GATHER.cost_price_sum" :disabled="true"></el-input> </el-col> </el-row>
+
+							</div>
+						</div>
+						<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" @click="btg()" >复核不通过</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" @click="tg()" >复核通过</button>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+<script type="text/javascript" src="js/qs.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
+<script>
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				input: '',
+				id:0,
+				currentPage: 1, //默认显示页面为1
+				pagesize: 2,
+				name: '',
+				keywords: '',
+				list: [], //存储所有品牌对象的数据,
+				S_GATHER:{"gather_id":"","reason":"","reasonexact":"","amount_sum":"","cost_price_sum":""},
+			},
+			mounted() { //初始化显示完成调用
+				this.getAll();
+			},
+			methods:{
+				handleChange(value) {
+					console.log(value);
+				}
+				,tableRowClassName({row, rowIndex}) {
+					if (rowIndex%2==1) {
+						return 'warning-row';
+					} else if (rowIndex%2==0) {
+						return 'success-row';
+					}
+			          return '';
+			      },
+				getAll() {
+					axios.get("rkdjfhAll").then(res=>{
+						var newList=[]
+						res.data.forEach(ss=>{
+							if(ss.reason=='R001-1'){
+								ss.reason='生产入库'
+								newList.push(ss)
+							}
+							if(ss.reason=='R001-2'){
+								ss.reason='库存初始'
+								newList.push(ss)
+							}
+							if(ss.reason=='R001-3'){
+								ss.reason='赠送'
+								newList.push(ss)
+							}
+							if(ss.reason=='R001-4'){
+								ss.reason='内部归还'
+								newList.push(ss)
+							}
+							if(ss.reason=='R001-5'){
+								ss.reason='其他归还'
+								newList.push(ss)
+							}
+						})
+						this.list=newList;
+					})
+				},S_GATHERXX(id){
+					this.id=id;
+					axios.get("auditWarehousingXX?id="+id+"").then(res=>{
+						var newList={};
+						if(res.data.reason=='R001-1'){
+							res.data.reason='生产入库'
+						    newList=res.data;
+						}
+						if(res.data.reason=='R001-2'){
+							res.data.reason='库存初始'
+						    newList=res.data;
+						}
+						if(res.data.reason=='R001-3'){
+							res.data.reason='赠送'
+						    newList=res.data;
+						}
+						if(res.data.reason=='R001-4'){
+							res.data.reason='内部归还'
+						    newList=res.data;
+						}
+						if(res.data.reason=='R001-5'){
+							res.data.reason='其他归还'
+						    newList=res.data;
+						}
+						this.S_GATHER=newList;
+					})
+				},tg(){
+					axios.get("auditruku?id="+this.id+"&audit=1").then(res=>{
+						if(res.data>0){
+							alert("审核通过！");
+						}
+					})
+				},btg(){
+					axios.get("auditruku?id="+this.id+"&audit=2").then(res=>{
+						if(res.data>0){
+							alert("审核不通过！");
+						}
+					})
+				}, handleSizeChange (size) {
+	                this.pagesize = size;
+	                /*console.log(this.pagesize) */
+	            },
+	            //点击第几页
+	            handleCurrentChange (currentPage) {
+	                this.currentPage = currentPage;
+	                /*console.log(this.currentPage) */
+	            }
+			}				
+		})
+	</script>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>制定入库调度单</title>
+<meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+<meta name="description"
+	content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+ <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>
+							产品设计 <small>产品档案管理 -->产品档案查询</small>
+						</h5>
+						<div class="ibox-tools">
+							<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+							</a>
+							<button class="btn  btn-outline" type="button" name="refresh"
+								title="刷新">
+								<i class="glyphicon glyphicon-repeat"></i>
+							</button>
+						</div>
+					</div>
+					<div class="ibox-content">
+
+						<table
+							class="table table-striped table-bordered table-hover dataTables-example">
+							<thead>
+								<tr>
+									<th>入库单编号</th>
+									<th>入库理由</th>
+									<th>入库详细理由</th>
+									<th>登记时间</th>
+									<th>总件数</th>
+									<th>总金额</th>
+									<th>入库调度</th>
+								</tr>
+							</thead>
+							<tbody>								
+								<tr th:each="file:${list}">
+									<td style="display: none;" th:text="${file.id}"></td>
+									<td th:text="${file.gather_id}"></td>
+									<td th:if="${file.reason=='R001-1'}">生产入库</td>
+									<td th:if="${file.reason=='R001-2'}">库存初始</td>
+									<td th:if="${file.reason=='R001-3'}">赠送</td>
+									<td th:if="${file.reason=='R001-4'}">内部归还</td>
+									<td th:if="${file.reason=='R001-5'}">其他</td>
+									<td th:text="${file.reasonexact}"></td>
+									<td th:text=${file.register_time}></td>
+									<td th:text=${file.amount_sum}></td>
+									<td th:text=${file.cost_price_sum}></td>
+									<td>
+										<button type="button" class="btn btn-info sk"
+											data-toggle="modal" data-target="#myModal">入库调度</button>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div style="width: 80%" class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">入库申请单审核</h4>
+						</div>
+						<div class="modal-body">
+						<form class="layui-form">
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">申请单编号</label>
+									<div class="layui-input-block">
+									<input type="text" name="id" style="display: none;" />
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="gather_id" placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">入库理由</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="reason"  placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+							</div>
+						
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md7 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">入库人</label>
+									<div class="layui-input-block">
+										<input type="text" name="storer" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md5 layui-col-xs12"></div>
+							</div>
+							
+							<div class="ibox-content">
+								<table
+								id="tab"	class="table table-striped table-bordered table-hover dataTables-example">
+									<thead>
+									<tr>
+									<td>序号</td>
+									<td>商品名称</td>
+									<td>商品编号</td>
+									<td>应入库件数</td>
+									<td>已入库件数</td>
+									<td>存放地</td>
+									<td>调度</td>									
+									</tr>
+									</thead>
+								</table>
+							</div>
+						
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md7 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">审核人</label>
+									<div class="layui-input-block">
+										<input type="text" th:value="${username}" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+								<div class="magb15 layui-col-md1 layui-col-xs12">
+									<span>登记时间：</span>
+								</div>
+
+								<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
+									<script>
+										setInterval(
+												"document.getElementById('datetime').innerHTML=new Date().toLocaleString();",
+												1000);
+									</script>
+								</div>
+							</div>
+
+							<div
+								class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
+								<label class="layui-form-label" style="font-size: 17px;">备注</label>
+								<div class="layui-input-block">
+									<textarea placeholder="请输入信息" name="module_descri" class="layui-textarea userDesc"></textarea>
+								</div>
+							</div>
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md1 layui-col-xs12"></div>
+							</div>
+
+
+
+							<!--操作-->
+							<script type="text/html" id="userListBar">
+		<input type="radio"/>
+	</script>
+						</form>
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div style="width: 80%" class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">入库申请单审核</h4>
+						</div>
+						<div class="modal-body">
+						<input id="am" type="text" style="display: none;"/>
+						<input id="idd" type="text" style="display: none;"/>
+						<form class="layui-form">
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">申请单编号</label>
+									<div class="layui-input-block">
+									<input type="text" name="id" style="display: none;" />
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="gather_id" placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">入库理由</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName"
+											lay-verify="required" name="reason"  placeholder="不可选中" disabled="disabled">
+									</div>
+								</div>
+							</div>
+						
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md7 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">入库人</label>
+									<div class="layui-input-block">
+										<input type="text" name="storer" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md5 layui-col-xs12"></div>
+							</div>
+							
+							<div class="ibox-content">
+								<table
+								id="ttab"	class="table table-striped table-bordered table-hover dataTables-example">
+									<thead>
+									<tr>
+									<td>序号</td>
+									<td>库房名称</td>
+									<td>当前最高储存量</td>
+									<td>本次入库数量</td>														
+									</tr>
+									</thead>
+								</table>
+							</div>
+						
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md7 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 18px;">审核人</label>
+									<div class="layui-input-block">
+										<input type="text" th:value="${username}" class="layui-input userName"
+											lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+
+								<div class="magb15 layui-col-md2 layui-col-xs12"></div>
+
+								<div class="magb15 layui-col-md1 layui-col-xs12">
+									<span>登记时间：</span>
+								</div>
+
+								<div id="datetime" class="magb15 layui-col-md2 layui-col-xs12">
+									<script>
+										setInterval(
+												"document.getElementById('datetime').innerHTML=new Date().toLocaleString();",
+												1000);
+									</script>
+								</div>
+							</div>
+
+							<div
+								class="layui-form-item layui-row layui-col-md10 layui-col-xs12">
+								<label class="layui-form-label" style="font-size: 17px;">备注</label>
+								<div class="layui-input-block">
+									<textarea placeholder="请输入信息" name="module_descri" class="layui-textarea userDesc"></textarea>
+								</div>
+							</div>
+
+							<div class="layui-row">
+								<div class="magb15 layui-col-md1 layui-col-xs12"></div>
+							</div>
+
+
+
+							<!--操作-->
+							<script type="text/html" id="userListBar">
+		<input type="radio"/>
+	</script>
+						</form>
+							
+						</div>
+						<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="qd">确定</button>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script src="js/jquery.min.js?v=2.1.4"></script>
+	<script src="js/bootstrap.min.js?v=3.3.5"></script>
+	<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+	<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+	<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<script src="js/content.min.js?v=1.0.0"></script>
+	
+	<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+	<script type="text/javascript" th:src="@{/page/ADDF.js}"></script>
+	<script>
+		$(function(){
+			$(".sk").click(function() {
+				$("#tab  tr:not(:first)").html("");
+				var id=$(this).parent().parent().children(0).html();
+				$.post("auditWarehousingXX",{"id":id},back,"Json");
+				function back(a){
+					$("[name='id']").val(a["id"]);
+					$("[name='gather_id']").val(a["gather_id"]);
+					$("[name='storer']").val(a["storer"]["login_id"])
+					if(a["reason"]=='R001-1'){
+						$("[name='reason']").val("生产入库");
+					}else if(a["reason"]=='R001-2'){
+						$("[name='reason']").val("库存初始");
+					}else if(a["reason"]=='R001-3'){
+						$("[name='reason']").val("赠送");
+					}else if(a["reason"]=='R001-4'){
+						$("[name='reason']").val("内部归还");
+					}else if(a["reason"]=='R001-5'){
+						$("[name='reason']").val("其他归还");
+					}
+					var aa=a["s_GATHER_DETAILS"];
+					var panduan=0;
+					for (var i=0; i <aa.length;i++) {
+						if(aa[i]["gather_tag"]=="K002-0"){
+							panduan=1;
+							
+							var node=$("<tr><td>"+aa[i]["id"]+"</td><td>"+aa[i]["product_name"]+"</td><td>"+aa[i]["product_id"]+"</td><td>"+aa[i]["amount"]+"</td><td>"+aa[i]["gathered_amount"]+"</td><td></td><td><button type='button' class='btn btn-info dd' data-toggle='modal' data-target='#myModal1' >入库调度</button></td></tr>")
+							$("#tab").append(node);
+						}
+						if(aa[i]["gather_tag"]=="K002-2"){
+							var node=$("<tr><td>"+aa[i]["id"]+"</td><td>"+aa[i]["product_name"]+"</td><td>"+aa[i]["product_id"]+"</td><td>"+aa[i]["amount"]+"</td><td>"+aa[i]["gathered_amount"]+"</td><td>成品库</td><td><button type='button' class='btn btn-info'  >已完成</button></td></tr>")
+							$("#tab").append(node);
+						}						
+					}
+					if(a["store_tag"]=="K002-2"){
+						
+					}else{
+						if(panduan==0){
+							$.post("dispatchS_GATHERFather",{"fid":id},back,"text");
+							function back(a){
+								if(a>0){
+									alert("入库详细单已完成调度 入库单调度自动完成！");
+								}
+							}
+						}
+					}				
+			     }
+			})
+			
+			$("#tab").on("click",'.dd', function (){
+				$("#ttab  tr:not(:first)").html("");
+				$("#am").val(parseInt($(this).parent().prev().prev().prev().html())-parseInt($(this).parent().prev().prev().html()));
+				$("#idd").val($(this).parent().parent().children(0).html());
+				$.post("allWoreHouse",back,"Json")
+				function back(a){
+					for (var i=0; i <a.length;i++) {
+						var node=$("<tr><td>"+a[i]["id"]+"</td><td>"+a[i]["housename"]+"</td><td>"+a[i]["maxnum"]+"</td><td><input type='text' id='num' /></td></tr>");
+						$("#ttab").append(node);
+						
+					}	
+				}
+			})
+			
+			$("#ttab").on("change",'#num', function (){
+				var now=parseInt($(this).val())
+				var old=parseInt($("#am").val())
+				if(now>old){
+					$(this).val(old)
+				}
+			})
+			
+			$("#qd").click(function(){
+				var id=$("#idd").val();
+				var num=$("#num").val();
+				$.post("dispatchS_GATHER",{"id":id,"num":num},back,"text")
+				function back(a){
+					if(a>0){
+						alert("修改程坤！");
+					}
+				}
+			})
+		})
+	</script>
+
+</body>
+
+</html>

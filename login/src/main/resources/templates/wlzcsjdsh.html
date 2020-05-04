@@ -6,12 +6,35 @@
 <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
 <link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+ <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+
 </head>
-<body>
-	<div class="container">
-		<div class="row">
-		<span style="color: blue">符合产品条件的数量：</span><span th:text="${num}"></span>
-			<table class="table table-hover">
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>产品设计 <small>产品档案管理  -->产品档案查询</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <button class="btn  btn-outline" type="button" name="refresh" title="刷新">
+                            	<i class="glyphicon glyphicon-repeat"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-hover">
 				<tr>
 					<td>设计单编号</td>
 					<td>产品编号</td>
@@ -35,7 +58,16 @@
 							data-toggle="modal" data-target="#myModal">审核</button></td>
 				</tr>
 			</table>
-		</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+    </div>
+
+	<div class="container">
+		
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel">
 			<div style="width: 80%" class="modal-dialog" role="document">
@@ -154,6 +186,15 @@
 		</div>
 	</div>
 </body>
+  <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script>
+        $(document).ready(function(){$(".dataTables-example").dataTable();var oTable=$("#editable").dataTable();oTable.$("td").editable("../example_ajax.php",{"callback":function(sValue,y){var aPos=oTable.fnGetPosition(this);oTable.fnUpdate(sValue,aPos[0],aPos[1])},"submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})});function fnClickAddRow(){$("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
+    </script>
 <script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
@@ -161,6 +202,7 @@
 <script type="text/javascript">
 $(function(){
 	$(".sk").click(function(){
+		$("#tab  tr:not(:first)").html("");
 		var id=$(this).parent().parent().children(0).html();
 		$.post("D_moduleXX",{"id":id},back,"Json")
 		function back(a){

@@ -33,7 +33,6 @@ public interface productFilesService {
 
 	D_module D_moduleXX(int id);
 
-	//产品档案查询（全部）
 	List<d_file> cpdacx();
 
 	int cpdacxzs();

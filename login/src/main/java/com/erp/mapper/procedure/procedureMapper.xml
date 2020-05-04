@@ -264,13 +264,11 @@
 		)
 	</insert>
 
-	<select id="getProcedureIdByproduct_id" resultType="int">
+	<select id="getProcedureIdByproduct_id" resultType="String">
 		SELECT id FROM M_DESIGN_PROCEDURE order by id DESC limit 1
 	</select>
 	
-	<select id="getdesign_id" resultType="int">
-		SELECT design_id FROM M_DESIGN_PROCEDURE order by id DESC limit 1
-	</select>
+
 	
 	<update id="ToExamineDesign_Procedure">
 		update M_DESIGN_PROCEDURE set check_tag='S001-1' where id=#{id}
@@ -304,6 +302,92 @@
 		select * from m_design_procedure
 	</select>
 	<select id="getAllm_design_procedureBycheck_tag" resultType="m_design_procedure">
-		select * from m_design_procedure where check_tag='S001-1'
+		select * from m_design_procedure where check_tag='S001-1' AND design_module_tag='G002-0'
 	</select>
+	
+	   <resultMap type="D_module" id="m11">
+		<!-- 主键使用id标签映射， 其它列使用result标签映射 -->
+		<id property="id" column="id" />
+		<result property="design_id" column="design_id" />  
+		<result property="product_id" column="product_id" />
+		<result property="product_name" column="product_name" />
+		<result property="module_descri" column="module_descri" />
+		<result property="cost_price_sum" column="cost_price_sum" />
+		<!-- 关联集合对象 -->
+		<association property="designer" 
+            select="com.erp.mapper.productFilesMapper.productFilesMapper.selectNameId" column="designer">     
+        </association>
+		<collection property="D_module_details" ofType="D_module_details" 
+		     select="com.erp.mapper.productFilesMapper.productFilesMapper.selectByTid" column="id">
+		</collection>
+ 		 </resultMap> 
+ 		 
+   <select id="D_moduleXX" resultMap="m11">
+   select * from D_module where product_id=#{id}
+   </select>
+   
+   <insert id="addM_DESIGN_PROCEDURE_MODULE">
+   	insert into M_DESIGN_PROCEDURE_MODULE value(null,#{m.parent_id},#{m.details_number},#{m.product_id},#{m.product_name},
+   	<choose>
+			<when test="m.type==null">
+				null
+			</when>
+			<otherwise>
+				#{m.type}
+			</otherwise>
+		</choose>,
+		#{m.amount},
+		  <choose>
+			<when test="m.product_describe==null">
+				null
+			</when>
+			<otherwise>
+				#{m.product_describe}
+			</otherwise>
+		</choose>,
+		<choose>
+			<when test="m.amount_unit==null">
+				null
+			</when>
+			<otherwise>
+				#{m.amount_unit}
+			</otherwise>
+		</choose>,
+		#{m.cost_price},
+		<choose>
+			<when test="m.subtotal==null">
+				null
+			</when>
+			<otherwise>
+				#{m.subtotal}
+			</otherwise>
+		</choose>
+   	)
+   </insert>
+
+   <update id="updateM_DESIGN_PROCEDURE_DETAILS">
+   	UPDATE M_DESIGN_PROCEDURE_DETAILS SET design_module_tag='D002-1',module_subtotal=module_subtotal+#{module_subtotal} where id=#{id}
+   </update>
+   
+   <update id="updated_module_details">
+   	UPDATE D_MODULE_DETAILS SET residual_amount=residual_amount-#{residual_amount} where product_id=#{product_id} AND parent_id=#{parent_id}
+   </update>
+   <update id="updateM_DESIGN_PROCEDURE">
+   	UPDATE M_DESIGN_PROCEDURE SET design_module_tag='G002-1' WHERE id=#{id}
+   </update>
+   <select id="getM_DESIGN_PROCEDURE_ID" resultType="int">
+   	SELECT parent_id FROM M_DESIGN_PROCEDURE_DETAILS WHERE id=#{id}
+   </select>
+   <select id="getAllm_design_procedureBywlsjwc" resultType="m_design_procedure">
+   SELECT * FROM M_DESIGN_PROCEDURE WHERE check_tag='S001-1' AND design_module_tag='G002-1'
+   </select>
+   <select id="getM_DESIGN_PROCEDURE_MODULEByParent_Id" resultType="m_design_procedure_module">
+   	SELECT * FROM M_DESIGN_PROCEDURE_MODULE WHERE parent_id=#{id}
+   </select>
+   <update id="updateProduct" >
+   	UPDATE M_DESIGN_PROCEDURE SET design_module_tag='G002-2' WHERE id=#{id}
+   </update>
+   <select id="getAllM_design_procedure" resultType="m_design_procedure">
+   	SELECT * FROM M_DESIGN_PROCEDURE
+   </select>
 </mapper>

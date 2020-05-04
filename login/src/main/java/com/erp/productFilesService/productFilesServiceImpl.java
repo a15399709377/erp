@@ -124,12 +124,21 @@ public class productFilesServiceImpl implements productFilesService {
 		return productFilesMapper.D_moduleXX(id);
 	}
 
-
-
 	@Override
 	public List<d_file> cpdacx() {
 		return productFilesMapper.cpdacx();
 	}
+
+
+
+
+
+
+
+
+
+	
+
 
 
 
@@ -138,12 +147,6 @@ public class productFilesServiceImpl implements productFilesService {
 		// TODO Auto-generated method stub
 		return productFilesMapper.cpdacxzs();
 	}
-
-
-
-	
-
-
 
 
 }

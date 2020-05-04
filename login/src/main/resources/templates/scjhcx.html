@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- 引入样式 -->
+<link rel="stylesheet"
+	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+
+</head>
+<!--设置大小-->
+
+<style>
+.el-table .warning-row {
+	background: oldlace;
+}
+
+.el-table .success-row {
+	background: #f0f9eb;
+}
+</style>
+<body>
+	<div class="container " id="app" style="margin-top: 25px">
+		<template> <el-table border :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+			style="width: 100%" :row-class-name="tableRowClassName"> <el-table-column
+			prop="apply_id" label="生产计划编号"> </el-table-column> <el-table-column
+			prop="product_id" label="产品编号"> </el-table-column> <el-table-column
+			prop="product_name" label="产品名称" width="180"> </el-table-column> <el-table-column
+			prop="amount" label="数量" width="80"> </el-table-column> <el-table-column
+			prop="product_describe" label="产品描述" width="180"> </el-table-column>
+		<el-table-column prop="register" label="登记人" width="80">
+		</el-table-column> <el-table-column prop="register_time" label="登记时间">
+		</el-table-column> <el-table-column label="查看状态"> <template
+			v-slot="scope"> <el-button
+			v-show="scope.row.panduan!='SC009'" icon="el-icon-search"
+			type="success" @click="drawer = true,cg(scope.row.panduan)" circle></el-button>
+		<!-- <el-button v-show="scope.row.panduan=='SC009'" type="warning" @click="drawer1 = true,xg(scope.row.id)" round>修改</el-button>-->
+		<el-button v-show="scope.row.panduan=='SC009'" type="warning"
+			:plain="true" @click="open3">审核未通过</el-button> </template> </el-table-column> </el-table> 
+			 </template>
+			 <el-pagination
+					  			@size-change="handleSizeChange" @current-change="handleCurrentChange"
+					  			:current-page="currentPage" :page-sizes="[1, 2, 5, 10]"
+					  			:page-size="pagesize"
+					  			layout="total, sizes, prev, pager, next, jumper" :total="tableData.length">
+					  		</el-pagination>
+
+		<el-drawer title="我是标题" :visible.sync="drawer" :with-header="false">
+		<div class="block" style="margin-top: 30px;">
+			<el-timeline> <el-timeline-item
+				v-for="(activity, index) in activities" :key="index"
+				:icon="activity.icon" :type="activity.type" :color="activity.color"
+				:size="activity.size" :timestamp="activity.timestamp">
+			{{activity.content}} </el-timeline-item> </el-timeline>
+		</div>
+		</el-drawer>
+
+		<el-drawer size="80%" title="我是标题" :visible.sync="drawer1"
+			:with-header="false"> </el-drawer>
+
+	</div>
+
+</body>
+<script type="text/javascript" src="js/vue.min.js">
+	</script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+<script type="text/javascript" src="js/qs.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				
+				value1: '',
+				num: 1,
+				input: '',
+				id: '',
+				name: '',
+				keywords: '',
+				drawer: false,
+				drawer1: false,
+				list: [], //存储所有品牌对象的数据,
+				tableData: [],
+				currentPage: 1, //默认显示页面为1
+				pagesize: 2,
+				activities: [{
+					content: '生产计划登记完成',
+					timestamp: '2018-04-12 20:46',
+					color: '',
+					size: 'large',
+					type: '',
+					icon: ''
+				}, {
+					content: '生产计划审核',
+					timestamp: this.value1,
+					color: '',
+					size: 'large',
+					type: '',
+					icon: ''
+				}, {
+					content: '生产派工单制定完成',
+					timestamp: '2018-04-03 20:46',
+					color: '',
+					size: 'large',
+					type: '',
+					icon: ''
+				}, {
+					content: '生产派工单审核完成',
+					timestamp: '2018-04-03 20:46',
+					color: '',
+					size: 'large',
+					type: '',
+					icon: ''
+				}, {
+					content: '生产登记完成',
+					timestamp: '2018-04-03 20:46',
+					color: '',
+					size: 'large',
+					type: '',
+					icon: ''
+				}, {
+					content: '生产登记审核全部通过',
+					timestamp: '2018-04-03 20:46',
+					color: '',
+					size: 'large',
+					type: '',
+					icon: ''
+				}, {
+					content: '生产完成入库登记',
+					timestamp: '2018-04-03 20:46',
+					color: '',
+					size: 'large',
+					type: '',
+					icon: ''
+				}, {
+					content: '生产完成入库登记审核',
+					timestamp: '2018-04-03 20:46',
+					color: '',
+					size: 'large',
+					type: '',
+					icon: ''
+				}],
+			},
+			mounted() { //初始化显示完成调用
+				this.sccxAll();
+			},
+			methods: {
+				tableRowClassName({
+					row,
+					rowIndex
+				}) {
+					if (rowIndex%2== 1) {
+						return 'warning-row';
+					} else if (rowIndex%2==0) {
+						return 'success-row';
+					}
+					return '';
+				}, handleSizeChange (size) {
+	                this.pagesize = size;
+	                /*console.log(this.pagesize) */
+	            },
+	            //点击第几页
+	            handleCurrentChange (currentPage) {
+	                this.currentPage = currentPage;
+	                /*console.log(this.currentPage) */
+	            }
+				,xg(id){
+					
+					
+				},
+				cg(id) {
+					if (id == 'SC001') {
+						/* 
+						color: #0bbd87 :成功颜色 
+						icon:el-icon-more 正在进行
+						*/
+						this.activities[0].color = "#0bbd87";
+						this.activities[0].icon = "";
+						this.activities[0].type = "";
+						this.activities[1].color = "";
+						this.activities[1].type = "primary";
+						this.activities[1].icon = "el-icon-more";
+						this.activities[2].color = "";
+						this.activities[2].icon = "";
+						this.activities[2].type = "";
+						this.activities[3].color = "";
+						this.activities[3].icon = "";
+						this.activities[3].type = "";
+						this.activities[4].color = "";
+						this.activities[4].icon = "";
+						this.activities[4].type = "";
+						this.activities[5].color = "";
+						this.activities[5].icon = "";
+						this.activities[5].type = "";
+						this.activities[6].color = "";
+						this.activities[6].icon = "";
+						this.activities[6].type = "";
+						this.activities[7].color = "";
+						this.activities[7].icon = "";
+						this.activities[7].type = "";
+						this.activities[8].color = "";
+						this.activities[8].icon = "";
+						this.activities[8].type = "";
+					}
+					if (id == 'SC002') {
+						this.activities[0].color = "#0bbd87";
+						this.activities[0].icon = "";
+						this.activities[1].color = "#0bbd87";
+						this.activities[1].type = "";
+						this.activities[1].icon = "";
+						this.activities[2].color = "";
+						this.activities[2].type = "primary";
+						this.activities[2].icon = "el-icon-more";
+						this.activities[3].color = "";
+						this.activities[3].icon = "";
+						this.activities[3].type = "";
+						this.activities[4].color = "";
+						this.activities[4].icon = "";
+						this.activities[4].type = "";
+						this.activities[5].color = "";
+						this.activities[5].icon = "";
+						this.activities[5].type = "";
+						this.activities[6].color = "";
+						this.activities[6].icon = "";
+						this.activities[6].type = "";
+						this.activities[7].color = "";
+						this.activities[7].icon = "";
+						this.activities[7].type = "";
+						this.activities[8].color = "";
+						this.activities[8].icon = "";
+						this.activities[8].type = "";						
+					}
+					if(id=="SC003"){
+						this.activities[0].color = "#0bbd87";
+						this.activities[0].icon = "";
+						this.activities[1].color = "#0bbd87";
+						this.activities[1].type = "";
+						this.activities[1].icon = "";
+						this.activities[2].color = "#0bbd87";
+						this.activities[2].type = "";
+						this.activities[2].icon = "";
+						this.activities[3].color = "";
+						this.activities[3].icon = "el-icon-more";
+						this.activities[3].type = "primary";
+						this.activities[4].color = "";
+						this.activities[4].icon = "";
+						this.activities[4].type = "";
+						this.activities[5].color = "";
+						this.activities[5].icon = "";
+						this.activities[5].type = "";
+						this.activities[6].color = "";
+						this.activities[6].icon = "";
+						this.activities[6].type = "";
+						this.activities[7].color = "";
+						this.activities[7].icon = "";
+						this.activities[7].type = "";
+						this.activities[8].color = "";
+						this.activities[8].icon = "";
+						this.activities[8].type = "";
+					}
+					if(id=="SC004"){
+						this.activities[0].color = "#0bbd87";
+						this.activities[0].icon = "";
+						this.activities[1].color = "#0bbd87";
+						this.activities[1].type = "";
+						this.activities[1].icon = "";
+						this.activities[2].color = "#0bbd87";
+						this.activities[2].type = "";
+						this.activities[2].icon = "";
+						this.activities[3].color = "#0bbd87";
+						this.activities[3].icon = "";
+						this.activities[3].type = "";
+						this.activities[4].color = "";
+						this.activities[4].icon = "el-icon-more";
+						this.activities[4].type = "primary";
+						this.activities[5].color = "";
+						this.activities[5].icon = "";
+						this.activities[5].type = "";
+						this.activities[6].color = "";
+						this.activities[6].icon = "";
+						this.activities[6].type = "";
+						this.activities[7].color = "";
+						this.activities[7].icon = "";
+						this.activities[7].type = "";
+						this.activities[8].color = "";
+						this.activities[8].icon = "";
+						this.activities[8].type = "";
+					}
+					if(id=="SC005"){
+						this.activities[0].color = "#0bbd87";
+						this.activities[0].icon = "";
+						this.activities[1].color = "#0bbd87";
+						this.activities[1].type = "";
+						this.activities[1].icon = "";
+						this.activities[2].color = "#0bbd87";
+						this.activities[2].type = "";
+						this.activities[2].icon = "";
+						this.activities[3].color = "#0bbd87";
+						this.activities[3].icon = "";
+						this.activities[3].type = "";
+						this.activities[4].color = "#0bbd87";
+						this.activities[4].icon = "";
+						this.activities[4].type = "";
+						this.activities[5].color = "";
+						this.activities[5].icon = "el-icon-more";
+						this.activities[5].type = "primary";
+						this.activities[6].color = "";
+						this.activities[6].icon = "";
+						this.activities[6].type = "";
+						this.activities[7].color = "";
+						this.activities[7].icon = "";
+						this.activities[7].type = "";
+						this.activities[8].color = "";
+						this.activities[8].icon = "";
+						this.activities[8].type = "";
+					}
+					if(id=="SC006"){
+						this.activities[0].color = "#0bbd87";
+						this.activities[0].icon = "";
+						this.activities[1].color = "#0bbd87";
+						this.activities[1].type = "";
+						this.activities[1].icon = "";
+						this.activities[2].color = "#0bbd87";
+						this.activities[2].type = "";
+						this.activities[2].icon = "";
+						this.activities[3].color = "#0bbd87";
+						this.activities[3].icon = "";
+						this.activities[3].type = "";
+						this.activities[4].color = "#0bbd87";
+						this.activities[4].icon = "";
+						this.activities[4].type = "";
+						this.activities[5].color = "#0bbd87";
+						this.activities[5].icon = "";
+						this.activities[5].type = "";
+						this.activities[6].color = "";
+						this.activities[6].icon = "el-icon-more";
+						this.activities[6].type = "primary";
+						this.activities[7].color = "";
+						this.activities[7].icon = "";
+						this.activities[7].type = "";
+						this.activities[8].color = "";
+						this.activities[8].icon = "";
+						this.activities[8].type = "";
+					}
+					if(id=="SC007"){
+						this.activities[0].color = "#0bbd87";
+						this.activities[0].icon = "";
+						this.activities[1].color = "#0bbd87";
+						this.activities[1].type = "";
+						this.activities[1].icon = "";
+						this.activities[2].color = "#0bbd87";
+						this.activities[2].type = "";
+						this.activities[2].icon = "";
+						this.activities[3].color = "#0bbd87";
+						this.activities[3].icon = "";
+						this.activities[3].type = "";
+						this.activities[4].color = "#0bbd87";
+						this.activities[4].icon = "";
+						this.activities[4].type = "";
+						this.activities[5].color = "#0bbd87";
+						this.activities[5].icon = "";
+						this.activities[5].type = "";
+						this.activities[6].color = "#0bbd87";
+						this.activities[6].icon = "";
+						this.activities[6].type = "";
+						this.activities[7].color = "";
+						this.activities[7].icon = "el-icon-more";
+						this.activities[7].type = "primary";
+						this.activities[8].color = "";
+						this.activities[8].icon = "";
+						this.activities[8].type = "";
+					}
+					if(id=="SC008"){
+						this.activities[0].color = "#0bbd87";
+						this.activities[0].icon = "";
+						this.activities[1].color = "#0bbd87";
+						this.activities[1].type = "";
+						this.activities[1].icon = "";
+						this.activities[2].color = "#0bbd87";
+						this.activities[2].type = "";
+						this.activities[2].icon = "";
+						this.activities[3].color = "#0bbd87";
+						this.activities[3].icon = "";
+						this.activities[3].type = "";
+						this.activities[4].color = "#0bbd87";
+						this.activities[4].icon = "";
+						this.activities[4].type = "";
+						this.activities[5].color = "#0bbd87";
+						this.activities[5].icon = "";
+						this.activities[5].type = "";
+						this.activities[6].color = "#0bbd87";
+						this.activities[6].icon = "";
+						this.activities[6].type = "";
+						this.activities[7].color = "#0bbd87";
+						this.activities[7].icon = "";
+						this.activities[7].type = "";
+					}
+					
+				},sccxAll(){
+					axios.get("sccxAll").then(res=>{
+						this.tableData=res.data;
+					})
+				}, open3() {
+			        this.$message({
+			            message: '审核未通过！',
+			            type: 'warning'
+			          });
+			        },
+			}
+		})
+	</script>
+</html>

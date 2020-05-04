@@ -5,6 +5,7 @@ import java.util.List;
 import com.erp.pojo.S_GATHER;
 import com.erp.pojo.S_GATHER_DETAILS;
 import com.erp.pojo.User;
+import com.erp.pojo.warehouse;
 
 public interface warehouseService {
 
@@ -18,10 +19,22 @@ public interface warehouseService {
 
 	List<S_GATHER> dispatchAll();
 
-	S_GATHER dispatchS_GATHERXX(int id);
-
-	int dispatchS_GATHER(int num);
+	int dispatchS_GATHER(int id, int num);
 
 	int Warehousingregistration(List<S_GATHER_DETAILS> dede);
+
+	List<warehouse> allWoreHouse();
+
+	int dispatchS_GATHERFather(int fid, User user);
+
+	List<S_GATHER> warehousingAll();
+
+	List<S_GATHER> rkdjfh();
+
+	int WarehousingregistrationF(int id,int gathered_amount_sum);
+
+	int auditruku(int id, int audit, User user);
+
+	List<S_GATHER> rkcxAll();
 	
 }

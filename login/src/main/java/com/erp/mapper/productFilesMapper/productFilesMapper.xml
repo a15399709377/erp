@@ -5,6 +5,7 @@
 <mapper
 	namespace="com.erp.mapper.productFilesMapper.productFilesMapper">
 	
+
 	<insert id="addProductFilesService">
 		INSERT INTO D_FILE VALUES(null,#{file.product_id},#{file.product_name},
 		<choose>
@@ -103,7 +104,7 @@
 				null
 			</when>
 			<otherwise>
-				#{file.real_cost_price}
+				#{file.cost_price}
 			</otherwise>
 		</choose>,
 		<choose>
@@ -232,15 +233,15 @@
 	
 	</insert>
 	
-	<select id="test" resultType="int">
-   select * from D_MODULE order by id DESC limit 1
+	<select id="test" resultType="String">
+   select id from D_MODULE order by id DESC limit 1
    </select>
-   <select id="test1" resultType="int">
-   select * from d_file order by id DESC limit 1
+   <select id="test1" resultType="String">
+   select id from d_file order by id DESC limit 1
    </select>
    
-    <select id="test2" resultType="int">
-   select * from D_CONFIG_FILE_KIND order by id DESC limit 1
+    <select id="test2" resultType="String">
+   select id from D_CONFIG_FILE_KIND order by id DESC limit 1
    </select>
    
    <select id="D_CONFIG_FILE_KINDByid" resultType="D_CONFIG_FILE_KIND">
@@ -284,6 +285,7 @@ SELECT id,design_id,product_id,product_name,designer AS designerr,register_time,
       select * from sys_users where login_id=#{id}
    
    </select>
+   
    <select id="cpdacx" resultType="d_file">
    select * from d_file
    </select>

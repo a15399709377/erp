@@ -7,16 +7,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.mapper.s_cellmapper.s_cellmapper;
+
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
+
 import com.erp.pojo.s_cell;
 import com.erp.pojo.warehouse;
+
 
 @Service
 @Transactional
 public class s_cellServiceImpl implements s_cellService {
 	@Autowired
 	s_cellmapper mapper;
+
+	
 	@Override
 	public int inserts_cell(s_cell s) {
 		return mapper.inserts_cell(s);
@@ -73,8 +78,5 @@ public class s_cellServiceImpl implements s_cellService {
 	public List<d_file> cpdabgcx() {
 		return mapper.cpdabgcx();
 	}
-
-	
-	
 	
 }

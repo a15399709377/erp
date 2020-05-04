@@ -21,7 +21,9 @@ import com.erp.pojo.D_CONFIG_FILE_KIND;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 import com.erp.pojo.s_cell;
+
 import com.erp.pojo.warehouse;
+
 
 
 @Controller
@@ -112,6 +114,7 @@ public class s_cellController {
 	//审核 安全库存配置
 	@RequestMapping("/aqkcpzdfhtj")
 	@ResponseBody
+
 	public int aqkcpzdfhtj(s_cell se,HttpServletRequest request) {
 		System.out.println("================"+se);
 		HttpSession session=request.getSession();

@@ -9,6 +9,7 @@ import com.erp.pojo.d_file;
 import com.erp.pojo.s_cell;
 import com.erp.pojo.warehouse;
 
+
 public interface s_cellService {
 		//查询产品档案登记审核通过的,库存分配标志未设计的
 		List<d_file> cxByshbz_kcfpbz();
@@ -44,6 +45,5 @@ public interface s_cellService {
 		//产品档案变更查询
 		List<d_file> cpdabgcx();
 		
-
 		
 }

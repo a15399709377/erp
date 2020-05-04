@@ -25,6 +25,7 @@ import com.erp.loginservice.loginserviceimpl;
 import com.erp.pojo.Permissions;
 import com.erp.pojo.User;
 import com.erp.productFilesService.productFilesService;
+import com.erp.warehouseService.warehouseService;
 
 @Controller
 public class logincontroller {
@@ -91,6 +92,27 @@ public class logincontroller {
 		
 		return "rksqdj";
 	}
+	
+	@Autowired
+	warehouseService warehouseService;
+	@RequestMapping("/rksqdjsh")
+	public String rksqdjsh(Model model,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		User user=(User) session.getAttribute("user");
+		model.addAttribute("username",user.getLogin_id());
+		model.addAttribute("list",warehouseService.auditWarehousingAll());
+		return "rksqdjsh";
+	}
+	
+	@RequestMapping("/zdrkd")
+	public String zdrkd(Model model,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		User user=(User) session.getAttribute("user");
+		model.addAttribute("username",user.getLogin_id());
+		model.addAttribute("list",warehouseService.dispatchAll());
+		return "zdrkd";
+	}
+	
 	
 	@RequestMapping("/login")
     public String login(User user,Model model,HttpServletRequest request) {

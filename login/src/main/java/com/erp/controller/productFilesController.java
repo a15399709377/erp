@@ -40,39 +40,32 @@ public class productFilesController {
 		D_CONFIG_FILE_KIND first_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(file.getFirst_kind_id());
 		D_CONFIG_FILE_KIND second_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(file.getSecond_kind_id());
 		D_CONFIG_FILE_KIND third_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(file.getThird_kind_id());
-		int idd=productFilesMapper.test1();
-		int iddd=idd+1;
-		String pro_id="SJ00"+iddd;
-		/*d_file file1=new d_file(1,"SP003","神州战神 笔记本电脑",null,first_kind,second_kind,
-				third_kind,"神州笔记本","Y001-1","D001-1","台","1",null,"12个月",
-				null,null,null,5000.00,3000.00,2000.00,null,"很好用的笔记本",null,user,null,null,null,null,null,null,null,null,
-				0,null,null,null,null);
-		*/
-		/*d_file file1=new d_file(1,"SP004","因特尔 i9CPU",null,first_kind,second_kind,
-				third_kind,"CPU","Y001-2","D001-1","颗","1",null,"12个月",
-				null,null,null,1200.00,1000.00,800.00,null,"效率强劲",null,user,null,null,null,null,null,null,null,null,
-				0,null,null,null,null);
-		d_file file2=new d_file(1,"SP005","海盗船内存条 2900HZ 36GB",null,first_kind,second_kind,
-				third_kind,"内存条","Y001-2","D001-1","片","1",null,"12个月",
-				null,null,null,400.00,300.00,250.00,null,"容量充足",null,user,null,null,null,null,null,null,null,null,
-				0,null,null,null,null);
-		d_file file3=new d_file(1,"SP006","七彩虹炫光灯机箱",null,first_kind,second_kind,
-				third_kind,"机箱","Y001-2","D001-1","台","1",null,"12个月",
-				null,null,null,200.00,150.00,100.00,null,"效率强劲",null,user,null,null,null,null,null,null,null,null,
-				0,null,null,null,null);
-		d_file file4=new d_file(1,"SP007","test","",first_kind,second_kind,
-				third_kind,"机箱","Y001-2","D001-1","台","1",null,"12个月",
-				null,null,null,200.00,150.00,100.00,null,"效率强劲",null,user,null,null,null,null,null,null,null,null,
-				0,null,null,null,null);*/
-		file.setProduct_id(pro_id);
-		file.setFirst_kind(first_kind);
-		file.setSecond_kind(second_kind);
-		file.setThird_kind(third_kind);
-		file.setRegister(user);
-		System.out.println(file);
-		int a=productFilesService.addProductFilesService(file);
-		System.out.println(a);
-		return a;
+		if(productFilesMapper.test1()!=null) {
+			String idd=productFilesMapper.test1();
+			int iddd=Integer.parseInt(idd)+1;
+			String pro_id="SJ00"+iddd;		
+			file.setProduct_id(pro_id);
+			file.setFirst_kind(first_kind);
+			file.setSecond_kind(second_kind);
+			file.setThird_kind(third_kind);
+			file.setRegister(user);
+			System.out.println(file);
+			int a=productFilesService.addProductFilesService(file);
+			System.out.println(a);
+			return a;
+		}else {
+			String pro_id="SJ00"+1;		
+			file.setProduct_id(pro_id);
+			file.setFirst_kind(first_kind);
+			file.setSecond_kind(second_kind);
+			file.setThird_kind(third_kind);
+			file.setRegister(user);
+			System.out.println(file);
+			int a=productFilesService.addProductFilesService(file);
+			System.out.println(a);
+			return a;			
+		}
+		 
 	}
 	
 	@RequestMapping("/auditProductFiles")
@@ -126,10 +119,27 @@ public class productFilesController {
 		System.out.println("hhhhhh");
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");
-		int idd=productFilesMapper.test();
-		int dd=productFilesMapper.test2();
-		int ddd=dd+1;
-		int iddd=idd+1;
+
+
+
+		
+		int ddd=0;
+		int iddd=0;
+		if(productFilesMapper.test()!=null) {
+			String idd=productFilesMapper.test();
+			iddd=Integer.parseInt(idd)+1;
+		}else {
+			iddd=1;
+		}
+		if(productFilesMapper.test1()!=null) {
+			String dd=productFilesMapper.test2();
+			 ddd=Integer.parseInt(dd)+1;
+		}else {
+			 ddd=1;
+		}
+		
+		
+
 		int shunxu=0;
 		String pro_id="SJ00"+iddd;
 		d_file mo=productFilesMapper.designProductFilesXX(Dm);
@@ -168,17 +178,9 @@ public class productFilesController {
 		return list;
 	}
 	
-//	@RequestMapping("/cpdacx")
-//	public String  cpdacx(Model model,@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum) {
-//		PageHelper.startPage(pageNum,1);
-//		List<d_file> list=productFilesService.cpdacx();
-//		int count=productFilesService.cpdacxzs();
-//		PageInfo<d_file> pageInfo = new PageInfo<d_file>(list);
-//		model.addAttribute("pageInfo",pageInfo);
-//		model.addAttribute("count", count);
-//		System.out.println("========================="+list);
-//		return "cpdacx";
-//	}
+
+
+
 	@RequestMapping("/cpdacx")
 	public String  cpdacx(Model model) {
 		List<d_file> list=productFilesService.cpdacx();
@@ -189,4 +191,9 @@ public class productFilesController {
 		return "cpdacx";
 	}
 	
+	@RequestMapping("/cpdabg")
+	public String  cpdabg(Model model) {
+		return "cpdabg";
+	}
+
 }

@@ -12,6 +12,15 @@
 	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
 	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" media="all" />
+	<link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+	
 </head>
 <body class="childrenBody">
 <button type="submit" class="btn btn-primary" id="sh">审核</button>
@@ -57,21 +66,72 @@
 				<td>设计</td>
 			</tr>
 			</thead>
-			<tbody>
-				<tr th:each="pr:${p}">
-					<td th:text="${pr.details_number}"></td>
-					<td th:text="${pr.procedure_name}"></td>
-					<td th:text="${pr.procedure_id}"></td>
-					<td th:text="${pr.procedure_describe}"></td>
-					<td th:text="${pr.labour_hour_amount}"></td>
-					<td th:text="${pr.amount_unit}"></td>
-					<td th:text="${pr.cost_price }"></td>
-					<td th:text="${pr.subtotal}"></td>
-					<td><span id="sj">设计</span></td>
+			<tbody class="ptable">
+				<tr th:each="p:${p}">
+					<td th:text="${p.details_number}"></td>
+					<td th:text="${p.procedure_name}"></td>
+					<td th:text="${p.procedure_id}"></td>
+					<td th:text="${p.procedure_describe}"></td>
+					<td th:text="${p.labour_hour_amount}"></td>
+					<td th:text="${p.amount_unit}"></td>
+					<td th:text="${p.cost_price }"></td>
+					<td th:text="${p.subtotal}"></td>
+					<td><input th:value="${p.id}" type="hidden"/><button type="button" class="btn btn-primary btn-lg" id="close"
+					data-toggle="modal" data-target="#myModal">设计</button></td>
 				</tr>
             </tbody>
 		</table>		<br /><br />
-	
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">工序物料设计单</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table table-hover" id="GxList">
+						<tr>
+							<td>选择</td>
+							<td>序号</td>
+							<td>物料名称</td>
+							<td>物料编号</td>
+							<td>描述</td>
+							<td>设计数量</td>
+							<td>可用数量</td>
+							<td>单位</td>
+							<td>单价（元）</td>
+							<td>本工序数量</td>
+						</tr>
+						<tbody id="wlList">
+							  <tr th:each="do:${dom.D_module_details}">
+							  	<td><input type="checkbox" id="xz"/></td>
+								<td th:text="${do.details_number}"></td>
+								<td th:text="${do.product_name}"></td>
+								<td th:text="${do.product_id}"></td>
+								<td th:text="${do.product_describe}"></td>
+								<td th:text="${do.amount}"></td>
+								<td th:text="${do.residual_amount}"></td>
+								<td th:text="${do.amount_unit}"></td>
+								<td th:text="${do.cost_price}"></td>
+								<td><input type="text" id="num"/></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="qd">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="layui-row">
 		<div class="magb15 layui-col-md4 layui-col-xs12">
 			<label class="layui-form-label">登记人</label>
@@ -98,7 +158,14 @@
 		</div>
 	</div>	<br />
 	
+	<div class="layui-row">
+		<div class="magb15 layui-col-md1 layui-col-xs12"></div>
 
+		<div class="magb15 layui-col-md6 layui-col-xs12">
+			<button class="layui-btn layui-btn-sm" lay-submit="" id="add"
+				lay-filter="addUser">立即添加</button>
+		</div>
+	</div>
 
 
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
@@ -107,8 +174,73 @@
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 <script type="text/javascript">
 	$(function(){
-		$("#sj").click(function(){
-			
+		var parent_id=null;
+		var modul = new Array();
+		$(".ptable").on("click","#close",function(){
+			parent_id=$(this).prev().val();
+		})
+		$("#wlList").on("click","#xz",function(){
+			$(this).each(function(){
+				//获取序号
+				var details_number=$(this).parent().next().text();
+				//获取物料名称
+				var product_name=$(this).parent().next().next().text();
+				//获取物料编号
+				var product_id=$(this).parent().next().next().next().text();
+				//获取描述
+				var product_describe=$(this).parent().next().next().next().next().text();
+				//获取设计数量
+				var num=$(this).parent().next().next().next().next().next().text();
+				//获取可用数量
+				var residual_amount=$(this).parent().next().next().next().next().next().next().text();
+				//获取单位
+				var amount_unit=$(this).parent().next().next().next().next().next().next().next().text();
+				//获取单价
+				var cost_price=$(this).parent().next().next().next().next().next().next().next().next().text();
+				//获取数量
+				var amount=$(this).parent().next().next().next().next().next().next().next().next().next().children().val();
+				//创建一个工序物料对象用来存放数据
+				var m_design_procedure_module={
+						"parent_id":parent_id,
+						"details_number":details_number,
+						"product_id":product_id,
+						"product_name":product_name,
+						"amount":amount,
+						"product_describe":product_describe,
+						"amount_unit":amount_unit,
+						"cost_price":cost_price,
+						"subtotal":cost_price*amount
+				};
+				if(residual_amount<amount){
+					alert("数量过多");
+					$(this).removeAttr("checked");//取消全选
+					return false;
+				}
+				modul.push(m_design_procedure_module);
+				var a=eval(residual_amount-amount);
+				$(this).parent().next().next().next().next().next().next().text(a);
+				$(this).parent().next().next().next().next().next().next().next().next().next().children().val("");
+			})
+		})
+		$("#add").click(function(){
+			$
+			.ajax({
+				type : "POST",
+				url : "wlxxb",
+				data : JSON.stringify(modul),
+				contentType : "application/json;charsetset=UTF-8",
+				dataType : "json",
+				cache : true,
+				async : false,
+				error : function(request) {
+					showTipAlert("Connection error");
+				},
+				success : function(data) {
+					if (data > 0) {
+						alert("成功")
+					}
+				}
+			})
 		})
 	})
 </script>

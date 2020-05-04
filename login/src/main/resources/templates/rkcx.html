@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- 引入样式 -->
+<link rel="stylesheet"
+	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+
+</head>
+<style>
+ .el-table .warning-row {
+    background: oldlace;
+  }
+
+  .el-table .success-row {
+    background: #f0f9eb;
+    
+  }
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+</style>
+<body>
+
+	<div class="container "  id="app">
+	
+		<div class="row text-center" >
+			<el-table  :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)" border  style="width: 100%;" :row-class-name="tableRowClassName"> 
+			<el-table-column type="index" label="#">
+				 </el-table-column>
+			 <el-table-column type="expand">
+      <template slot-scope="props">
+        <el-form label-position="left" inline class="demo-table-expand">
+          <el-form-item label="入库单编号">
+            <span>{{ props.row.gather_id }}</span>
+          </el-form-item>
+          <el-form-item label="应入库总数">
+            <span>{{ props.row.amount_sum }}</span>
+          </el-form-item>
+          <el-form-item label="已入库总数">
+            <span>{{ props.row.gathered_amount_sum }}</span>
+          </el-form-item>
+        </el-form>
+      </template>
+    </el-table-column>
+			<el-table-column
+				
+				prop="gather_id"  label="入库单编号" width="180"> </el-table-column> 
+				<el-table-column
+				prop="reason" label="入库理由" width="180">
+				 </el-table-column> 
+				 <el-table-column
+				prop="check_time" label="完成时间">
+				 </el-table-column> 
+				 <el-table-column
+				prop="amount_sum" label="应入库总件数">
+				 </el-table-column>
+				 <el-table-column
+				prop="gathered_amount_sum" label="已入库总件数">
+				 </el-table-column>
+				  <el-table-column
+				prop="store_tag" label="入库单状态">	
+				<el-button type="info" plain>已完成</el-button>			
+				
+				 </el-table-column>
+				  <el-table-column
+				prop="store_tag" label="查看详细">	
+				<template slot-scope="propss">
+				  
+				 <el-button type="success" @click="xx(propss.row.id)" data-toggle="modal" data-target="#myModal" plain icon="el-icon-search" circle></el-button>
+				 </template>
+				 </el-table-column>
+				  
+				</el-table>
+				<el-pagination
+					  			@size-change="handleSizeChange" @current-change="handleCurrentChange"
+					  			:current-page="currentPage" :page-sizes="[1, 2, 5, 10]"
+					  			:page-size="pagesize"
+					  			layout="total, sizes, prev, pager, next, jumper" :total="list.length">
+					  		</el-pagination>
+		</div>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div style="width: 80%" class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h5>
+								<small>查询详细</small>
+							</h5>
+						</div>
+						<div class="modal-body">
+							 <el-table
+    :data="chlist" :row-class-name="tableRowClassName"
+    style="width: 100%">
+    <el-table-column
+      label="商品id"
+      prop="product_id">
+    </el-table-column>
+    <el-table-column
+      label="商品名字"
+      prop="product_name">
+    </el-table-column>
+    <el-table-column
+      label="总数量"
+      prop="amount">
+    </el-table-column>
+    <el-table-column
+      label="已入库数量"
+      prop="gathered_amount">
+    </el-table-column>
+   <el-table-column  label="仓库">
+   成品库
+    </el-table-column>
+  </el-table>
+						</div>
+						<div class="modal-footer">
+						
+						<el-button type="danger" icon="el-icon-delete" data-dismiss="modal"
+								aria-label="Close" circle></el-button>
+								<el-button type="success" icon="el-icon-check" data-dismiss="modal"
+								aria-label="Close" circle></el-button>
+					    </div>
+					</div>
+				</div>
+			</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+<script type="text/javascript" src="js/qs.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.5"></script>
+<script>
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				input: '',
+				id:0,
+				currentPage: 1, //默认显示页面为1
+				pagesize: 2,
+				name: '',
+				keywords: '',
+				list: [], //存储所有品牌对象的数据,
+				chlist:[],
+				search: ''
+			},
+			mounted() { //初始化显示完成调用
+				this.getAll();
+			},
+			methods:{
+				handleChange(value) {
+					console.log(value);
+				},tableRowClassName({row, rowIndex}) {
+					if (rowIndex%2==1) {
+						return 'warning-row';
+					} else if (rowIndex%2==0) {
+						return 'success-row';
+					}
+			          return '';
+			      },getAll(){
+			    	  axios.get("rkcxAll").then(res=>{
+			    		  this.list=res.data;
+			    	  })
+			      },xx(id){
+			    	  this.id=id;
+			    	  axios.get("auditWarehousingXX?id="+this.id+"").then(res=>{
+			    		  this.chlist=res.data.s_GATHER_DETAILS;
+			    	  })
+			      },handleEdit(index, row) {
+			          console.log(index, row);
+			      },
+			      handleDelete(index, row) {
+			        console.log(index, row);
+			      }, handleSizeChange (size) {
+		                this.pagesize = size;
+		                /*console.log(this.pagesize) */
+		            },
+		            //点击第几页
+		            handleCurrentChange (currentPage) {
+		                this.currentPage = currentPage;
+		                /*console.log(this.currentPage) */
+		            }		
+			}				
+		})
+	</script>
+</html>
