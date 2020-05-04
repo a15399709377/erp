@@ -34,7 +34,7 @@ public interface procedureMapper {
 		//添加产品工序表
 		int addProcedure_design(@Param("m")m_design_procedure m);
 
-		int getProcedureIdByproduct_id();
+		String getProcedureIdByproduct_id();
 		
 		//审批产品工序表
 		int ToExamineDesign_Procedure(@Param("id") int id);

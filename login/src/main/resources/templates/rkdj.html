@@ -43,7 +43,7 @@ input{
                     </div>
                     <div class="ibox-content">
 
-                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <table class="table table-striped table-bordered table-hover ">
                             <thead>
                                <tr>
 									<th>入库单编号</th>
@@ -214,18 +214,7 @@ input{
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <script src="js/content.min.js?v=1.0.0"></script>
     <script>
-        $(document).ready(function(){
-        	$(".dataTables-example").dataTable();
-        	var oTable=$("#editable").dataTable();
-        	oTable.$("td").editable("../example_ajax.php",{
-        		"callback":function(sValue,y){
-        			var aPos=oTable.fnGetPosition(this);
-        			oTable.fnUpdate(sValue,aPos[0],aPos[1])},
-        		"submitdata":function(value,settings){
-        			return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})
-        			
-       
-        });
+        
         
         $(".sk").click(function(){
 			$("#tab  tr:not(:first)").html("");
@@ -321,8 +310,7 @@ input{
         	}
         	
         })
-           function fnClickAddRow(){
-        	   $("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
+          
     </script>
 
 	

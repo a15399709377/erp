@@ -26,9 +26,9 @@
 	</choose>check_time=now(),
 	<choose>
 	<when test="app1.audit==1">
-	check_tag='S001-1'
+	check_tag='S001-1',panduan='SC002'
 	</when>
-	<otherwise>check_tag='S001-2' </otherwise>
+	<otherwise>check_tag='S001-2',panduan='SC009' </otherwise>
 	</choose>
 	
 	where id=#{app1.id}
@@ -42,9 +42,15 @@
 	</select>
 	
 	<select id="sccxAll" resultType="m_apply">
-	select * from m_apply ;
+	SELECT * FROM m_apply ;
 	</select>
 	
+	<select id="scjhshAll" resultType="m_apply">
+		select * from m_apply  where check_tag='S001-0' AND panduan='SC001';
+	</select>
 	
+	<select id="scjhshXX" resultType="m_apply">
+	select * from m_apply where id=#{id}
+	</select>
 	
 	</mapper>

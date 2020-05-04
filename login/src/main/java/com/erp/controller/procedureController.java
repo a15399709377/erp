@@ -135,7 +135,9 @@ public class procedureController {
 		//获取指定的产品工序
 		@RequestMapping("/zxwlsjd")
 		public String zxwlsjd(int id,Model model) {
+			
 			m_design_procedure pr=service.getM_Design_Procedure(id);
+			//1
 			model.addAttribute("pr",pr);
 			model.addAttribute("p", service.getDesign_Procedure_details(id));
 			//获取产品制定的物料信息
@@ -146,6 +148,7 @@ public class procedureController {
 			}
 			return "zxwlsjd";
 		}
+		
 		//获取页面的物料详细表
 		@RequestMapping("/wlxxb")
 		@ResponseBody

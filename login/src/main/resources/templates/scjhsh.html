@@ -1,10 +1,215 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="utf-8" />
+<title></title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- 引入样式 -->
+<link rel="stylesheet"
+	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+
 </head>
+<!--设置大小-->
+
+<style>
+.el-row {
+	margin-bottom: 20px;
+	&:
+	last-child
+	{
+	margin-bottom
+	:
+	0;
+}
+
+}
+.el-col {
+	border-radius: 4px;
+}
+
+.bg-purple-dark {
+	background: #99a9bf;
+}
+
+.bg-purple {
+	background: #d3dce6;
+}
+
+.bg-purple-light {
+	background: #e5e9f2;
+}
+
+.grid-content {
+	border-radius: 4px;
+	min-height: 36px;
+}
+
+.row-bg {
+	padding: 10px 0;
+	background-color: #f9fafc;
+}
+
+.input-class {
+	width: 150px;
+	height: 30px;
+}
+
+.el-table .warning-row {
+	background: oldlace;
+}
+
+.el-table .success-row {
+	background: #f0f9eb;
+}
+
+.transition-box {
+	margin-bottom: 10px;
+	width: 200px;
+	height: 100px;
+	border-radius: 4px;
+	background-color: #409EFF;
+	text-align: center;
+	color: #fff;
+	padding: 40px 20px;
+	box-sizing: border-box;
+	margin-right: 20px;
+}
+</style>
 <body>
+	<div class="container " id="app">
+		<el-row> <el-col :span="24"> <span
+			class="text-center" style="font-size: 20px;">生产计划审核</span> </el-col> </el-row>
+		<el-table :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 100%"
+			:row-class-name="tableRowClassName" v-loading="loading"> <el-table-column
+			prop="apply_id" label="生产计划编号" width="180"> </el-table-column> <el-table-column
+			prop="register" label="登记人" width="180"> </el-table-column> <el-table-column
+			prop="register_time" label="登记时间"> </el-table-column> <el-table-column
+			label="审核"> <template v-slot="scope"> <el-button
+			@click="drawer = true,sh(scope.row.id)" type="primary"
+			icon="el-icon-edit" circle></el-button> </template> </el-table-column> </el-table>
+<el-pagination
+					  			@size-change="handleSizeChange" @current-change="handleCurrentChange"
+					  			:current-page="currentPage" :page-sizes="[1, 2, 5, 10]"
+					  			:page-size="pagesize"
+					  			layout="total, sizes, prev, pager, next, jumper" :total="list.length">
+					  		</el-pagination>
+
+
+
+		<el-drawer size="80%" title="我是标题" :visible.sync="drawer"
+			:with-header="false">
+		<div class="container">
+			<span>我来啦!</span>
+			<el-row> <el-col :span="12"> </el-col> </el-row>
+			<el-row> <el-col :span="24"> <template>
+			<el-table border v-loading="loading1" :data="tableData"
+				style="width: 100%" :row-class-name="tableRowClassName">
+			<el-table-column prop="apply_id" label="生产编号" width="180">
+			</el-table-column> <el-table-column prop="product_id" label="产品编号" width="180">
+			</el-table-column> <el-table-column prop="product_name" label="产品名称" width="180">
+			</el-table-column> <el-table-column prop="amount" label="数量" width="180">
+			</el-table-column> <el-table-column prop="product_describe" label="产品描述" width="180">
+			</el-table-column> <el-table-column label="审核"> <template
+				v-slot="scope"> <el-button icon="el-icon-search"
+				type="success" @click="cg(scope.row.id)" circle></el-button> <el-button
+				type="danger" icon="el-icon-delete" @click="bcg(scope.row.id)"
+				circle></el-button> </template> </el-table-column> </el-table> </template> </el-col></el-row>
+		</el-drawer>
+
+
+	</div>
+
+
 
 </body>
+<script type="text/javascript" src="js/vue.min.js">
+	</script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+<script type="text/javascript" src="js/qs.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				value1: '',
+				num: 1,
+				input: '',
+				id: '',
+				currentPage: 1, //默认显示页面为1
+				pagesize: 2,
+				name: '',
+				keywords: '',
+				drawer: false,
+				list: [], //存储所有品牌对象的数据,
+				tableData: [],
+				direction: 'rtl',
+				loading: false,
+				loading1: false
+			},
+			mounted() { //初始化显示完成调用
+				this.getAll();
+			},
+			methods: {
+				tableRowClassName({
+					row,
+					rowIndex
+				}) {
+					if (rowIndex%2==1) {
+						return 'warning-row';
+					} else if (rowIndex%2==0) {
+						return 'success-row';
+					}
+					return '';
+				},getAll(){
+					this.loading=true;
+					axios.get("scjhshAll").then(res=>{
+		        		  this.list=res.data;
+		        		  this.loading=false;
+				})
+			},sh(id){
+							
+				axios.get("scjhshXX?id="+id+"").then(res=>{
+					this.tableData=res.data;
+				
+			})
+			    this.getAll();
+			},cg(id){
+				axios.get("auditProductionPlan?id="+id+"&audit=1").then(res=>{
+					if(res.data>0){
+						this.open2();
+						this.getAll();
+				    }							
+				})
+				
+			},bcg(id){
+				axios.get("auditProductionPlan?id="+id+"&audit=2").then(res=>{
+					if(res.data>0){
+						this.open3();
+						this.getAll();
+				}
+				})				
+			},open2() {
+		        this.$message({
+		            message: '审核通过！',
+		            type: 'success'
+		          });
+				},
+			open3() {
+		        this.$message({
+		            message: '审核不通过！',
+		            type: 'warning'
+		          });
+				}, handleSizeChange (size) {
+	                this.pagesize = size;
+	                /*console.log(this.pagesize) */
+	            },
+	            //点击第几页
+	            handleCurrentChange (currentPage) {
+	                this.currentPage = currentPage;
+	                /*console.log(this.currentPage) */
+	            }
+			}
+		})
+	</script>
 </html>

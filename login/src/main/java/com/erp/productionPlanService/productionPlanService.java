@@ -15,5 +15,10 @@ public interface productionPlanService {
 	List<d_file> d_fileAll();
 
 	List<m_apply> sccxAll();
+
+	List<m_apply> scjhshAll();
+
+	List<m_apply> scjhshXX(int id);
+
 	
 }

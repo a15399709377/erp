@@ -67,23 +67,41 @@ public class productionPlanController {
 	}
 	
 	
+	
+	//生产计划审核
+	
+	@RequestMapping("/scjhshAll")
+	@ResponseBody
+	public List<m_apply> scjhshAll() {
+		
+		return productionPlanService.scjhshAll();
+	}
+	
+	@RequestMapping("scjhshXX")
+	@ResponseBody
+	public List<m_apply> scjhshXX(int id) {
+		
+		return productionPlanService.scjhshXX(id);
+	}
+	
 	@RequestMapping("/auditProductionPlan")
 	@ResponseBody
-	public int auditProductionPlan(m_apply apply,HttpServletRequest request) {
+	public int auditProductionPlan(int id,int audit,HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");
-		m_apply apply1 =new m_apply(1,"可以",1);
+		m_apply apply1 =new m_apply(id,"",audit);
 		return productionPlanService.auditProductionPlan(apply1,user);
 	}
 	
-	//生产查询
-	@RequestMapping("/sccx")
-	public String sccx(Model model,HttpServletRequest request) {
+	//生产计划查询
+	@RequestMapping("/scjhcx")
+	public String scjhcx(Model model,HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");
 		model.addAttribute("username",user.getLogin_id());
-		return "sccx";
+		return "scjhcx";
 	}
+	
 	//查询所有生产计划sccxAll
 	@RequestMapping("/sccxAll")
 	@ResponseBody
@@ -91,4 +109,9 @@ public class productionPlanController {
 		
 		return productionPlanService.sccxAll();
 	}
+	
+	//制定生产派工单
+	
+	
+	
 }

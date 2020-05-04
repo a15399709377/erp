@@ -92,7 +92,7 @@
 </el-row>
 		<el-row> <el-col :span="24">   <el-table
    
-    :data="list" border
+    :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)" border
    
     style="width: 100%" :row-class-name="tableRowClassName">
 			<el-table-column
@@ -126,6 +126,12 @@
 			</template>
 			</el-table-column>  
 			</el-table> 
+			<el-pagination
+					  			@size-change="handleSizeChange" @current-change="handleCurrentChange"
+					  			:current-page="currentPage" :page-sizes="[1, 2, 5, 10]"
+					  			:page-size="pagesize"
+					  			layout="total, sizes, prev, pager, next, jumper" :total="list.length">
+					  		</el-pagination>
 			</el-col>
 			 </el-row>
 		
@@ -134,7 +140,7 @@
 		<el-row>
 		<el-col :span="24">
 		<el-table
-    :data="chlist"
+    :data="chlist.slice((currentPage-1)*pagesize,currentPage*pagesize)"
     style="width: 100%"
     :row-class-name="tableRowClassName">
     <el-table-column
@@ -170,6 +176,12 @@
       </template>
     </el-table-column>
   </el-table>
+  <el-pagination
+					  			@size-change="handleSizeChange" @current-change="handleCurrentChange"
+					  			:current-page="currentPage" :page-sizes="[1, 2, 5, 10]"
+					  			:page-size="pagesize"
+					  			layout="total, sizes, prev, pager, next, jumper" :total="chlist.length">
+					  		</el-pagination>
 		</el-col>				
 		</el-row>
 		</el-drawer>
@@ -188,6 +200,8 @@ var vm = new Vue({
 		input: '',
 		id:0,
 		name: '',
+		currentPage: 1, //默认显示页面为1
+		pagesize: 2,
 		keywords: '',
 		list: [], //存储所有品牌对象的数据,
 		chlist:[],
@@ -211,11 +225,11 @@ var vm = new Vue({
 				this.value1 = new Date();
 			},
 			tableRowClassName({row, rowIndex}) {
-		        if (rowIndex === 1) {
-		          return 'warning-row';
-		        } else if (rowIndex === 3) {
-		          return 'success-row';
-		        }
+				if (rowIndex%2== 1) {
+					return 'warning-row';
+				} else if (rowIndex%2==0) {
+					return 'success-row';
+				}
 		        return '';
 		      },toggleSelection(rows) {
 		          if (rows) {
@@ -301,7 +315,15 @@ var vm = new Vue({
 		                    });
 		                  });
 		            }
-		            	}
+		            	},handleSizeChange (size) {
+			                this.pagesize = size;
+			                /*console.log(this.pagesize) */
+			            },
+			            //点击第几页
+			            handleCurrentChange (currentPage) {
+			                this.currentPage = currentPage;
+			                /*console.log(this.currentPage) */
+			            }
 		          
 		        
 	}				

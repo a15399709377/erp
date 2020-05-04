@@ -104,7 +104,7 @@
 				null
 			</when>
 			<otherwise>
-				#{file.real_cost_price}
+				#{file.cost_price}
 			</otherwise>
 		</choose>,
 		<choose>

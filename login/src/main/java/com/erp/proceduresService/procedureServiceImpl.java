@@ -51,13 +51,14 @@ public class procedureServiceImpl implements procedureService{
 		//获取产品工序表的产品编号
 		pro.setProduct_id(file.getProduct_id());
 		//设置产品工序的设计编号
-		int id=0;
-		if(mapper.getProcedureIdByproduct_id()==0) {
-			id=0;
+		
+		int iid=0;
+		if(mapper.getProcedureIdByproduct_id()==null) {
+			iid=1;
 		}else {
-			id=mapper.getProcedureIdByproduct_id();
-		}
-		int iid=id+1;
+			String id=mapper.getProcedureIdByproduct_id();
+			iid=Integer.parseInt(id)+1;
+		}		
 		String design_id="GX00"+iid;
 		pro.setDesign_id(design_id);
 		//获取工时总成本
@@ -70,10 +71,10 @@ public class procedureServiceImpl implements procedureService{
 		int count=mapper.addProcedure_design(pro);
 		//根据产品编号 获取产品的序号
 		if(count>0) {
-			int parent_id=mapper.getProcedureIdByproduct_id();
+			String parent_id=mapper.getProcedureIdByproduct_id();
 			//获取所有的产品工序
 			for (m_design_procedure_details p : pro.getProcedure_details()) {
-				mapper.addProcedureDetails(new m_design_procedure_details(0, parent_id, p.getDetails_number(), "GXBH"+p.getDetails_number(), p.getProcedure_name(), p.getLabour_hour_amount(), p.getProcedure_describe(), p.getAmount_unit(), p.getCost_price(), p.getSubtotal(), p.getModule_subtotal(), p.getRegister(), p.getRegister_time(), p.getDesign_module_tag(), p.getDesign_module_change_tag()));
+				mapper.addProcedureDetails(new m_design_procedure_details(0, Integer.parseInt(parent_id), p.getDetails_number(), "GXBH"+p.getDetails_number(), p.getProcedure_name(), p.getLabour_hour_amount(), p.getProcedure_describe(), p.getAmount_unit(), p.getCost_price(), p.getSubtotal(), p.getModule_subtotal(), p.getRegister(), p.getRegister_time(), p.getDesign_module_tag(), p.getDesign_module_change_tag()));
 			}
 			//修改产品档案的工序设计标志为设计完成
 			mapper.updateFileBydesign_procedure_tag(file.getId());

@@ -264,13 +264,11 @@
 		)
 	</insert>
 
-	<select id="getProcedureIdByproduct_id" resultType="int">
+	<select id="getProcedureIdByproduct_id" resultType="String">
 		SELECT id FROM M_DESIGN_PROCEDURE order by id DESC limit 1
 	</select>
 	
-	<select id="getdesign_id" resultType="int">
-		SELECT design_id FROM M_DESIGN_PROCEDURE order by id DESC limit 1
-	</select>
+
 	
 	<update id="ToExamineDesign_Procedure">
 		update M_DESIGN_PROCEDURE set check_tag='S001-1' where id=#{id}

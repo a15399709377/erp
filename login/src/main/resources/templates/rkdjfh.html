@@ -38,7 +38,7 @@
 		<div class="row">
 		<el-row >
 		<el-col :span="24">
-			<el-table :data="list" border   :row-class-name="tableRowClassName" > 
+			<el-table :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)" border   :row-class-name="tableRowClassName" > 
 			<el-table-column type="index" label="#">
 				 </el-table-column>
 			<el-table-column
@@ -65,6 +65,12 @@
 				</template>			
 				</el-table-column>
  </el-table>
+ <el-pagination
+					  			@size-change="handleSizeChange" @current-change="handleCurrentChange"
+					  			:current-page="currentPage" :page-sizes="[1, 2, 5, 10]"
+					  			:page-size="pagesize"
+					  			layout="total, sizes, prev, pager, next, jumper" :total="list.length">
+					  		</el-pagination>
  </el-col>
  </el-row>
 			
@@ -135,7 +141,8 @@
 <script type="text/javascript" src="js/axios.min.js"></script>
 <script type="text/javascript" src="js/qs.min.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
+<script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
 <script>
 
 		var vm = new Vue({
@@ -143,6 +150,8 @@
 			data: {
 				input: '',
 				id:0,
+				currentPage: 1, //默认显示页面为1
+				pagesize: 2,
 				name: '',
 				keywords: '',
 				list: [], //存储所有品牌对象的数据,
@@ -156,11 +165,11 @@
 					console.log(value);
 				}
 				,tableRowClassName({row, rowIndex}) {
-			        if (rowIndex === 1) {
-			            return 'warning-row';
-			          } else if (rowIndex === 3) {
-			            return 'success-row';
-			          }
+					if (rowIndex%2==1) {
+						return 'warning-row';
+					} else if (rowIndex%2==0) {
+						return 'success-row';
+					}
 			          return '';
 			      },
 				getAll() {
@@ -228,7 +237,15 @@
 							alert("审核不通过！");
 						}
 					})
-				}
+				}, handleSizeChange (size) {
+	                this.pagesize = size;
+	                /*console.log(this.pagesize) */
+	            },
+	            //点击第几页
+	            handleCurrentChange (currentPage) {
+	                this.currentPage = currentPage;
+	                /*console.log(this.currentPage) */
+	            }
 			}				
 		})
 	</script>

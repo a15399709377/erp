@@ -58,5 +58,31 @@ public class productionPlanServiceImpl implements productionPlanService {
 		// TODO Auto-generated method stub
 		return productionPlanMapper.sccxAll();
 	}
+
+
+
+
+
+	@Override
+	public List<m_apply> scjhshAll() {
+		// TODO Auto-generated method stub
+		return productionPlanMapper.scjhshAll();
+	}
+
+
+
+
+
+	@Override
+	public List<m_apply> scjhshXX(int id) {
+		// TODO Auto-generated method stub
+		return productionPlanMapper.scjhshXX(id);
+	}
+
+
+
+
+
+
 	
 }
