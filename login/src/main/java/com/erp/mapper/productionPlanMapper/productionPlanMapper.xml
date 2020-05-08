@@ -53,4 +53,10 @@
 	select * from m_apply where id=#{id}
 	</select>
 	
+	
+	<select id="zdscpgdAll" resultType="m_apply">
+			select * from m_apply  where check_tag='S001-1' AND panduan='SC002';
+	
+	</select>
+	
 	</mapper>

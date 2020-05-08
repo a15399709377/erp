@@ -83,6 +83,16 @@ public class productionPlanServiceImpl implements productionPlanService {
 
 
 
+	@Override
+	public List<m_apply> zdscpgdAll() {
+		// TODO Auto-generated method stub
+		return productionPlanMapper.zdscpgdAll();
+	}
+
+
+
+
+
 
 	
 }

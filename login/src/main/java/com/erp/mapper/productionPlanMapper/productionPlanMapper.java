@@ -25,5 +25,7 @@ public interface productionPlanMapper {
 
 	List<m_apply> scjhshXX(int id);
 
+	List<m_apply> zdscpgdAll();
+
 
 }

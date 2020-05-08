@@ -112,6 +112,18 @@ public class productionPlanController {
 	
 	//制定生产派工单
 	
+	@RequestMapping("/zdscpgd")
+	public String zdscpgd(Model model,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		User user=(User) session.getAttribute("user");
+		model.addAttribute("username",user.getLogin_id());
+		return "zdscpgd";
+	}
 	
-	
+	@RequestMapping("zdscpgdAll")
+	@ResponseBody
+	public List<m_apply> zdscpgdAll() {
+		
+		return productionPlanService.zdscpgdAll();
+	}
 }
