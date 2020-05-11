@@ -9,10 +9,92 @@
 <link rel="stylesheet"
 	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <!-- 引入组件库 -->
+<style>
+.el-table .warning-row {
+	background: oldlace;
+}
+
+.el-table .success-row {
+	background: #f0f9eb;
+}
+
+.input-class {
+	width: 150px;
+	height: 30px;
+}
+</style>
 <body>
 	<div class="container" id="app" style="padding: 25px;">
 		<div class="row">
-		
+			<el-table border
+				:data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+				style="width: 100%" :row-class-name="tableRowClassName">
+			<el-table-column prop="apply_id" label="计划单编号" width="180">
+			</el-table-column> <el-table-column prop="product_id" label="产品编号" width="180">
+			</el-table-column> <el-table-column prop="product_name" label="产品名称">
+			</el-table-column> <el-table-column prop="product_describe" label="产品描述">
+			</el-table-column> <el-table-column prop="amount" label="数量"> </el-table-column> <el-table-column
+				prop="check_time" label="审核时间"> </el-table-column> <el-table-column
+				label="制定派工单">
+			<template v-slot="scope"> <el-button type="success"
+				@click="drawer = true,zdscpgdXX(scope.row.id)" icon="el-icon-edit"
+				circle></el-button> </template></el-table-column> </el-table>
+			<el-pagination @size-change="handleSizeChange"
+				@current-change="handleCurrentChange" :current-page="currentPage"
+				:page-sizes="[1, 2, 5, 10]" :page-size="pagesize"
+				layout="total, sizes, prev, pager, next, jumper"
+				:total="list.length"> </el-pagination>
+
+			<el-drawer title="生产派工单" :visible.sync="drawer" size="80%">
+			<el-row> <el-col :span="12">制定人：<el-input
+				th:value="${username}" :disabled="true" placeholder="请输入内容"
+				class="input-class"></el-input></el-col> <el-col :span="12"><el-button icon="el-icon-check" type="success"
+				@click="tj()" round>提交</el-button></el-col></el-row> </br>
+			<el-row> <el-col :span="12">产品编号：<el-input
+				v-model="Listxx.product_id" :disabled="true" placeholder="请输入内容"
+				class="input-class"></el-input></el-col> <el-col :span="12">产品名字：<el-input
+				:disabled="true" v-model="Listxx.product_name" placeholder="请输入内容"
+				class="input-class"></el-input></el-col></el-row> </br>
+			<el-row> <el-col :span="12">数量：<el-input
+				v-model="Listxx.amount" :disabled="true" placeholder="请输入内容"
+				class="input-class"></el-input></el-col> <el-col :span="12">描述：<el-input
+				v-model="Listxx.product_describe" :disabled="true"
+				placeholder="请输入内容" class="input-class"></el-input></el-col></el-row> </br>
+			<el-table border :data="chlist" style="width: 100%"
+				:row-class-name="tableRowClassName"> <el-table-column
+				prop="id" label="序号" width=""> </el-table-column> <el-table-column
+				prop="procedure_name" label="工序名称" width=""> </el-table-column> <el-table-column
+				prop="procedure_id" label="工序编号" width=""> </el-table-column> <el-table-column
+				prop="procedure_describe" label="描述" width=""> </el-table-column> <el-table-column
+				prop="labour_hour_amount" label="工时数"> </el-table-column> <el-table-column
+				prop="cost_price" label="单位工时成本"> </el-table-column> <el-table-column
+				prop="subtotal" label="工时成本小计"> </el-table-column> <el-table-column
+				label="查看物料"> <template v-slot="scope">
+			<el-button icon="el-icon-search" type="success"
+				@click="innerDrawer = true,ckwl(scope.row.id)" circle></el-button> </template></el-table-column>
+			</el-table>
+			<div>
+
+				<el-drawer size="50%" title="查看物料" :append-to-body="true"
+					 :visible.sync="innerDrawer">
+				<p>_(:зゝ∠)_</p>
+				<el-table border :data="ckwlist" style="width: 100%"
+					:row-class-name="tableRowClassName"> <el-table-column
+					prop="id" label="序号" width="180"> </el-table-column> <el-table-column
+					prop="product_name" label="物料名称" width="180"> </el-table-column> <el-table-column
+					prop="product_id" label="物料编号"> </el-table-column> 
+					 <el-table-column
+					prop="product_describe" label="描述"> </el-table-column>
+					 <el-table-column
+					prop="amount" label="本工序数量"> </el-table-column>
+					<el-table-column
+					prop="amount_unit" label="单位"> </el-table-column>
+					<el-table-column
+					prop="cost_price" label="单价"> </el-table-column>
+					<el-table-column
+					prop="subtotal" label="小计"> </el-table-column></el-table> </el-drawer>
+			</div>
+			</el-drawer>
 		</div>
 	</div>
 </body>
@@ -24,7 +106,15 @@
 var vm = new Vue({
 	el: '#app',
 	data: {
-		list:[],		
+		id:0,
+		list:[],
+		currentPage: 1, //默认显示页面为1
+		pagesize: 2,
+		drawer: false,
+        innerDrawer: false,
+        chlist:[],
+        Listxx:{},
+        ckwlist:[],
 	},
 	mounted() { //初始化显示完成调用
 	  this.zdscpgdAll();
@@ -35,7 +125,49 @@ var vm = new Vue({
        		  
        		  this.list=res.data;
 	    	  })
-		}		
+		},tableRowClassName({row, rowIndex}) {
+	        if (rowIndex%2==1) {
+	            return 'warning-row';
+	          } else if (rowIndex%2==0) {
+	            return 'success-row';
+	          }
+	          return '';
+	        },handleSizeChange (size) {
+                this.pagesize = size;
+                /*console.log(this.pagesize) */
+            },
+            //点击第几页
+            handleCurrentChange (currentPage) {
+                this.currentPage = currentPage;
+                /*console.log(this.currentPage) */
+            },zdscpgdXX(id){
+            	 this.id=id;
+            	 axios.get("zdscpgdXX?id="+id+"").then(res=>{              		  
+              		  this.Listxx=res.data;
+              		  this.chlist=res.data.product.m_Design_Procedure.procedure_details;
+       	    	  })
+            },ckwl(id){
+            	 axios.get("zdscpgdCkwl?id="+id+"&amo="+this.Listxx.amount+"").then(res=>{              		  
+            		 this.ckwlist=res.data;
+            		 axios.get("zdscpgdXX?id="+this.id+"").then(res=>{              		  
+                 		  this.Listxx=res.data;
+                 		  this.chlist=res.data.product.m_Design_Procedure.procedure_details;
+          	    	  })
+      	    	  })
+      	    	 
+            },tj(){
+            	axios.post("zdscpgdxx",this.Listxx).then(res=>{            		  
+            		if(res.data>0){
+            			this.open1();
+            		}
+     	    	  })
+            },open1() {
+                this.$notify({
+                    title: '成功',
+                    message: '制定派工单成功',
+                    type: 'success'
+                  });
+                },		
 	}
 })
 </script>
