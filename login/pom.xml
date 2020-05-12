@@ -14,6 +14,33 @@
       	<groupId>org.springframework.boot</groupId>
       	<artifactId>spring-boot-starter-web</artifactId>
      </dependency>
+     <!-- 想要使用log4j，需要先排除logback的依赖的坐标 spring-boot-start-logging -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <exclusions>
+           <exclusion>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-logging</artifactId>
+           </exclusion>
+        </exclusions>
+     </dependency>
+     <!-- 引入log4j依赖的jar包  -->
+     <dependency>
+	    <groupId>log4j</groupId>
+	    <artifactId>log4j</artifactId>
+	    <version>1.2.17</version>
+	</dependency>
+	<!-- slf4j日志记录 -->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-api</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-log4j12</artifactId>
+	</dependency>
+  
       <!--thymeleaf启动器坐标-->
      <dependency>
      	<groupId>org.springframework.boot</groupId>

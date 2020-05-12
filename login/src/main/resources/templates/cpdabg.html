@@ -158,9 +158,9 @@ border-color: #e6e6e6;
 								<div class="magb15 layui-col-md4 layui-col-xs12">
 									<label class="layui-form-label">II级分类</label>
 									<div class="layui-input-block">
-										<select name="second_kind_id" class="userStatus" lay-filter="userStatus" th:each="no2:${second_kind}">
+										<select name="second_kind_id" class="userStatus" lay-filter="userStatus" >
 												<option value="">正常使用</option>
-												<option th:value="${no2.id}" th:text="${no2.kind_name}"></option>
+												<option th:each="no2:${second_kind}" th:value="${no2.id}" th:text="${no2.kind_name}"></option>
 										</select>
 									</div>
 								</div>
@@ -168,9 +168,9 @@ border-color: #e6e6e6;
 								<div class="magb15 layui-col-md4 layui-col-xs12">
 									<label class="layui-form-label">III级分类</label>
 									<div class="layui-input-block">
-										<select name="third_kind_id"  class="userStatus" lay-filter="userStatus" th:each="no3:${third_kind}">
+										<select name="third_kind_id"  class="userStatus" lay-filter="userStatus" >
 											<option value="">正常使用</option>
-											<option th:value="${no3.id}" th:text="${no3.kind_name}"></option>
+											<option th:each="no3:${third_kind}" th:value="${no3.id}" th:text="${no3.kind_name}"></option>
 										</select>
 									</div>
 								</div>
@@ -187,7 +187,7 @@ border-color: #e6e6e6;
 								<div class="magb15 layui-col-md5 layui-col-xs12">
 									<label class="layui-form-label">用途类型</label>
 									<div class="layui-input-block">
-										<input name="type" readonly="readonly" >
+										<input name="type" disabled="disabled" class="layui-input userName">
 										<!-- <select name="type" class="userStatus" lay-filter="userStatus">
 											<option value="Y001-1">商品</option>
 											<option value="Y001-2">物料</option>
@@ -331,8 +331,8 @@ border-color: #e6e6e6;
 								<div class="magb15 layui-col-md9 layui-col-xs12"></div>
 								
 								<div class="magb15 layui-col-md3 layui-col-xs12">
-								    <button type="button" class="btn btn-default" data-dismiss="modal" id="btg">审核不通过</button>
-						    		<button type="button" class="btn btn-primary" data-dismiss="modal" id="tg" >审核通过</button>
+								    <button type="button" class="btn btn-default" data-dismiss="modal" id="bbg">取消</button>
+						    		<button type="button" class="btn btn-primary" data-dismiss="modal" id="bg" >变更</button>
 								</div>
 							</div>
 							
@@ -364,28 +364,22 @@ border-color: #e6e6e6;
         		"submitdata":function(value,settings){
         			return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})
         });
-        $("#tg").click(function(){
+        $("#bg").click(function(){
     		var file=$("#file").serializeArray();
-    		var haha='S001-1';
-    		$.post("cpdadjshtj?check_tag="+haha,file,back,"text")
+    		var haha='S001-0';
+    		$.post("cpdabgtj?check_tag="+haha,file,back,"text")
     		function back(a){
     			if(a>0){
-    				swal({title:"审核成功",text:"恭喜审核！",type:"success"},
-							function(){	window.location="cpdadjsh"})
+    				swal({title:"变更成功",text:"需要审核！",type:"success"},
+							function(){	window.location="cpdabg"})
     			}
     	 	}
     	})
-    	$("#btg").click(function(){
-    		var file=$("#file").serializeArray();
-    		var haha='S001-2';
-    		$.post("cpdadjshtj?check_tag="+haha,file,back,"text")
-    		function back(a){
-    			if(a>0){
-    				swal({title:"审核失败",text:"请重新审核！",type:"error"},
-							function(){	window.location="cpdadjsh"})
-    			}
-    	 	}
-    	 })
+    	 $("#bbg").click(function(){
+    				swal({title:"您已取消变更",text:"!!!!",type:"success"},
+							function(){	window.location="cpdabg"})
+    	})
+    	
         $(".sk").click(function(){
     		var id=$(this).parent().parent().children(0).html();
     		$.post("cpdadjshcx",{"id":id},back,"Json")
@@ -398,10 +392,6 @@ border-color: #e6e6e6;
     			$("[name='first_kind_id']").val(a["first_kind_id"]);
     			$("[name='second_kind_id']").val(a["second_kind_id"]);
     			$("[name='third_kind_id']").val(a["third_kind_id"]);
-    			
-    			$("[name='first_kind']").val(a["first_kind"]);
-    			$("[name='second_kind']").val(a["second_kind"]);
-    			$("[name='third_kind']").val(a["third_kind"]);
     			
     			$("[name='product_class']").val(a["product_class"]);
     			$("[name='personal_unit']").val(a["personal_unit"]);
@@ -416,6 +406,24 @@ border-color: #e6e6e6;
     			$("[name='responsible_person']").val(a["responsible_person"]);
     			$("[name='provider_group']").val(a["provider_group"]);
     			$("[name='product_describe']").val(a["product_describe"]);
+    			 $("[name='first_kind_id'] option").each( function () {
+     			    if($(this).val()==a["first_kind_id"]){
+     			    $(this).attr("selected","selected");        
+     			  }
+     		 	})
+     		 	$("[name='second_kind_id'] option").each( function () {
+     			    if($(this).val()==a["second_kind_id"]){
+     			    $(this).attr("selected","selected");        
+     			  }
+     		 	})
+     		 	$("[name='third_kind_id'] option").each( function () {
+     			    if($(this).val()==a["third_kind_id"]){
+     			    $(this).attr("selected","selected");        
+     			  }
+     		 	})
+     		 	
+     		 	
+    			
     			var haha=a["type"];
     			if(haha=="Y001-1"){
     				$("[name=type]").val("商品")

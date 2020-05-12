@@ -59,7 +59,25 @@ insert into s_cell values(null,#{store_id},#{product_id},#{product_name},
 
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
 <select id="cpdadjshcx" resultType="d_file"> select * from d_file where id=#{id}</select>
+<select id="d_fileProduct_id" resultType="d_file" >select * from d_file where product_id=#{id}</select>
 <select id="cpdabgcx" resultType="d_file">  SELECT * FROM d_file WHERE check_tag='S001-1' AND delete_tag='C001-0'</select>
+<select id="cpdaschf" resultType="d_file">select * from d_file where  delete_tag='C001-1'</select>
+<delete id="deletecp"> delete from d_file where id=#{id}</delete>
+<delete id="deleteaqkc">delete from s_cell where product_id=#{product_id}</delete>
+<select id="wlzcsjdcx" resultType="D_module">SELECT dm.* FROM d_file d INNER JOIN D_MODULE dm ON d.`product_id`=dm.`product_id` WHERE d.design_module_tag='W001-1' </select>
+<select id="wlzcsjdcxxx" resultType="D_module_details">SELECT * FROM D_module_details WHERE  parent_id=#{id}</select>
+<select id="wlzcsjcxid" resultType="D_module">SELECT * FROM D_module WHERE  design_id=#{id}</select>
+<delete id="delwlxx">DELETE FROM D_module_details WHERE parent_id=#{id} </delete>
+<delete id="delwlxx2">DELETE FROM D_module_details WHERE  product_id=#{id} and parent_id=#{parent_id} </delete>
+<select id="wlzcsjdbgcx" resultType="D_module">SELECT dm.* FROM d_file d INNER JOIN D_MODULE dm ON d.`product_id`=dm.`product_id` WHERE d.design_module_tag='W001-1' AND dm.`check_tag`='S001-1'</select>
+<select id="tjwlcx" resultType="d_file">
+SELECT * FROM d_file
+ WHERE product_name NOT IN  (SELECT dd.product_name FROM D_module dm
+                             INNER JOIN D_module_details dd ON dm.`id`=dd.parent_id 
+                             WHERE dm.`design_id`=#{id}) 
+AND TYPE='Y001-2'</select>
+<insert id="addD_module_details">insert into d_module_details values(null,#{parent_id},#{details_number},#{product_id},#{product_name},#{type},#{product_describe},#{amount_unit},#{amount},#{residual_amount},#{cost_price},#{subtotal})</insert>
+<update id="updated_module">UPDATE D_module SET check_tag='S001-0' , change_tag='B002-1' WHERE id=#{id}</update>
 <update id="updD_file">
 	UPDATE d_file
    	<set>
@@ -68,10 +86,10 @@ insert into s_cell values(null,#{store_id},#{product_id},#{product_name},
    	  <if test="factory_name !=null and factory_name !='' "> factory_name=#{factory_name},</if>
    	  <if test="first_kind_id !=null and first_kind_id !='' "> first_kind_id=#{first_kind.kind_id},</if>
    	  <if test="first_kind_name !=null and first_kind_name !='' "> first_kind_name=#{first_kind.kind_name},</if>
-   	  <if test="second_kind_id !=null and second_kind_id !='' "> second_kind_id=#{third_kind.kind_id},</if>
-   	  <if test="second_kind_name !=null and second_kind_name !='' "> second_kind_name=#{first_kind.kind_name}</if>
+   	  <if test="second_kind_id !=null and second_kind_id !='' "> second_kind_id=#{second_kind.kind_id},</if>
+   	  <if test="second_kind_name !=null and second_kind_name !='' "> second_kind_name=#{second_kind.kind_name}</if>
    	  <if test="third_kind_id !=null and third_kind_id !='' "> third_kind_id=#{third_kind.kind_id},</if>
-   	  <if test="third_kind_name !=null and third_kind_name !='' "> third_kind_name=#{first_kind.kind_name},</if>
+   	  <if test="third_kind_name !=null and third_kind_name !='' "> third_kind_name=#{third_kind.kind_name},</if>
    	  <if test="product_nick !=null and product_nick !='' "> product_nick=#{product_nick},</if>
    	  <if test="type !=null and type !='' "> type=#{type},</if>
    	  <if test="product_class !=null and product_class !='' "> product_class=#{product_class},</if>
@@ -88,10 +106,10 @@ insert into s_cell values(null,#{store_id},#{product_id},#{product_name},
    	  <if test="amount_unit !=null and amount_unit !='' "> amount_unit=#{amount_unit},</if>
    	  <if test="product_describe !=null and product_describe !='' "> product_describe=#{product_describe},</if>
    	  <if test="responsible_person !=null and responsible_person !='' "> responsible_person=#{responsible_person},</if>
-   	  <if test="checker !=null and checker !='' "> checker=#{register.login_id},</if>
+   	  <if test="checker !=null"> checker=#{checker.login_id},</if>
    	  <if test="check_time !=null and check_time !='' "> check_time=now(),</if>
    	  <if test="check_tag !=null and check_tag !='' "> check_tag=#{check_tag},</if>
-   	  <if test="changer !=null and changer !='' "> changer=#{changer},</if>
+   	  <if test="changer !=null and changer !='' "> changer=#{changer.login_id},</if>
    	  <if test="change_time !=null and change_time !='' "> change_time=#{change_time},</if>
    	  <if test="change_tag !=null and change_tag !='' "> change_tag=#{change_tag},</if>
    	  <if test="price_change_tag !=null and price_change_tag !='' "> price_change_tag=#{price_change_tag},</if>

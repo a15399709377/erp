@@ -164,7 +164,6 @@ public class productFilesController {
 	@ResponseBody
 	public D_module D_moduleXX(int id) {
 		D_module list=productFilesService.D_moduleXX(id);
-		System.out.println(list.getD_module_details().get(0));
 		return list;
 	}
 	
