@@ -390,6 +390,7 @@ System.out.println("================================"+num);
     	int num=service.delwlxx2(id,parent_id);
 		return num;
 	}
+    
 	//添加物料(添加)
 	@RequestMapping("/tjwladd")
     @ResponseBody

@@ -25,7 +25,70 @@
 </style>
 <body>
 	<div class="container" id="app" style="padding: 25px;">
-		<div class="row"></div>
+		<div class="row text-center">
+			<el-table :data="list" border style="width: 100%"
+				:row-class-name="tableRowClassName"> <el-table-column
+				prop="manufacture_id" label="生产派工单编号" width="180"> </el-table-column> <el-table-column
+				prop="product_id" label="产品编号" width="180"> </el-table-column> <el-table-column
+				prop="product_name" label="产品名称"> </el-table-column><el-table-column
+				prop="amount" label="数量"> </el-table-column></el-table-column><el-table-column
+				prop="register_time" label="登记时间"> </el-table-column><el-table-column
+				 label="审核"> 
+				 <template v-slot="scope">
+				 <el-button type="warning" @click="drawer = true,zdscpgdXX(scope.row.id)"  round>点击审核</el-button></template></el-table-column>  </el-table>
+				 
+				 <el-drawer title="生产派工单审核" :visible.sync="drawer" size="80%">
+			<el-row> <el-col :span="12">制定人：<el-input
+				th:value="${username}" :disabled="true" placeholder="请输入内容"
+				class="input-class"></el-input></el-col> <el-col :span="12"><el-button icon="el-icon-check" type="success"
+				@click="tg()" round>通过</el-button><el-button icon="el-icon-delete" type="danger"
+				@click="btg()" round>不通过</el-button></el-col></el-row> </br>
+			<el-row> <el-col :span="12">产品编号：<el-input
+				v-model="Listxx.product_id" :disabled="true" placeholder="请输入内容"
+				class="input-class"></el-input></el-col> <el-col :span="12">产品名字：<el-input
+				:disabled="true" v-model="Listxx.product_name" placeholder="请输入内容"
+				class="input-class"></el-input></el-col></el-row> </br>
+			<el-row> <el-col :span="12">数量：<el-input
+				v-model="Listxx.amount" :disabled="true" placeholder="请输入内容"
+				class="input-class"></el-input></el-col> <el-col :span="12">描述：<el-input
+				v-model="Listxx.product_describe" :disabled="true"
+				placeholder="请输入内容" class="input-class"></el-input></el-col></el-row> </br>
+			<el-table border :data="chlist" style="width: 100%"
+				:row-class-name="tableRowClassName"> <el-table-column
+				prop="id" label="序号" width=""> </el-table-column> <el-table-column
+				prop="procedure_name" label="工序名称" width=""> </el-table-column> <el-table-column
+				prop="procedure_id" label="工序编号" width=""> </el-table-column> <el-table-column
+				prop="procedure_describe" label="描述" width=""> </el-table-column> <el-table-column
+				prop="labour_hour_amount" label="工时数"> </el-table-column> <el-table-column
+				prop="cost_price" label="单位工时成本"> </el-table-column> <el-table-column
+				prop="subtotal" label="工时成本小计"> </el-table-column> <el-table-column
+				label="查看物料"> <template v-slot="scope">
+			<el-button icon="el-icon-search" type="success"
+				@click="innerDrawer = true,ckwl(scope.row.id)" circle></el-button> </template></el-table-column>
+			</el-table>
+			<div>
+
+				<el-drawer size="50%" title="查看物料" :append-to-body="true"
+					 :visible.sync="innerDrawer">
+				<p>_(:зゝ∠)_</p>
+				<el-table border :data="ckwlist" style="width: 100%"
+					:row-class-name="tableRowClassName"> <el-table-column
+					prop="id" label="序号" width="180"> </el-table-column> <el-table-column
+					prop="product_name" label="物料名称" width="180"> </el-table-column> <el-table-column
+					prop="product_id" label="物料编号"> </el-table-column> 
+					 <el-table-column
+					prop="product_describe" label="描述"> </el-table-column>
+					 <el-table-column
+					prop="amount" label="本工序数量"> </el-table-column>
+					<el-table-column
+					prop="amount_unit" label="单位"> </el-table-column>
+					<el-table-column
+					prop="cost_price" label="单价"> </el-table-column>
+					<el-table-column
+					prop="subtotal" label="小计"> </el-table-column></el-table> </el-drawer>
+			</div>
+			</el-drawer>
+		</div>
 	</div>
 </body>
 <script type="text/javascript" src="js/vue.min.js"></script>
@@ -36,13 +99,55 @@
 var vm = new Vue({
 	el: '#app',
 	data: {
-		
+		list:[],
+		id:0,
+		currentPage: 1, //默认显示页面为1
+		pagesize: 2,
+		drawer: false,
+        innerDrawer: false,
+        chlist:[],
+        Listxx:{},
+        ckwlist:[],
 	},
 	mounted() { //初始化显示完成调用
-	  
+	  this.scpgdshAll();
 	},
 	methods:{
-		
+		tableRowClassName({row, rowIndex}) {
+	        if (rowIndex%2==1) {
+	            return 'warning-row';
+	          } else if (rowIndex%2==0) {
+	            return 'success-row';
+	          }
+	          return '';
+	        },scpgdshAll(){
+	        	axios.get("scpgdshAll").then(res=>{              		  
+	              		  this.list=res.data;	
+	       	    })
+	        },zdscpgdXX(id){
+           	 this.id=id;
+        	 axios.get("zdscpgdXX?id="+id+"").then(res=>{              		  
+          		  this.Listxx=res.data;
+          		  this.chlist=res.data.product.m_Design_Procedure.procedure_details;
+   	    	  })
+        },ckwl(id){
+        	 axios.get("zdscpgdCkwl?id="+id+"&amo="+this.Listxx.amount+"").then(res=>{              		  
+        		 this.ckwlist=res.data;
+        		 axios.get("zdscpgdXX?id="+this.id+"").then(res=>{              		  
+             		  this.Listxx=res.data;
+             		  this.chlist=res.data.product.m_Design_Procedure.procedure_details;
+      	    	  })
+  	    	  })
+  	    	 
+        },tg(){
+        	 axios.post("scpgdshtg",this.Listxx).then(res=>{              		  
+        		
+  	    	 })
+        },btg(){
+        	 axios.post("scpgdshBtg",this.listxx).then(res=>{              		  
+         		
+ 	    	 })
+        }	        
 	}
 })
 </script>
