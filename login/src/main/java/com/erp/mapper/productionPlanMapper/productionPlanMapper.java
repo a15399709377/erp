@@ -5,9 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.erp.pojo.User;
-import com.erp.pojo.d_file;
-import com.erp.pojo.m_apply;
+import com.erp.pojo.*;
 @Mapper
 public interface productionPlanMapper {
 
@@ -25,5 +23,20 @@ public interface productionPlanMapper {
 
 	List<m_apply> scjhshXX(int id);
 
+	List<m_apply> zdscpgdAll();
+
+	m_apply zdscpgdXX(int id);
+	
+	d_file product_id(String product_id);
+	
+	List<m_design_procedure> m_Design_Procedure(String product_id);
+
+	List<m_design_procedure_module> zdscpgdCkwl(int id);
+
+	String test1();
+
+	int zdscpgdxx(@Param("mm")M_MANUFACTURE mm);
+
+	int xgzt(int id);
 
 }

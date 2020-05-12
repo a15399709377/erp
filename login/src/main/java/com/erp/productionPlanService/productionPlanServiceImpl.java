@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.mapper.productionPlanMapper.productionPlanMapper;
+import com.erp.pojo.M_MANUFACTURE;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 import com.erp.pojo.m_apply;
+import com.erp.pojo.m_design_procedure_details;
+import com.erp.pojo.m_design_procedure_module;
 @Service
 @Transactional
 public class productionPlanServiceImpl implements productionPlanService {
@@ -77,6 +80,84 @@ public class productionPlanServiceImpl implements productionPlanService {
 	public List<m_apply> scjhshXX(int id) {
 		// TODO Auto-generated method stub
 		return productionPlanMapper.scjhshXX(id);
+	}
+
+
+
+
+
+	@Override
+	public List<m_apply> zdscpgdAll() {
+		// TODO Auto-generated method stub
+		return productionPlanMapper.zdscpgdAll();
+	}
+
+
+
+
+
+	@Override
+	public m_apply zdscpgdXX(int id) {
+		// TODO Auto-generated method stub
+		return productionPlanMapper.zdscpgdXX(id);
+	}
+
+
+
+
+
+	@Override
+	public List<m_design_procedure_module> zdscpgdCkwl(int id) {
+		// TODO Auto-generated method stub
+		return productionPlanMapper.zdscpgdCkwl(id);
+	}
+
+
+
+
+
+	@Override
+	public int zdscpgdxx(m_apply listxx,User user) {
+		M_MANUFACTURE mm=new M_MANUFACTURE();
+		String m_id="";
+		String id="";
+		if(productionPlanMapper.test1()!=null) {
+			id=productionPlanMapper.test1();
+			m_id="PGD00"+Integer.parseInt(id)+1;
+		}else {
+			id="1";
+			m_id="PGD00"+id;
+		}
+		mm.setManufacture_id(m_id);
+		mm.setProduct_id(listxx.getProduct().getProduct_id());
+		mm.setProduct_name(listxx.getProduct().getProduct_name());
+		mm.setAmount(listxx.getAmount());
+		mm.setApply_id_group(listxx.getId()+"");
+		int aa=productionPlanMapper.xgzt(listxx.getId());
+		if(aa>0) {
+			mm.setProduct_describe(listxx.getProduct_describe());
+			double module_cost_price_sum=0;
+			double labour_cost_price_sum=0;
+			List<m_design_procedure_details> list=listxx.getProduct().getM_Design_Procedure().getProcedure_details();
+			for (m_design_procedure_details mmmm : list) {
+				labour_cost_price_sum=labour_cost_price_sum+mmmm.getSubtotal();
+				List<m_design_procedure_module> list1=this.zdscpgdCkwl(mmmm.getId());
+				for (m_design_procedure_module mmm : list1) {
+					mmm.setAmount(mmm.getAmount()*listxx.getAmount());
+					mmm.setSubtotal(mmm.getAmount()*mmm.getCost_price());
+					module_cost_price_sum=module_cost_price_sum+mmm.getSubtotal();
+				}
+			}
+			
+			
+			mm.setModule_cost_price_sum(module_cost_price_sum);
+			mm.setLabour_cost_price_sum(labour_cost_price_sum);
+			mm.setDesigner(user.getLogin_id());
+			mm.setRegister(user.getLogin_id());
+			System.out.println(mm);
+		}
+		
+		return productionPlanMapper.zdscpgdxx(mm);
 	}
 
 

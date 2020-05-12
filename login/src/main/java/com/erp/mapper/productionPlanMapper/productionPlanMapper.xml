@@ -53,4 +53,72 @@
 	select * from m_apply where id=#{id}
 	</select>
 	
+	
+	<select id="zdscpgdAll" resultType="m_apply">
+	select * from m_apply  where check_tag='S001-1' AND panduan='SC002';	
+	</select>
+	
+	
+	<select id="zdscpgdXX" resultMap="m_app">
+	select * from m_apply  where id=#{id};	
+	</select>
+	
+	<resultMap type="m_apply" id="m_app">
+			<id property="id" column="id" />
+		    <result property="apply_id" column="apply_id" /> 
+		    <result property="product_id" column="product_id" /> 
+		    <result property="amount" column="amount" /> 
+
+		    <association property="product" 
+            select="com.erp.mapper.productionPlanMapper.productionPlanMapper.product_id" column="product_id">     
+            </association>
+	</resultMap>
+	<select id="product_id" resultMap="m_app1">
+	select * from d_file where product_id=#{product_id}
+	</select>
+	<resultMap type="d_file" id="m_app1">
+			<id property="id" column="id" />
+			<result property="product_id" column="product_id" />
+			<result property="product_name" column="product_name" />
+			<result property="amount" column="amount" />
+			<result property="product_describe" column="product_describe" />
+			 <association property="m_Design_Procedure" 
+            select="com.erp.mapper.productionPlanMapper.productionPlanMapper.m_Design_Procedure" column="product_id">     
+            </association>
+			
+	</resultMap>
+	
+	<select id="m_Design_Procedure" resultMap="m_app2">
+	  select * from m_Design_Procedure where product_id=#{product_id}
+	</select>
+	 <resultMap type="m_design_procedure" id="m_app2">	 
+	   <collection property="procedure_details" ofType="m_design_procedure_details" 
+		     select="com.erp.mapper.productionPlanMapper.productionPlanMapper.m_design_procedure_details" column="id">
+		</collection>
+	 </resultMap>
+	 
+	 <select id="m_design_procedure_details" resultType="m_design_procedure_details">
+	 select * from m_design_procedure_details where parent_id=#{id}
+	 </select>
+	 
+	 <select id="zdscpgdCkwl" resultType="m_design_procedure_module">
+	 select * from m_design_procedure_module where parent_id=#{id}
+	 </select>
+	 
+	 <select id="test1" resultType="String">
+	 	 select id from M_MANUFACTURE order by id DESC limit 1
+	 </select>
+	 
+	 <insert id="zdscpgdxx">
+	  insert  into M_MANUFACTURE values(
+	  null,#{mm.manufacture_id},#{mm.product_id}
+	  ,#{mm.product_name},#{mm.amount},0,#{mm.apply_id_group}
+	  ,#{mm.product_describe},#{mm.module_cost_price_sum},0,#{mm.labour_cost_price_sum}
+	  ,0,#{mm.designer},#{mm.register},now(),null,null,null,'S001-0','S002-0'
+	  );
+	 </insert>
+	 
+	 <update id="xgzt">
+	 update m_apply set panduan='SC003' where id=#{id}
+	 </update>
 	</mapper>

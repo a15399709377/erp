@@ -130,5 +130,15 @@ public class m_design_procedure_details {
 	public void setDesign_module_change_tag(String design_module_change_tag) {
 		this.design_module_change_tag = design_module_change_tag;
 	}
+	@Override
+	public String toString() {
+		return "m_design_procedure_details [id=" + id + ", parent_id=" + parent_id + ", details_number="
+				+ details_number + ", procedure_id=" + procedure_id + ", procedure_name=" + procedure_name
+				+ ", labour_hour_amount=" + labour_hour_amount + ", procedure_describe=" + procedure_describe
+				+ ", amount_unit=" + amount_unit + ", cost_price=" + cost_price + ", subtotal=" + subtotal
+				+ ", module_subtotal=" + module_subtotal + ", register=" + register + ", register_time=" + register_time
+				+ ", design_module_tag=" + design_module_tag + ", design_module_change_tag=" + design_module_change_tag
+				+ "]";
+	}
 	
 }

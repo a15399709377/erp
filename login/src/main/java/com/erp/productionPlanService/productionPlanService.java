@@ -5,6 +5,7 @@ import java.util.List;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 import com.erp.pojo.m_apply;
+import com.erp.pojo.m_design_procedure_module;
 
 public interface productionPlanService {
 
@@ -19,6 +20,14 @@ public interface productionPlanService {
 	List<m_apply> scjhshAll();
 
 	List<m_apply> scjhshXX(int id);
+
+	List<m_apply> zdscpgdAll();
+
+	m_apply zdscpgdXX(int id);
+
+	List<m_design_procedure_module> zdscpgdCkwl(int id);
+
+	int zdscpgdxx(m_apply listxx, User user);
 
 	
 }
