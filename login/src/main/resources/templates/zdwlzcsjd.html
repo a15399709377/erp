@@ -165,7 +165,7 @@ border-color: #e6e6e6;
 					                <td th:if="${file1.	amount_unit==null}"></td>
 									<td th:text="${file1.cost_price}"></td>
 									<td th:if="${file1.product_describe=='' or file1.product_describe==null}" >无描述</td>
-					                <td th:if="${file1.product_describe!=null}" th:text="${file1.product_describe"></td>
+					                <td th:if="${file1.product_describe!=null}" th:text="${file1.product_describe}"></td>
 									<td ></td>
 								</tr>
 							</table>
@@ -271,10 +271,8 @@ border-color: #e6e6e6;
     			if($(this).is(":checked"))
                 {
                   var id=$(this).parent().next().html();
-                  alert($(this).parent().next().next().next().next().next().next().children(0).val());
-                  var amount=$(this).parent().next().next().next().next().next().next().children(0).val();
+                  var amount=$(this).parent().next().next().next().next().next().children(0).val();
                   var subtotal=$(this).parent().next().next().next().next().next().next().next().next().html();
-                  alert(subtotal);
                   var D_module_details={"id":id,"amount":amount,"subtotal":subtotal};
                   details.push(D_module_details);
                 }

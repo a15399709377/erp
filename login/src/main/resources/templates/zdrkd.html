@@ -371,7 +371,7 @@
 							var node=$("<tr><td>"+aa[i]["id"]+"</td><td>"+aa[i]["product_name"]+"</td><td>"+aa[i]["product_id"]+"</td><td>"+aa[i]["amount"]+"</td><td>"+aa[i]["gathered_amount"]+"</td><td></td><td><button type='button' class='btn btn-info dd' data-toggle='modal' data-target='#myModal1' >入库调度</button></td></tr>")
 							$("#tab").append(node);
 						}
-						if(aa[i]["gather_tag"]=="K002-2"){
+						if(aa[i]["gather_tag"]=="K002-2"||aa[i]["gather_tag"]=="K002-1"){
 							var node=$("<tr><td>"+aa[i]["id"]+"</td><td>"+aa[i]["product_name"]+"</td><td>"+aa[i]["product_id"]+"</td><td>"+aa[i]["amount"]+"</td><td>"+aa[i]["gathered_amount"]+"</td><td>成品库</td><td><button type='button' class='btn btn-info'  >已完成</button></td></tr>")
 							$("#tab").append(node);
 						}						

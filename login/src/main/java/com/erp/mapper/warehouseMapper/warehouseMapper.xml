@@ -26,7 +26,7 @@
 
 	<insert id="addWarehousingXX">
 		insert into S_GATHER_DETAILS values(
-		null,#{id},#{gaaa.product_id},#{gaaa.product_name},
+		null,#{gaaa.parent_id},#{gaaa.product_id},#{gaaa.product_name},
 		<choose>
 			<when test="gaaa.product_describe!=null">
 				#{gaaa.product_describe}
@@ -144,7 +144,7 @@
 
 	<update id="WarehousingregistrationF">
 		update S_GATHER set
-		store_tag='K002-1',gathered_amount_sum=gathered_amount_sum+#{gathered_amount_sum}
+		store_tag='K002-1',gathered_amount_sum=#{gathered_amount_sum}
 		where id=#{id}
 	</update>
 
