@@ -39,4 +39,6 @@ public interface productionPlanMapper {
 
 	int xgzt(int id);
 
+	List<M_MANUFACTURE> scpgdshAll();
+
 }

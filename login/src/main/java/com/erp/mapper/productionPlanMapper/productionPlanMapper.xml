@@ -121,4 +121,8 @@
 	 <update id="xgzt">
 	 update m_apply set panduan='SC003' where id=#{id}
 	 </update>
+	 
+	 <select id="scpgdshAll" resultType="M_MANUFACTURE">
+	 select * from M_MANUFACTURE where check_tag='S001-0'
+	 </select>
 	</mapper>

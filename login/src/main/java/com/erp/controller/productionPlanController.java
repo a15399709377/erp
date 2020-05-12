@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.erp.pojo.M_MANUFACTURE;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 import com.erp.pojo.m_apply;
@@ -175,5 +176,27 @@ public class productionPlanController {
 		User user=(User) session.getAttribute("user");
 		model.addAttribute("username",user.getLogin_id());
 		return "scpgdsh";
+	}
+    
+    @RequestMapping("/scpgdshAll")
+    @ResponseBody
+    public List<M_MANUFACTURE> scpgdshAll() {
+    	
+		return productionPlanService.scpgdshAll();
+	}
+    
+    
+    @RequestMapping("/scpgdshtg")
+    @ResponseBody
+    public int scpgdshtg(@RequestBody m_apply listxx) {
+    	System.out.println(listxx);
+		return 0;
+	}
+    
+    @RequestMapping("/scpgdshBtg")
+    @ResponseBody
+    public int scpgdshBtg(@RequestBody m_apply listxx) {
+    	System.out.println(listxx);
+		return 0;
 	}
 }

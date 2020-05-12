@@ -164,6 +164,16 @@ public class productionPlanServiceImpl implements productionPlanService {
 
 
 
+	@Override
+	public List<M_MANUFACTURE> scpgdshAll() {
+		// TODO Auto-generated method stub
+		return productionPlanMapper.scpgdshAll();
+	}
+
+
+
+
+
 
 	
 }

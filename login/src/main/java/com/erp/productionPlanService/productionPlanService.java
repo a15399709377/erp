@@ -2,6 +2,7 @@ package com.erp.productionPlanService;
 
 import java.util.List;
 
+import com.erp.pojo.M_MANUFACTURE;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 import com.erp.pojo.m_apply;
@@ -28,6 +29,8 @@ public interface productionPlanService {
 	List<m_design_procedure_module> zdscpgdCkwl(int id);
 
 	int zdscpgdxx(m_apply listxx, User user);
+
+	List<M_MANUFACTURE> scpgdshAll();
 
 	
 }
