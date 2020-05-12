@@ -13,19 +13,29 @@
 
     <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-
-    <!-- Data Tables -->
-    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
-
+	<link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
-<link rel="stylesheet"href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 <!-- 引入组件库 -->
 <script src="js/vue-2.4.0.js"></script>
-		<script src="js/axios.min.js"></script>
-		<script src="js/qs.min.js"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
+<script src="js/axios.min.js"></script>
+<script src="js/qs.min.js"></script>
+<style type="text/css">
+.layui-form-label{
+width: 110px;
+}
+.layui-form select{
+width: 100%;
+padding-left: 10px;
+height: 38px;
+display: block;
+box-sizing: border-box;
+border-color: #e6e6e6;
+}
+</style>
 </head>
 
 <body class="gray-bg">
@@ -49,6 +59,7 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
+                                	<th>编号</th>
                                     <th>产品编号</th>
 									<th>产品名称</th>
 									<th>档次级别</th>
@@ -62,6 +73,7 @@
                             </thead>
                             <tbody>
                                 <tr th:each="file:${pageInfo}">
+                                	<td th:text="${file.id}"></td>
 									<td th:text="${file.product_id}"></td>
 									<td th:text="${file.product_name}"></td>
 									<td th:if="${file.product_class=='D001-1'}">高档</td>
@@ -76,17 +88,8 @@
 									<td th:if="${file.check_tag=='S001-0' or file.check_tag=='S001-2'}">等待审核</td>
 									<td>
 									  <button type="button" class="btn btn-info sk"data-toggle="modal" data-target="#myModal">详情</button>
-										<el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
-										  点我打开
-										</el-button>
 									</td>
 								</tr>
-                                <el-drawer
-								  title="我是标题"
-								  :visible.sync="drawer"
-								  :with-header="false">
-								  <span>我来啦!</span>
-								</el-drawer>
                             </tbody>
                         </table>
 
@@ -94,28 +97,300 @@
                 </div>
             </div>
         </div>
-     
+     <!-- Modal -->
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div style="width: 90%" class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5>产品设计<small>产品档案管理  --> 产品档案登记审核</small></h5>
+					</div>
+					<div class="modal-body">
+						<form class="layui-form" id="file">
+							<div style="height: 30px;background:#93D1FF;">
+								<label class="layui-form-label" style="font-size: 20px;">主信息</label>
+							</div><br />
+							<div class="layui-row">
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label">商品编号</label>
+									<div class="layui-input-block">
+										<input type="text" name="product_id"   readonly="readonly" class="layui-input userName" lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label">序号</label>
+									<div class="layui-input-block">
+										<input type="text" name="id"  readonly="readonly" class="layui-input userName" >
+									</div>
+								</div>
+							</div>
+							<div class="layui-row">
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label">产品名称</label>
+									<div class="layui-input-block">
+										<input type="text" name="product_name"readonly="readonly"  class="layui-input userName" lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label">制造商</label>
+									<div class="layui-input-block">
+										<input type="text" name="factory_name"readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+							
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">I级分类</label>
+									<div class="layui-input-block">
+										<input type="text" name="first_kind_name" readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">II级分类</label>
+									<div class="layui-input-block">
+										<input type="text" name="second_kind_name" readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">III级分类</label>
+									<div class="layui-input-block">
+										<input type="text" name="third_kind_name" readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+							
+							<div class="layui-row">
+								<div class="magb15 layui-col-md3 layui-col-xs12">
+									<label class="layui-form-label">产品简称</label>
+									<div class="layui-input-block">
+										<input type="text" name="product_nick"readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md5 layui-col-xs12">
+									<label class="layui-form-label">用途类型</label>
+									<div class="layui-input-block">
+										<input type="text" name="type"readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">档次级别</label>
+									<div class="layui-input-block">
+										<input type="text" name="product_class"readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+							
+							<div class="layui-row">
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label">计量单位</label>
+									<div class="layui-input-block">
+										<input type="text" name="personal_unit" readonly="readonly" class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label">计量值</label>
+									<div class="layui-input-block">
+										<input type="text" name="personal_value"readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+							
+							<div class="layui-row">
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">市场单位(元)</label>
+									<div class="layui-input-block">
+										<input type="text" name="list_price" readonly="readonly" class="layui-input userName" lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">计划成本单价</label>
+									<div class="layui-input-block">
+										<input type="text" name="cost_price" readonly="readonly" class="layui-input userName" lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+							
+							<div style="height: 30px;background:#93D1FF;">
+								<label class="layui-form-label" style="font-size: 20px;">辅助信息</label>
+							</div><br />
+							
+							<div class="layui-row">
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label">保修期</label>
+									<div class="layui-input-block">
+										<input type="text" name="warranty"readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">替代品名称</label>
+									<div class="layui-input-block">
+										<input type="text" name="twin_name"readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+							
+							<div class="layui-row">
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">替代品编号</label>
+									<div class="layui-input-block">
+										<input type="text" name="twin_id" readonly="readonly" class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">生命周期(年)</label>
+									<div class="layui-input-block">
+										<input type="text" name="lifecycle"readonly="readonly"  class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+							
+							<div class="layui-row">
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">单位</label>
+									<div class="layui-input-block">
+										<input type="text" name="amount_unit" readonly="readonly" class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">档案变更次数</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName" readonly="readonly" name="file_change_amount"lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+								
+								<div class="magb15 layui-col-md4 layui-col-xs12">
+									<label class="layui-form-label">登记人</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input userName" name="register" lay-verify="required" placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+						
+							<div class="layui-form-item layui-row layui-col-xs12">
+								<label class="layui-form-label">供应商集合</label>
+								<div class="layui-input-block">
+									<textarea name="provider_group"  placeholder="请输入信息" class="layui-textarea userDesc"></textarea>
+								</div>
+							</div>
+							
+							<div class="layui-form-item layui-row layui-col-xs12">
+								<label class="layui-form-label">产品描述</label>
+								<div class="layui-input-block">
+									<textarea placeholder="请输入信息" name="product_describe" class="layui-textarea userDesc"></textarea>
+								</div>
+							</div>
+							
+							<div class="layui-form-item layui-row layui-col-xs12">
+								<div class="magb15 layui-col-md6 layui-col-xs12">
+									<label class="layui-form-label" style="font-size: 12px;">审核时间：</label>
+									<div class="layui-input-block">
+										<input type="text" name="register_time" class="layui-input userName"  placeholder="请输入数值">
+									</div>
+								</div>
+							</div>
+							
+							<div class="layui-form-item layui-row layui-col-xs12">
+								<div class="magb15 layui-col-md9 layui-col-xs12"></div>
+								
+								<div class="magb15 layui-col-md3 layui-col-xs12">
+						    		<button type="button" class="btn btn-primary" data-dismiss="modal" >关闭</button>
+								</div>
+							</div>
+							
+							
+						</form>
+					</div>
+					<div class="modal-footer">
+						</div>
+				</div>
+			</div>
+		</div>     
     </div>
     <script src="js/jquery.min.js?v=2.1.4"></script>
     <script src="js/bootstrap.min.js?v=3.3.5"></script>
     <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
     <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="js/content.min.js?v=1.0.0"></script>
     <script>
-        $(document).ready(function(){$(".dataTables-example").dataTable();var oTable=$("#editable").dataTable();oTable.$("td").editable("../example_ajax.php",{"callback":function(sValue,y){var aPos=oTable.fnGetPosition(this);oTable.fnUpdate(sValue,aPos[0],aPos[1])},"submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})});function fnClickAddRow(){$("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
-    </script>
-   
-
-<script>
-  export default {
-    data() {
-      return {
-        drawer: false,
-      };
-    }
-  };
-</script>
+    $(document).ready(function(){
+    	$(".dataTables-example").dataTable();
+    	var oTable=$("#editable").dataTable();
+    	oTable.$("td").editable("../example_ajax.php",{
+    		"callback":function(sValue,y){
+    			var aPos=oTable.fnGetPosition(this);
+    			oTable.fnUpdate(sValue,aPos[0],aPos[1])},
+    		"submitdata":function(value,settings){
+    			return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})
+    });
+    $(".sk").click(function(){
+		var id=$(this).parents("tr").children("td:eq(0)").html();
+		$.post("cpdadjshcx",{"id":id},back,"Json")
+		function back(a){
+			$("[name='id']").val(a["id"]);
+			$("[name='product_name']").val(a["product_name"]);
+			$("[name='product_id']").val(a["product_id"]);
+			$("[name='product_nick']").val(a["product_nick"]);
+			$("[name='first_kind_id']").val(a["first_kind_id"]);
+			$("[name='second_kind_id']").val(a["second_kind_id"]);
+			$("[name='third_kind_id']").val(a["third_kind_id"]);
+			$("[name='first_kind_name']").val(a["first_kind_name"]);
+			$("[name='second_kind_name']").val(a["second_kind_name"]);
+			$("[name='third_kind_name']").val(a["third_kind_name"]);
+			$("[name='first_kind']").val(a["first_kind"]);
+			$("[name='second_kind']").val(a["second_kind"]);
+			$("[name='third_kind']").val(a["third_kind"]);
+			$("[name='personal_unit']").val(a["personal_unit"]);
+			$("[name='personal_value']").val(a["personal_value"]);
+			$("[name='list_price']").val(a["list_price"]);
+			$("[name='cost_price']").val(a["cost_price"]);
+			$("[name='warranty']").val(a["warranty"]);
+			$("[name='twin_name']").val(a["twin_name"]);
+			$("[name='twin_id']").val(a["twin_id"]);
+			$("[name='lifecycle']").val(a["lifecycle"]);
+			$("[name='amount_unit']").val(a["amount_unit"]);
+			$("[name='file_change_amount']").val(a["file_change_amount"]);
+			$("[name='provider_group']").val(a["provider_group"]);
+			$("[name='product_describe']").val(a["product_describe"]);
+			$("[name='register']").val(a["register"]["login_id"]);
+			$("[name='register_time']").val(a["register_time"]);
+			var type=a["type"];
+			if(type=="Y001-1"){
+				$("[name='type']").val("商品");
+			}else{
+				$("[name='type']").val("物料");
+			}
+			var type=a["product_class"];
+			if(type=="D001-1"){
+				$("[name='product_class']").val("高档 ");
+			}else if(type=="D001-2"){
+				$("[name='product_class']").val("中档");
+			}else{
+				$("[name='product_class']").val("低档");
+			}
+	}})
+	
+	
+       function fnClickAddRow(){
+    	   $("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
+   </script>
 </body>
 
 </html>

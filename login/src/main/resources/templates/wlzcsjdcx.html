@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>H+ 后台主题UI框架 - 数据表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+
+<!-- 引入组件库 -->
+<script src="js/vue-2.4.0.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/qs.min.js"></script>
+<style type="text/css">
+.userName1{
+ width: 100%;
+ border: 0;
+}
+</style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>产品设计 <small>产品物料组成设计  -->   物料组成设计的查询</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <button class="btn  btn-outline" type="button" name="refresh" title="刷新">
+                            	<i class="glyphicon glyphicon-repeat"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                	<th>设计单编号</th>
+                                	<th>产品编号</th>
+                                	<th>产品名称</th>
+                                	<th>设计人</th>
+									<th>物料总成本</th>
+									<th>审核状态</th>
+									<th>详情</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="file:${list}">
+                                	<td th:text=${file.design_id}></td>
+									<td th:text="${file.product_id}"></td>
+									<td th:text="${file.product_name}"></td>
+									<td th:text="${file.designer.login_id}"></td>
+									<td th:text="${file.cost_price_sum}"></td>
+									<td th:if="${file.check_tag=='S001-1'}">审核通过</td>
+									<td th:if="${file.check_tag=='S001-0' or file.check_tag=='S001-2'}">等待审核</td>
+									<td>
+									  <button type="button" class="btn btn-info sk"data-toggle="modal" data-target="#myModal">详情</button>
+									</td>
+								</tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+      <!-- Modal -->
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div style="width: 90%" class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5>产品设计 <small>产品物料组成设计  -->   物料组成设计的查询</small></h5>
+					</div>
+					<div class="modal-body">
+						<table class="table " id="tab">
+                            <thead>
+                                <tr>
+                                	<th>物料编号</th>
+                                	<th>物料名称</th>
+                                	<th>描述</th>
+									<th>数量</th>
+									<th>单价</th>
+									<th>小计</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <tr >
+									<td><input type="text"  class=" userName1"name="product_id" readonly="readonly"> </td>
+									<td><input type="text"  class=" userName1"name="product_name" readonly="readonly" > </td>
+									<td><input type="text"  class=" userName1"name="product_describe" readonly="readonly"> </td>
+									<td><input type="text"  class=" userName1"name="amount" readonly="readonly"> </td>
+									<td><input type="text"  class=" userName1"name="cost_price" readonly="readonly"> </td>
+									<td><input type="text"  class=" userName1"name="subtotal" readonly="readonly"> </td>
+								</tr> -->
+                            </tbody>
+                        </table>
+					</div>
+					<div class="modal-footer">
+						</div>
+				</div>
+			</div>
+		</div>    
+    </div>
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script>
+    $(document).ready(function(){
+    	$(".dataTables-example").dataTable();
+    	var oTable=$("#editable").dataTable();
+    	oTable.$("td").editable("../example_ajax.php",{
+    		"callback":function(sValue,y){
+    			var aPos=oTable.fnGetPosition(this);
+    			oTable.fnUpdate(sValue,aPos[0],aPos[1])},
+    		"submitdata":function(value,settings){
+    			return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})
+    });
+    $(".sk").click(function(){
+    	$("#tab  tr:not(:first)").html("");
+		var id=$(this).parent().parent().children(0).html();
+		$.post("wlzcsjcxid",{"id":id},back,"Json")
+		function back(a){
+			var  aa =a["d_module_details"];
+			for(var i=0;i<=aa.length;i++){
+				var ms=aa[i]["product_describe"];
+				if(ms!=null){
+					ms=aa[i]["product_describe"];
+				}else{
+					ms="无描述！";
+				}
+				var tr=$("<tr><td>"+aa[i]["product_name"]+"</td><td>"+aa[i]["product_id"]+"</td><td>"+ms+"</td><td>"+aa[i]["amount"]+"</td><td>"+aa[i]["cost_price"]+"</td><td>"+aa[i]["subtotal"]+"</td></tr>");
+			    $("#tab").append(tr);
+			}
+			
+		 } 
+	})
+	
+	
+       function fnClickAddRow(){
+    	   $("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
+ </script>
+</body>
+
+</html>

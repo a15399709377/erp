@@ -7,7 +7,11 @@ public class D_module {
 private int id;//序号
 private String  design_id     ;//'设计编号'
 private String  product_id    ;//产品编号
-private String  product_name  ;//'产品名称',       
+private String  product_name  ;//'产品名称',
+private int  first_kind_id ;//
+private int  second_kind_id ;//
+private int  third_kind_id ;//
+
 private D_CONFIG_FILE_KIND first_kind; // '产品I级分类编号',
 
 private D_CONFIG_FILE_KIND second_kind;//  '产品II级分类编号',
@@ -198,22 +202,18 @@ public String getChange_tag() {
 public void setChange_tag(String change_tag) {
 	this.change_tag = change_tag;
 }
+
 @Override
 public String toString() {
 	return "D_module [id=" + id + ", design_id=" + design_id + ", product_id=" + product_id + ", product_name="
-			+ product_name + ", first_kind=" + first_kind + ", second_kind=" + second_kind + ", third_kind="
-			+ third_kind + ", designer=" + designer + ", module_descri=" + module_descri + ", cost_price_sum="
-			+ cost_price_sum + ", register=" + register + ", register_time=" + register_time + ", checker=" + checker
-			+ ", check_time=" + check_time + ", changer=" + changer + ", change_time=" + change_time + ", check_tag="
-			+ check_tag + ", change_tag=" + change_tag + ", getId()=" + getId() + ", getDesign_id()=" + getDesign_id()
-			+ ", getProduct_id()=" + getProduct_id() + ", getProduct_name()=" + getProduct_name() + ", getFirst_kind()="
-			+ getFirst_kind() + ", getSecond_kind()=" + getSecond_kind() + ", getThird_kind()=" + getThird_kind()
-			+ ", getDesigner()=" + getDesigner() + ", getModule_descri()=" + getModule_descri()
-			+ ", getCost_price_sum()=" + getCost_price_sum() + ", getRegister()=" + getRegister()
-			+ ", getRegister_time()=" + getRegister_time() + ", getChecker()=" + getChecker() + ", getCheck_time()="
-			+ getCheck_time() + ", getChanger()=" + getChanger() + ", getChange_time()=" + getChange_time()
-			+ ", getCheck_tag()=" + getCheck_tag() + ", getChange_tag()=" + getChange_tag() + ", getClass()="
-			+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+			+ product_name + ", first_kind_id=" + first_kind_id + ", second_kind_id=" + second_kind_id
+			+ ", third_kind_id=" + third_kind_id + ", first_kind=" + first_kind + ", second_kind=" + second_kind
+			+ ", third_kind=" + third_kind + ", designer=" + designer + ", module_descri=" + module_descri
+			+ ", cost_price_sum=" + cost_price_sum + ", register=" + register + ", register_time=" + register_time
+			+ ", checker=" + checker + ", check_time=" + check_time + ", changer=" + changer + ", change_time="
+			+ change_time + ", check_tag=" + check_tag + ", change_tag=" + change_tag + ", D_module_details="
+			+ D_module_details + ", designerr=" + designerr + ", registerr=" + registerr + ", checkerr=" + checkerr
+			+ ", changerr=" + changerr + "]";
 }
 public String getDesignerr() {
 	return designerr;
@@ -249,6 +249,58 @@ public D_module(int id, String design_id, String product_id, String product_name
 	this.design_id = design_id;
 	this.product_id = product_id;
 	this.product_name = product_name;
+	this.first_kind = first_kind;
+	this.second_kind = second_kind;
+	this.third_kind = third_kind;
+	this.designer = designer;
+	this.module_descri = module_descri;
+	this.cost_price_sum = cost_price_sum;
+	this.register = register;
+	this.register_time = register_time;
+	this.checker = checker;
+	this.check_time = check_time;
+	this.changer = changer;
+	this.change_time = change_time;
+	this.check_tag = check_tag;
+	this.change_tag = change_tag;
+	D_module_details = d_module_details;
+	this.designerr = designerr;
+	this.registerr = registerr;
+	this.checkerr = checkerr;
+	this.changerr = changerr;
+}
+public int getFirst_kind_id() {
+	return first_kind_id;
+}
+public void setFirst_kind_id(int first_kind_id) {
+	this.first_kind_id = first_kind_id;
+}
+public int getSecond_kind_id() {
+	return second_kind_id;
+}
+public void setSecond_kind_id(int second_kind_id) {
+	this.second_kind_id = second_kind_id;
+}
+public int getThird_kind_id() {
+	return third_kind_id;
+}
+public void setThird_kind_id(int third_kind_id) {
+	this.third_kind_id = third_kind_id;
+}
+public D_module(int id, String design_id, String product_id, String product_name, int first_kind_id, int second_kind_id,
+		int third_kind_id, D_CONFIG_FILE_KIND first_kind, D_CONFIG_FILE_KIND second_kind, D_CONFIG_FILE_KIND third_kind,
+		User designer, String module_descri, double cost_price_sum, User register, String register_time, User checker,
+		String check_time, User changer, String change_time, String check_tag, String change_tag,
+		List<com.erp.pojo.D_module_details> d_module_details, String designerr, String registerr, String checkerr,
+		String changerr) {
+	super();
+	this.id = id;
+	this.design_id = design_id;
+	this.product_id = product_id;
+	this.product_name = product_name;
+	this.first_kind_id = first_kind_id;
+	this.second_kind_id = second_kind_id;
+	this.third_kind_id = third_kind_id;
 	this.first_kind = first_kind;
 	this.second_kind = second_kind;
 	this.third_kind = third_kind;

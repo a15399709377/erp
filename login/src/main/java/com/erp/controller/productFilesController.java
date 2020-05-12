@@ -43,7 +43,7 @@ public class productFilesController {
 		if(productFilesMapper.test1()!=null) {
 			String idd=productFilesMapper.test1();
 			int iddd=Integer.parseInt(idd)+1;
-			String pro_id="SJ00"+iddd;		
+			String pro_id="SP00"+iddd;		
 			file.setProduct_id(pro_id);
 			file.setFirst_kind(first_kind);
 			file.setSecond_kind(second_kind);
@@ -54,7 +54,7 @@ public class productFilesController {
 			System.out.println(a);
 			return a;
 		}else {
-			String pro_id="SJ00"+1;		
+			String pro_id="SP00"+1;		
 			file.setProduct_id(pro_id);
 			file.setFirst_kind(first_kind);
 			file.setSecond_kind(second_kind);
@@ -164,7 +164,6 @@ public class productFilesController {
 	@ResponseBody
 	public D_module D_moduleXX(int id) {
 		D_module list=productFilesService.D_moduleXX(id);
-		System.out.println(list.getD_module_details().get(0));
 		return list;
 	}
 	
