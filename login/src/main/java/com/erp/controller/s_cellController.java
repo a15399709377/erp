@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,7 +57,7 @@ public class s_cellController {
 			D_CONFIG_FILE_KIND third_kind=productFilesMapper.D_CONFIG_FILE_KINDByid(d.getThird_kind_id());
 			System.out.println("=============dsgsadfssssssadffefffffffffff"+d);
 			int num=mapper.cxzhid()+1;
-			String store_id="AQKCPZD2020"+num;
+			String store_id="kcpzd2020"+num;
 			s.setStore_id(store_id);
 			s.setProduct_name(d.getProduct_name());
 			s.setFirst_kind(first_kind);
@@ -395,6 +394,7 @@ System.out.println("================================"+num);
 	@RequestMapping("/tjwladd")
     @ResponseBody
 	public int tjwladd(@RequestBody List<D_module_details> list,HttpServletRequest request) {
+		System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
 		System.out.println("======================================================"+list);
 		HttpSession session=request.getSession();
 		int parent_id=(int)session.getAttribute("id");

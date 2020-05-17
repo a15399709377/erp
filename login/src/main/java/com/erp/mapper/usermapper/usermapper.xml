@@ -5,11 +5,11 @@
 <mapper namespace="com.erp.mapper.usermapper.usermapper">
 <select id="findMenuByName" resultType="Permissions">
 SELECT * FROM SYS_MENUS WHERE id
-IN(SELECT menu_id FROM SYS_MENU_ROLE WHERE role_id=(SELECT role_id FROM SYS_USER_ROLE WHERE user_id=(SELECT id FROM SYS_USERS WHERE login_id=#{name})));
+IN(SELECT menu_id FROM SYS_MENU_ROLE WHERE role_id in (SELECT role_id FROM SYS_USER_ROLE WHERE user_id=(SELECT id FROM SYS_USERS WHERE login_id=#{name})));
 </select>
 
 <select id="getMapByName" resultType="User">
-select * from sys_users where login_id=#{userName} and password=#{pwd}
+select * from sys_users where login_id=#{userName} and password=#{pwd} and status=1
 </select>
 
 <select id="first_kind" resultType="D_CONFIG_FILE_KIND">

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.erp.mapper.s_cellmapper.s_cellmapper;
 import com.erp.pojo.D_module;
 import com.erp.pojo.D_module_details;
+import com.erp.pojo.Role;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 
@@ -128,6 +129,10 @@ public class s_cellServiceImpl implements s_cellService {
 	@Override
 	public int delwlxx2(String id, int parent_id) {
 		return mapper.delwlxx2(id,parent_id);
+	}
+	@Override
+	public List<Role> selectRole(String name) {
+		return mapper.selectRole(name);
 	}
 	
 }

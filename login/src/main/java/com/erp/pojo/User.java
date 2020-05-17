@@ -10,6 +10,7 @@ public class User {
 	private String status;
 	private String photo_path;
 	private List<Role> role;
+	private List<String> roleId;
 	
 	public List<Role> getRole() {
 		return role;
@@ -17,6 +18,7 @@ public class User {
 	public void setRole(List<Role> role) {
 		this.role = role;
 	}
+	
 	public User(int id, String login_id, String password, String status, String photo_path, List<Role> role) {
 		super();
 		this.id = id;
@@ -72,11 +74,36 @@ public class User {
 	public void setPhoto_path(String photo_path) {
 		this.photo_path = photo_path;
 	}
+	public List<String> getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(List<String> roleId) {
+		this.roleId = roleId;
+	}
+	public User(int id, String login_id, String password, String status, String photo_path, List<Role> role,
+			List<String> roleId) {
+		super();
+		this.id = id;
+		this.login_id = login_id;
+		this.password = password;
+		this.status = status;
+		this.photo_path = photo_path;
+		this.role = role;
+		this.roleId = roleId;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", login_id=" + login_id + ", password=" + password + ", status=" + status
-				+ ", photo_path=" + photo_path + ", role=" + role + "]";
+				+ ", photo_path=" + photo_path + ", role=" + role + ", roleId=" + roleId + "]";
 	}
+	
+	
+	public User(int id, String status) {
+		super();
+		this.id = id;
+		this.status = status;
+	}
+	
 	
 	
 	

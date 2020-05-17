@@ -138,12 +138,11 @@ input{
 							</div>
 							<br /> <br />
 
-							<table class="table" id="tab">
+							<table class="table table-striped table-bordered table-hover " id="tab">
 								<tr>
                                 	<th>序号</th>
                                     <th>仓库名称</th>
 									<th>最大存储量</th>
-									<th>存储单位</th>
                                 </tr>
 								
 							</table>
@@ -233,7 +232,7 @@ input{
     			$("[name='max_amount']").val(a["max_amount"]);
     			$.post("cxkcbxx",back,"Json")
         		function back(b){
-        			  var node=$("<tr><td>"+b["id"]+"</td><td>"+b["housename"]+"</td><td><input type='text' name='max_capacity_amount'/> </td><td><input type='text' id='hh'/></td></tr>");
+        			  var node=$("<tr><td>"+b["id"]+"</td><td>"+b["housename"]+"</td><td><input type='text' name='max_capacity_amount'/> </td></tr>");
         			    $("#tab").append(node);
         		}
     		}
@@ -244,16 +243,21 @@ input{
 			var max=$("[name='max_amount']").val();
 			var maxca=$("[name='max_capacity_amount']").val();
 			var config=$("[name='config']").val();
-			$.post("aqkcpzd",{"product_id":productid,"min_amount":min,"max_amount":max,"max_capacity_amount":maxca,"config":config},back,"text");
-			function back(a){
-				if(a>0){
-					swal({title:"提交成功",text:"需要审核！",type:"success"},
-							function(){	window.location="zdaqkcpzd"}
-				     )
-				}else{
-					swal({title:"提交失败",text:"需要重新提交！",type:"error"})
+			if(min>max||maxca<max){
+				swal({title:"数据有误！",text:"需要重新填写！",type:"error"})
+			}else{
+				$.post("aqkcpzd",{"product_id":productid,"min_amount":min,"max_amount":max,"max_capacity_amount":maxca,"config":config},back,"text");
+				function back(a){
+					if(a>0){
+						swal({title:"提交成功",text:"需要审核！",type:"success"},
+								function(){	window.location="zdaqkcpzd"}
+					     )
+					}else{
+						swal({title:"提交失败",text:"需要重新提交！",type:"error"})
+					}
 				}
 			}
+			
 		})
            function fnClickAddRow(){
         	   $("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
