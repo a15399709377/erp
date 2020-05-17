@@ -21,9 +21,13 @@ public class warehouseServiceImpl implements warehouseService {
 	@Override
 	public int addWarehousing(S_GATHER gATHER) {
 		int a=warehouseMapper.addWarehousing(gATHER);
+		String id=warehouseMapper.test(); 
+		System.out.println(gATHER);
 		int b=0;
 		if(a>0) {
 			for (S_GATHER_DETAILS S_GATHER_DETAILS : gATHER.getS_GATHER_DETAILS()) {
+				S_GATHER_DETAILS.setParent_id(Integer.parseInt(id));
+				System.out.println(S_GATHER_DETAILS);
 				b=warehouseMapper.addWarehousingXX(S_GATHER_DETAILS,gATHER.getId());
 			}	
 		}

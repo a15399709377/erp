@@ -1497,10 +1497,7 @@
 				}
 	
 				/* Add user defined class */
-				if ( oCol.sClass !== null )
-				{
-					nTd.className += ' '+oCol.sClass;
-				}
+				
 	
 				// Visibility - add or remove as required
 				if ( oCol.bVisible && ! nTrIn )

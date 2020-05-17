@@ -79,10 +79,15 @@ public class productFilesServiceImpl implements productFilesService {
 	public int addD_module(D_module dm) {
 		int aa=0;
 		int a=productFilesMapper.addD_module(dm);
+		System.out.println(dm);
+		System.out.println(a);
 		int bb=productFilesMapper.addD_moduledeSign_module_tag(dm.getProduct_id());
+		String id=productFilesMapper.test();
 		if(a>0) {
 			List<D_module_details> details=dm.getD_module_details();
 			for (D_module_details de : details) {
+				de.setParent_id(Integer.parseInt(id));
+				System.out.println(de);
 				int b=productFilesMapper.addDetails(de);
 				if(b>0) {
 					aa=1;
@@ -100,12 +105,12 @@ public class productFilesServiceImpl implements productFilesService {
 	public int auditD_module(int id, int audit, User user) {
 		if(audit==1) {
 			int a=productFilesMapper.auditD_module(id, audit, user);
+			return a;
 		}else {
 			int a=productFilesMapper.auditD_module(id, audit, user);
 			return a;
 		}		
 		
-		return 0;
 	}
 
 

@@ -100,7 +100,7 @@
 			</otherwise>
 		</choose>,
 		<choose>
-			<when test="file.real_cost_price==''">
+			<when test="file.cost_price==''">
 				null
 			</when>
 			<otherwise>
