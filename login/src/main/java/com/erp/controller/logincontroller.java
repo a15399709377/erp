@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.erp.loginservice.LoginService;
 import com.erp.loginservice.loginserviceimpl;
 import com.erp.pojo.Permissions;
+import com.erp.pojo.Role;
 import com.erp.pojo.User;
 import com.erp.productFilesService.productFilesService;
+import com.erp.s_cellService.s_cellService;
 import com.erp.warehouseService.warehouseService;
 
 @Controller
@@ -35,6 +37,9 @@ public class logincontroller {
 	
 	@Autowired
 	productFilesService productFilesService;
+	
+	@Autowired
+	s_cellService scellservice;
 	
 	@RequestMapping("/log")
 	 public String log() {
@@ -130,18 +135,25 @@ public class logincontroller {
 //            subject.checkPermissions("query", "add");
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            model.addAttribute("msg","用戶名密碼錯誤！");
+            model.addAttribute("msg","用戶名密碼错误或账号已失效！");
             return "login";
         } catch (AuthorizationException e) {
             e.printStackTrace();
-            model.addAttribute("msg","用戶名密碼錯誤！");
+            model.addAttribute("msg","用戶名密碼错误或账号已失效！");
             return "login";
         }
         System.out.println("hhhh");
         model.addAttribute("list",LoginService.findByName(user.getLogin_id()));
         HttpSession session=request.getSession();
         session.setAttribute("user",user);
+        List<Role> r=scellservice.selectRole(user.getLogin_id());
+//        for (int i = 0; i < user.getRole().size(); i++) {
+//        	s.add(user.getRole().get(i).getName());
+//		}
+        user.setRole(r);
         model.addAttribute("username",user.getLogin_id());
+        model.addAttribute("role",user.getRole());
+        System.out.println("role================="+user.getRole());
         return "index";
     }
    

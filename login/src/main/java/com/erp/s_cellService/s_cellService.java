@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.erp.pojo.D_module;
 import com.erp.pojo.D_module_details;
+import com.erp.pojo.Role;
 import com.erp.pojo.User;
 import com.erp.pojo.d_file;
 import com.erp.pojo.s_cell;
@@ -71,6 +72,8 @@ public interface s_cellService {
 		List<D_module> wlzcsjdbgcx();
 		//删除
 		int delwlxx2(String id, int parent_id);
+		
+		List<Role> selectRole(String name);
 		
 		
 		

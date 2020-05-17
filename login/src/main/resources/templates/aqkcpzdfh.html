@@ -70,8 +70,8 @@ input{
 									<td th:text=${file.third_kind_name}></td>
 									<td th:text=${file.register_time}></td>
 									<td>
-									  <button id="zd" class="btn btn-info " data-toggle="modal" data-target="#myModal" th:if="${file.s_check_tag=='S001-0'}">复核</button>
-									  <button id="zd" class="btn btn-info " data-toggle="modal" data-target="#myModal" th:if="${file.s_check_tag=='S001-2'}">重新复核</button>
+									  <button  class="btn btn-info zd" data-toggle="modal" data-target="#myModal" th:if="${file.s_check_tag=='S001-0'}">复核</button>
+									  <button  class="btn btn-info zd" data-toggle="modal" data-target="#myModal" th:if="${file.s_check_tag=='S001-2'}">重新复核</button>
 									</td>
 								</tr>
                             </tbody>
@@ -226,7 +226,7 @@ input{
         		"submitdata":function(value,settings){
         			return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})
         });
-        $("#zd").click(function(){
+        $(".zd").click(function(){
         	var id=$(this).parent().parent().children(0).html();
     		$("#tab  tr:not(:first)").html("");
         	$.post("aqkcpzdfhcx",{"id":id},back,"Json")

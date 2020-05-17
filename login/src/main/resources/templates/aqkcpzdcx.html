@@ -67,7 +67,7 @@
 										<div th:case="*"></div>
 									</td>
 									<td>
-										<button id="xq" class="btn btn-info " data-toggle="modal" data-target="#myModal" >详情</button>
+										<button  class="btn btn-info xq" data-toggle="modal" data-target="#myModal" >详情</button>
 									</td>
 			
 
@@ -222,7 +222,7 @@
     		"submitdata":function(value,settings){
     			return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})
     });
-    $("#xq").click(function(){
+    $(".xq").click(function(){
     	var id=$(this).parent().parent().children(0).html();
 		$("#tab  tr:not(:first)").html("");
     	$.post("aqkcpzdfhcx",{"id":id},back,"Json")

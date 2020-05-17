@@ -9,8 +9,19 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
-	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+	<link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+	<link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+<style type="text/css">
+.layui-form-label{
+width: 110px;
+}
+</style>
 </head>
 <body class="childrenBody">
 <form class="layui-form" style="width:85%;" id="file">
@@ -230,7 +241,13 @@
 <script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:src="@{/layui/userAdd.js}"></script>
-
+ 	<script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.5"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
 <script>
 $(function(){
 	$("#add").click(function(){
@@ -238,7 +255,9 @@ $(function(){
 		$.post("addProductFilesService",file,back,"text")
 		function back(a){
 			if(a>0){
-				alert("增加成功！");
+				swal({title:"新增成功",text:"温馨提示：需要审核！",type:"success"},
+						function(){	window.location="cpdadj"}
+			     )
 			}
 		}
 	})
